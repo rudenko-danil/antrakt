@@ -1,0 +1,1506 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Антракт</title>
+<meta name="description" content="Классическая музыка мини-уроками">
+<meta name="theme-color" content="#EEF0EB" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#111317" media="(prefers-color-scheme: dark)">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Антракт">
+<style>
+:root { color-scheme: light; padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); box-sizing: border-box; height: 100%; }
+body { margin: 0; font: 14px system-ui, -apple-system, sans-serif; }
+img { max-width: 100%; }
+[hidden] { display: none !important; }
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Prata&family=Golos+Text:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+</head>
+<body>
+<style>
+/* Layout: one phone-width column — status strip, one card at a time, staff-line progress, tab bar. */
+:root {
+  --bg: #EEF0EB;          /* cool staff-paper */
+  --surface: #FAFAF7;
+  --ink: #17191E;
+  --muted: #5D636E;
+  --line: #D6D9D1;
+  --ok: #2E7D4F;
+  --bad: #B23A3A;
+  --baroque: #9A6A12;
+  --classical: #2F5D9E;
+  --romantic: #9C2F45;
+  --modern: #24766D;
+  --intro: #555A66;
+  --era: var(--intro);
+  --f-display: "Prata", "Georgia", "Times New Roman", serif;
+  --f-body: "Golos Text", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #111317; --surface: #1A1C21; --ink: #ECEDE8; --muted: #9BA1AB; --line: #2B2E35;
+  --ok: #5BBF85; --bad: #E07070;
+  --baroque: #D9A541; --classical: #7FA6E0; --romantic: #E07A8F; --modern: #5FC2B6; --intro: #A3A8B3;
+  color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #111317; --surface: #1A1C21; --ink: #ECEDE8; --muted: #9BA1AB; --line: #2B2E35;
+  --ok: #5BBF85; --bad: #E07070;
+  --baroque: #D9A541; --classical: #7FA6E0; --romantic: #E07A8F; --modern: #5FC2B6; --intro: #A3A8B3;
+  color-scheme: dark }
+
+html, body { height: 100%; }
+body { background: var(--bg); color: var(--ink); font-family: var(--f-body); font-size: 16px; line-height: 1.55;
+  -webkit-font-smoothing: antialiased; overflow: hidden; }
+.app { height: 100%; max-width: 560px; margin: 0 auto; display: flex; flex-direction: column;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+button:focus-visible, [tabindex]:focus-visible { outline: 2px solid var(--era); outline-offset: 3px; border-radius: 6px; }
+
+/* status strip */
+.top { display: flex; align-items: center; gap: 12px; padding-block: 12px 6px; font-family: var(--f-mono); font-size: 12px;
+  letter-spacing: .04em; color: var(--muted); font-variant-numeric: tabular-nums; }
+.top .brand { font-family: var(--f-display); font-size: 19px; letter-spacing: 0; color: var(--ink); margin-right: auto; }
+.top b { color: var(--ink); font-weight: 500; }
+.chip { display: inline-flex; align-items: center; gap: 5px; }
+.chip svg { width: 14px; height: 14px; }
+
+/* screens */
+.screen { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+.screen[hidden] { display: none !important; }
+.scroll { flex: 1; min-height: 0; overflow-y: auto; -webkit-overflow-scrolling: touch; padding-block: 8px 24px; }
+
+/* lesson header */
+.lhead { display: flex; align-items: baseline; gap: 10px; padding-block: 6px 2px; min-width: 0; }
+.lhead .num { font-family: var(--f-mono); font-size: 12px; color: var(--era); letter-spacing: .08em; text-transform: uppercase; white-space: nowrap; }
+.lhead .ttl { font-size: 13px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+
+/* staff progress */
+.staff { position: relative; height: 34px; margin-block: 4px 6px; }
+.staff svg { width: 100%; height: 100%; display: block; overflow: visible; }
+
+/* card stage */
+.stage { flex: 1; min-height: 0; position: relative; }
+.card { position: absolute; inset: 0; display: flex; flex-direction: column; overflow-y: auto;
+  background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 24px 22px 22px; }
+.card.enter { animation: rise .32s cubic-bezier(.2,.8,.2,1); }
+@keyframes rise { from { transform: translateY(28px); opacity: .0; } to { transform: none; opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .card.enter { animation: none; } }
+.kicker { font-family: var(--f-mono); font-size: 11.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--era); margin-bottom: 14px; }
+.card h2 { font-family: var(--f-display); font-weight: 400; font-size: clamp(25px, 7vw, 31px); line-height: 1.18; margin: 0 0 16px; text-wrap: balance; }
+.card p { margin: 0 0 12px; font-size: 17px; line-height: 1.6; max-width: 62ch; }
+.card .grow { flex: 1; }
+
+/* listen card */
+.work { font-family: var(--f-display); font-size: clamp(22px, 6vw, 27px); line-height: 1.22; margin: 0 0 8px; text-wrap: balance; }
+.meta { font-family: var(--f-mono); font-size: 12.5px; color: var(--muted); letter-spacing: .02em; }
+.player { margin-block: 26px 18px; display: flex; align-items: center; gap: 18px; }
+.play { width: 74px; height: 74px; border-radius: 50%; background: var(--era); color: var(--surface); display: grid; place-items: center; flex: none;
+  box-shadow: 0 0 0 6px color-mix(in srgb, var(--era) 16%, transparent); transition: transform .15s; }
+.play:active { transform: scale(.95); }
+.play svg { width: 28px; height: 28px; }
+.ptrack { flex: 1; min-width: 0; }
+.bar { height: 4px; background: var(--line); border-radius: 2px; overflow: hidden; }
+.bar i { display: block; height: 100%; width: 0; background: var(--era); }
+.ptime { font-family: var(--f-mono); font-size: 12px; color: var(--muted); margin-top: 8px; display: flex; justify-content: space-between; font-variant-numeric: tabular-nums; }
+.note { font-size: 16px; color: var(--ink); border-top: 1px solid var(--line); padding-top: 14px; margin: 0; }
+.synth { font-family: var(--f-mono); font-size: 11px; color: var(--muted); margin-top: 12px; }
+.synth a { color: inherit; }
+.more { align-self: flex-start; margin-top: 4px; font-size: 14px; font-weight: 600; color: var(--era); padding: 8px 0; }
+
+/* questions */
+.qtext { font-family: var(--f-display); font-size: clamp(21px, 5.6vw, 25px); line-height: 1.28; margin: 0 0 18px; text-wrap: balance; }
+.opts { display: grid; gap: 10px; }
+.opt { text-align: left; padding: 14px 16px; border: 1px solid var(--line); border-radius: 12px; font-size: 16.5px; line-height: 1.35;
+  background: var(--bg); display: flex; gap: 12px; align-items: center; transition: border-color .15s, background .15s; }
+.opt .k { font-family: var(--f-mono); font-size: 12px; color: var(--muted); width: 18px; flex: none; }
+.opt:hover:not([disabled]) { border-color: var(--era); }
+.opt.right { border-color: var(--ok); background: color-mix(in srgb, var(--ok) 12%, var(--surface)); }
+.opt.wrong { border-color: var(--bad); background: color-mix(in srgb, var(--bad) 10%, var(--surface)); }
+.opt[disabled] { cursor: default; }
+.opt.picked { border-color: var(--era); background: color-mix(in srgb, var(--era) 10%, var(--surface)); }
+.opt.picked .k { color: var(--era); font-weight: 500; }
+.why { margin-top: 16px; padding: 14px 16px; border-radius: 12px; font-size: 15.5px; line-height: 1.5;
+  background: color-mix(in srgb, var(--ok) 9%, var(--surface)); border-left: 3px solid var(--ok); }
+.why.no { background: color-mix(in srgb, var(--bad) 8%, var(--surface)); border-left-color: var(--bad); }
+.why b { display: block; font-family: var(--f-mono); font-size: 11.5px; letter-spacing: .08em; text-transform: uppercase; margin-bottom: 4px; }
+.mini { display: flex; align-items: center; gap: 12px; margin-bottom: 18px; }
+.mini .play { width: 54px; height: 54px; box-shadow: none; }
+.mini .play svg { width: 22px; height: 22px; }
+.mini .ptrack { font-family: var(--f-mono); font-size: 12px; color: var(--muted); }
+.review-tag { display: inline-block; font-family: var(--f-mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase;
+  padding: 3px 8px; border-radius: 99px; border: 1px solid var(--era); color: var(--era); margin-bottom: 14px; }
+
+/* done card */
+.done-mark { width: 64px; height: 40px; color: var(--era); margin-bottom: 10px; display: block; }
+.facts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-block: 18px 6px; }
+.facts div { border-top: 1px solid var(--line); padding-top: 8px; }
+.facts b { display: block; font-family: var(--f-mono); font-weight: 500; font-size: 20px; font-variant-numeric: tabular-nums; }
+.facts span { font-size: 12.5px; color: var(--muted); }
+
+/* figures */
+.fig { margin: 0 0 16px; }
+.fig figcaption { font-size: 13px; color: var(--muted); margin-top: 6px; line-height: 1.4; }
+.fsvg { width: 100%; height: auto; display: block; overflow: visible; }
+.xscroll { overflow-x: auto; }
+.xscroll .fsvg { min-width: 300px; }
+.comp { display: grid; grid-template-columns: auto 1fr; gap: 4px 14px; align-items: center; padding: 14px; border-radius: 14px;
+  background: color-mix(in srgb, var(--era) 7%, var(--surface)); border: 1px solid color-mix(in srgb, var(--era) 25%, var(--line)); }
+.comp .fsvg { grid-column: 1 / -1; margin-top: 4px; }
+.medal { width: 68px; height: 68px; border-radius: 50%; display: grid; place-items: center; border: 1.5px solid var(--era);
+  box-shadow: inset 0 0 0 4px var(--surface), inset 0 0 0 5px color-mix(in srgb, var(--era) 45%, transparent); }
+.medal span { font-family: var(--f-display); font-size: 17px; color: var(--era); letter-spacing: .02em; }
+.medal { overflow: hidden; position: relative; }
+.medal img { position: absolute; inset: 5px; width: calc(100% - 10px); height: calc(100% - 10px); object-fit: cover; object-position: center 20%; border-radius: 50%; }
+.medal.has-img span { visibility: hidden; }
+.cname { font-family: var(--f-display); font-size: 18px; line-height: 1.2; }
+.cmeta { font-family: var(--f-mono); font-size: 11.5px; color: var(--muted); margin-top: 3px; }
+.insts { display: flex; flex-wrap: wrap; gap: 6px; margin: -4px 0 16px; }
+.ichip { display: inline-flex; align-items: center; gap: 6px; padding: 5px 10px 5px 7px; border-radius: 99px; font-size: 13px;
+  border: 1px solid var(--line); background: var(--bg); }
+.ichip svg { width: 18px; height: 18px; color: var(--era); }
+.bigicon { width: 96px; height: 96px; display: block; margin: 0 auto; }
+.btn.back { flex: 0 0 54px; padding: 0; display: grid; place-items: center; }
+.btn.back svg { width: 22px; height: 22px; }
+
+/* action row */
+.actions { padding-block: 12px 10px; display: flex; gap: 10px; }
+.btn { flex: 1; height: 54px; border-radius: 14px; font-weight: 600; font-size: 16.5px; background: var(--ink); color: var(--bg); }
+.btn.ghost { background: transparent; color: var(--ink); border: 1px solid var(--line); flex: 0 0 auto; padding-inline: 18px; font-weight: 500; }
+.btn[disabled] { opacity: .35; cursor: default; }
+.hint { text-align: center; font-size: 12px; color: var(--muted); font-family: var(--f-mono); padding-bottom: 2px; min-height: 16px; }
+
+/* tab bar */
+.tabs { display: flex; border-top: 1px solid var(--line); padding-bottom: 4px; }
+.tabs button { flex: 1; padding-block: 10px 6px; font-size: 12px; color: var(--muted); display: flex; flex-direction: column; align-items: center; gap: 3px; }
+.tabs button svg { width: 22px; height: 22px; }
+.tabs button[aria-current="page"] { color: var(--ink); }
+
+/* programme */
+.prog h1, .stats h1 { font-family: var(--f-display); font-weight: 400; font-size: 30px; margin: 8px 0 4px; }
+.sub { color: var(--muted); font-size: 14px; margin: 0 0 18px; }
+.era-h { display: flex; align-items: baseline; gap: 10px; margin: 22px 0 8px; padding-bottom: 6px; border-bottom: 1px solid var(--line); }
+.era-h .n { font-family: var(--f-display); font-size: 21px; }
+.era-h .y { font-family: var(--f-mono); font-size: 12px; color: var(--muted); margin-left: auto; }
+.era-h .tm { font-family: var(--f-display); font-style: italic; font-size: 14px; color: var(--era); }
+.row { display: flex; align-items: center; gap: 14px; width: 100%; text-align: left; padding: 11px 2px; border-bottom: 1px dashed var(--line); }
+.row .no { font-family: var(--f-mono); font-size: 13px; color: var(--muted); width: 22px; flex: none; font-variant-numeric: tabular-nums; }
+.row .tt { flex: 1; min-width: 0; font-size: 16px; }
+.row .st { font-family: var(--f-mono); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); flex: none; }
+.row.done .st { color: var(--era); }
+.row.cur .tt { font-weight: 600; }
+.row.cur .st { color: var(--ink); }
+.dot { width: 9px; height: 9px; border-radius: 50%; border: 1.5px solid var(--era); flex: none; }
+.row.done .dot { background: var(--era); }
+.foot { font-size: 13px; color: var(--muted); margin-top: 26px; line-height: 1.5; }
+
+/* stats */
+.tiles { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 14px; }
+.tile { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 14px; }
+.tile b { display: block; font-family: var(--f-mono); font-weight: 500; font-size: 26px; font-variant-numeric: tabular-nums; line-height: 1.1; }
+.tile span { font-size: 13px; color: var(--muted); }
+.chart { margin-top: 18px; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 14px 14px 10px; }
+.chart h3, .tools h3 { font-size: 13px; font-weight: 600; margin: 0 0 10px; }
+.chart svg { width: 100%; height: 150px; display: block; }
+.tools { margin-top: 18px; }
+.tools .rowb { display: flex; gap: 8px; flex-wrap: wrap; }
+.tools .btn { height: 44px; font-size: 14.5px; flex: 1 1 140px; }
+.tools textarea { width: 100%; min-height: 90px; margin-top: 10px; font-family: var(--f-mono); font-size: 12px; background: var(--surface);
+  color: var(--ink); border: 1px solid var(--line); border-radius: 10px; padding: 10px; box-sizing: border-box; }
+.msg { font-size: 13.5px; color: var(--muted); margin-top: 8px; min-height: 20px; }
+.sync { font-family: var(--f-mono); font-size: 11px; color: var(--muted); margin-top: 18px; }
+</style>
+
+<div class="app" id="app">
+  <header class="top">
+    <span class="brand">Антракт</span>
+    <span class="chip" title="Дней подряд"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M8 1.5c2.5 3 4 5 4 7.5a4 4 0 0 1-8 0c0-1.4.6-2.6 1.6-3.6.2 1.3.9 2 1.7 2.3C6.9 5.6 7.3 3.4 8 1.5Z"/></svg><b id="streak">0</b></span>
+    <span class="chip" title="Минут сегодня"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="8" cy="8.5" r="6"/><path d="M8 5v3.5l2.2 1.4"/></svg><b id="today">0:00</b></span>
+  </header>
+
+  <section class="screen" id="s-learn">
+    <div class="lhead"><span class="num" id="lnum"></span><span class="ttl" id="lttl"></span></div>
+    <div class="staff" id="staff" aria-hidden="true"></div>
+    <div class="stage" id="stage"></div>
+    <div class="actions" id="actions"></div>
+    <div class="hint" id="hint"></div>
+  </section>
+
+  <section class="screen" id="s-prog" hidden>
+    <div class="scroll prog" id="prog"></div>
+  </section>
+
+  <section class="screen" id="s-stats" hidden>
+    <div class="scroll stats" id="stats"></div>
+  </section>
+
+  <nav class="tabs" aria-label="Разделы">
+    <button data-tab="learn" aria-current="page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 18V5l11-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="17" cy="16" r="3"/></svg>Слушать</button>
+    <button data-tab="prog"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 3h11l3 3v15H5z"/><path d="M8 9h8M8 13h8M8 17h5"/></svg>Программа</button>
+    <button data-tab="stats"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>Статистика</button>
+  </nav>
+</div>
+
+<script>
+// Контент трека «Классическая музыка: база»
+const T = (h, b) => ({ t: "text", h, b });
+const L = (track, work, meta, note) => ({ t: "listen", track, work, meta, note });
+const Q = (id, q, opts, a, why, track) => ({ t: "q", kind: "choice", id, q, opts, a, why, track });
+const O = (id, q, items, why) => ({ t: "q", kind: "order", id, q, items, why });
+
+const ERAS = {
+  intro:     { name: "Вступление", years: "", tempo: "Preludio" },
+  baroque:   { name: "Барокко", years: "1600–1750", tempo: "Allegro" },
+  classical: { name: "Классицизм", years: "1750–1820", tempo: "Andante" },
+  romantic:  { name: "Романтизм", years: "1820–1900", tempo: "Espressivo" },
+  modern:    { name: "XX век", years: "1900–", tempo: "Rubato" },
+};
+const ERA_OPTS = ["Барокко", "Классицизм", "Романтизм", "XX век"];
+
+const LESSONS = [
+{ id: "l01", era: "intro", title: "Что такое классическая музыка", cards: [
+  T("Два значения одного слова",
+    "«Классической» в быту называют всю академическую музыку от Баха до Рахманинова. А в учебниках классицизм — это одна конкретная эпоха, время Гайдна, Моцарта и раннего Бетховена. В этом курсе слово «классика» значит первое, широкое."),
+  T("Четыре эпохи",
+    "Удобнее всего слушать музыку по эпохам. Барокко (1600–1750) — пышность и узоры. Классицизм (1750–1820) — ясность и порядок. Романтизм (1820–1900) — чувства на пределе. XX век — эксперименты и новые краски. Границы условные, но за месяц ты научишься слышать разницу."),
+  L("l01_ode", "Бетховен. Симфония №9, финал: «Ода к радости»", "op. 125 · 1824",
+    "Мелодию ты точно слышал: сейчас это гимн Евросоюза. Здесь она в оркестровой версии. Бетховен стоит на границе классицизма и романтизма."),
+  O("q01a", "Расставь эпохи по порядку, от ранней к поздней", ["Барокко", "Классицизм", "Романтизм", "XX век"],
+    "Барокко → классицизм → романтизм → XX век. Запомни эту ось, на неё будет крепиться всё остальное."),
+  Q("q01b", "Кто написал «Оду к радости»?", ["Моцарт", "Бетховен", "Бах", "Чайковский"], 1,
+    "Бетховен, финал Девятой симфонии (1824). Текст — стихотворение Шиллера."),
+]},
+
+{ id: "l02", era: "intro", title: "Оркестр на слух", cards: [
+  T("Четыре семьи инструментов",
+    "Симфонический оркестр делится на группы. Струнные: скрипки, альты, виолончели, контрабасы. Деревянные духовые: флейта, гобой, кларнет, фагот. Медные: труба, валторна, тромбон, туба. И ударные, главные из которых — литавры."),
+  T("Кто здесь главный",
+    "Самая большая группа — струнные, это больше половины музыкантов. Они звучат почти всё время. Духовые добавляют цвет, медь — мощь, литавры — драму. Дирижёр не играет сам, а собирает всех в одно целое."),
+  L("l02_orchestra", "Одна фраза — четыре группы", "демонстрация",
+    "Фраза из «Оды к радости» звучит по очереди: струнные, деревянные духовые, медные, литавры."),
+  Q("q02a", "Какая группа в оркестре самая многочисленная?", ["Медные", "Струнные", "Ударные", "Деревянные духовые"], 1,
+    "Струнные: в большом оркестре их бывает больше шестидесяти человек."),
+  Q("q02b", "К какой группе относится флейта?", ["Медные духовые", "Струнные", "Деревянные духовые", "Ударные"], 2,
+    "Деревянные духовые, даже если флейта сделана из металла. Группу определяет способ звукоизвлечения, а не материал."),
+]},
+
+{ id: "l03", era: "baroque", title: "Вивальди: «Весна»", cards: [
+  T("Рыжий священник",
+    "Антонио Вивальди (1678–1741) жил в Венеции. Его звали «рыжим священником»: он действительно был рукоположен, но почти не служил мессы. Десятилетиями он учил музыке девочек из сиротского приюта, и их оркестр был знаменит на всю Европу."),
+  T("Музыка с сюжетом",
+    "«Времена года» — четыре скрипичных концерта, изданных в 1725 году. К каждому приложен сонет, и музыка его иллюстрирует. В «Весне» поют птицы, журчит ручей, проходит гроза. Это ранний пример программной музыки, где звуки рассказывают историю."),
+  T("Эхо барокко",
+    "Послушай, как фраза звучит громко, а потом тихо, как эхо. Барокко любило резкие контрасты громкости, без плавных нарастаний. Такую манеру называют «террасной динамикой»."),
+  L("l03_spring", "Вивальди. «Весна» из «Времён года», I часть", "RV 269 · Allegro · 1725",
+    "Слушай перекличку: громкая фраза и её тихое эхо."),
+  Q("q03a", "Сколько концертов во «Временах года»?", ["Два", "Четыре", "Двенадцать", "Один"], 1,
+    "Четыре: «Весна», «Лето», «Осень», «Зима»."),
+  Q("q03b", "Что такое «террасная динамика»?", ["Плавное нарастание громкости", "Резкая смена громко/тихо", "Игра на ступенях сцены", "Очень быстрый темп"], 1,
+    "Резкие переключения громкости, как ступени террасы. Это примета барокко."),
+]},
+
+{ id: "l04", era: "baroque", title: "Пахельбель: Канон", cards: [
+  T("Восемь нот по кругу",
+    "Иоганн Пахельбель (1653–1706) — немецкий органист. Его Канон ре мажор построен на басе из восьми нот, который повторяется от начала до конца, почти тридцать раз. Повторяющийся бас называют остинато."),
+  T("Что такое канон",
+    "Канон — это когда голоса вступают по очереди с одной и той же мелодией, как в песне «Братец Яков». В записи сначала вступает одна скрипка, потом вторая повторяет её фразу, потом третья."),
+  T("Поздняя слава",
+    "Двести с лишним лет Канон почти никто не знал. Хитом он стал только после записи 1968 года. Сегодня его играют на свадьбах, а его аккорды стоят в основе десятков поп-песен."),
+  L("l04_canon", "Пахельбель. Канон ре мажор", "P 37 · около 1700",
+    "Найди бас из восьми нот в виолончели, а потом считай, сколько скрипок вступает."),
+  Q("q04a", "Как называется короткая фраза в басу, повторяющаяся всё время?", ["Каденция", "Остинато", "Фуга", "Ария"], 1,
+    "Остинато, от итальянского «упрямый»."),
+  Q("q04b", "Что такое канон?", ["Голоса по очереди повторяют одну мелодию", "Произведение для органа", "Медленная часть симфонии", "Танец XVII века"], 0,
+    "Голоса вступают по очереди с одной мелодией и накладываются друг на друга."),
+]},
+
+{ id: "l05", era: "baroque", title: "Бах: Токката и фуга", cards: [
+  T("Отец всей музыки",
+    "Иоганн Себастьян Бах (1685–1750) почти тридцать лет служил кантором в Лейпциге и писал музыку к каждому воскресенью. У него было двадцать детей. При жизни его ценили как органиста, а как композитора по-настоящему открыли только в XIX веке."),
+  T("Фуга",
+    "Фуга — главная форма Баха. Короткая тема проходит по очереди во всех голосах, и они сплетаются в ткань. Это вершина полифонии, многоголосия, где каждый голос самостоятелен. Токката — наоборот, свободная виртуозная пьеса, проба пальцев."),
+  T("Номер BWV",
+    "У произведений Баха есть номера BWV, это каталог его сочинений. Токката и фуга ре минор — BWV 565. Год смерти Баха, 1750, условно считают концом эпохи барокко."),
+  L("l05_toccata", "Бах. Токката и фуга ре минор", "BWV 565 · орган",
+    "Самое знаменитое начало в органной музыке. Фраза спускается трижды, каждый раз на октаву ниже."),
+  Q("q05a", "Что такое фуга?", ["Песня для голоса и органа", "Тема по очереди проходит во всех голосах", "Быстрый танец", "Вступление к опере"], 1,
+    "Тема переходит из голоса в голос, и они сплетаются."),
+  Q("q05b", "Какой год условно считают концом барокко?", ["1600", "1750", "1820", "1900"], 1,
+    "1750 — год смерти Баха."),
+  Q("q05c", "На каком инструменте звучит Токката BWV 565?", ["Клавесин", "Скрипка", "Орган", "Фортепиано"], 2,
+    "На органе. Бах был одним из лучших органистов своего времени."),
+]},
+
+{ id: "l06", era: "baroque", title: "Гендель: «Аллилуйя»", cards: [
+  T("Немец в Лондоне",
+    "Георг Фридрих Гендель (1685–1759) родился в один год с Бахом, но они так и не встретились. Гендель сделал карьеру в Лондоне: сначала писал итальянские оперы, а потом прославился ораториями."),
+  T("Оратория",
+    "Оратория похожа на оперу без декораций и костюмов: хор, солисты и оркестр на сцене, сюжет чаще религиозный. «Мессию» Гендель написал в 1741 году примерно за три недели."),
+  T("Почему встают",
+    "Во многих странах на хоре «Аллилуйя» публика встаёт. По легенде, так сделал король Георг II, а встать вслед за королём обязаны все. Было ли это на самом деле, неизвестно, но традиция жива."),
+  L("l06_hallelujah", "Гендель. «Аллилуйя» из оратории «Мессия»", "HWV 56 · 1741",
+    "Хор, трубы и литавры. Барокко в самом торжественном виде."),
+  Q("q06a", "Чем оратория отличается от оперы?", ["Нет хора", "Нет декораций и сценического действия", "Нет оркестра", "Поётся только на латыни"], 1,
+    "В оратории нет постановки: всё держится на музыке."),
+  Q("q06b", "Угадай композитора по фрагменту", ["Вивальди", "Пахельбель", "Бах", "Гендель"], 0,
+    "Это Вивальди, «Весна»: громкая фраза и тихое эхо.", "l03_spring"),
+  Q("q06c", "Угадай композитора по фрагменту", ["Вивальди", "Пахельбель", "Бах", "Гендель"], 2,
+    "Это Бах, Токката ре минор на органе.", "l05_toccata"),
+]},
+
+{ id: "l07", era: "classical", title: "Гайдн: «Сюрприз»", cards: [
+  T("Новая эпоха — ясность",
+    "После узорчатого барокко музыка упростилась. Классицизм любит ясную мелодию с аккомпанементом, симметричные фразы и чёткую форму. Центром музыкального мира стала Вена."),
+  T("Отец симфонии",
+    "Йозеф Гайдн (1732–1809) около тридцати лет служил у князей Эстерхази, и в глуши усадьбы, по его словам, был «вынужден стать оригинальным». Он написал 104 симфонии и задал её форму: обычно четыре части, быстрая — медленная — танец — финал."),
+  T("Шутка с литаврами",
+    "В Симфонии №94 тихая, почти колыбельная тема вдруг обрывается оглушительным аккордом. По легенде, Гайдн хотел разбудить задремавших лондонских слушателей. Отсюда и название «Сюрприз»."),
+  L("l07_surprise", "Гайдн. Симфония №94 «Сюрприз», II часть", "Hob. I:94 · Andante · 1791",
+    "Тема звучит тихо, потом ещё тише… Держи телефон покрепче."),
+  Q("q07a", "Сколько частей обычно в классической симфонии?", ["Две", "Три", "Четыре", "Шесть"], 2,
+    "Четыре: быстрая, медленная, танцевальная (менуэт) и финал."),
+  Q("q07b", "Какой город стал столицей классицизма?", ["Венеция", "Лейпциг", "Вена", "Париж"], 2,
+    "Вена. Гайдна, Моцарта и Бетховена даже называют «венскими классиками»."),
+]},
+
+{ id: "l08", era: "classical", title: "Моцарт: Серенада", cards: [
+  T("Вундеркинд",
+    "Вольфганг Амадей Моцарт (1756–1791) из Зальцбурга с шести лет гастролировал по Европе. За 35 лет жизни он написал больше 600 произведений во всех жанрах: оперы, симфонии, концерты, мессы."),
+  T("Номер K.",
+    "Произведения Моцарта нумеруют по каталогу Кёхеля, отсюда буква K. «Маленькая ночная серенада» — K. 525, написана в 1787 году для струнного ансамбля. Серенада — лёгкая музыка для вечернего развлечения."),
+  T("Звучание классицизма",
+    "Послушай, как всё ясно: короткий вопрос, короткий ответ, всё симметрично. Никаких сложных переплетений, как у Баха, мелодия всегда на первом плане. Опубликовали серенаду только через 36 лет после смерти Моцарта."),
+  L("l08_nachtmusik", "Моцарт. «Маленькая ночная серенада», I часть", "K. 525 · Allegro · 1787",
+    "Все струнные играют в унисон: фраза-вопрос и фраза-ответ."),
+  Q("q08a", "Что значит буква K. в номерах Моцарта?", ["Королевский заказ", "Каталог Кёхеля", "Концерт", "Камерная музыка"], 1,
+    "Каталог Людвига фон Кёхеля, составленный в XIX веке."),
+  Q("q08b", "Что такое серенада?", ["Траурная музыка", "Лёгкая вечерняя музыка", "Церковное песнопение", "Оперная увертюра"], 1,
+    "Вечерняя развлекательная музыка, часто для небольшого ансамбля."),
+]},
+
+{ id: "l09", era: "classical", title: "Моцарт: «Турецкий марш»", cards: [
+  T("Мода на Восток",
+    "«Турецкий марш» — финал Фортепианной сонаты №11. В Вене тогда была мода на всё турецкое, особенно на шумные оркестры янычар с барабанами и тарелками. Моцарт изображает их на фортепиано: в левой руке слышен грохот марша."),
+  T("Рондо",
+    "Форма пьесы — рондо: главная тема возвращается снова и снова, а между её повторами звучат другие эпизоды. Схема А–Б–А–В–А. Поэтому тему так легко запомнить."),
+  T("Новый инструмент",
+    "Фортепиано тогда было новинкой. В отличие от клавесина, на нём можно играть и громко, и тихо, отсюда название «форте-пиано». Для классиков это был главный домашний инструмент."),
+  L("l09_turca", "Моцарт. Rondo alla turca из Сонаты №11", "K. 331 · Allegretto · около 1783",
+    "Запомни эту тему. Именно она будет возвращаться в рондо."),
+  Q("q09a", "Что такое рондо?", ["Форма, где главная тема возвращается много раз", "Медленный танец", "Пьеса для двух роялей", "Вступление к симфонии"], 0,
+    "Главная тема (рефрен) чередуется с эпизодами: А–Б–А–В–А."),
+  Q("q09b", "Чем фортепиано отличалось от клавесина?", ["Было меньше", "Позволяло играть громко и тихо", "Имело две клавиатуры", "Звучало только в церкви"], 1,
+    "Сила звука зависит от удара пальца, отсюда «форте-пиано»."),
+]},
+
+{ id: "l10", era: "classical", title: "Бетховен: «Лунная соната»", cards: [
+  T("Бетховен",
+    "Людвиг ван Бетховен (1770–1827) родился в Бонне и переехал в Вену. Около тридцати лет он начал терять слух и к концу жизни оглох полностью, но продолжал сочинять. Многие его поздние шедевры написаны, когда он их уже не слышал."),
+  T("Название не от автора",
+    "Соната №14 написана в 1801 году. «Лунной» её назвал критик Людвиг Рельштаб уже после смерти Бетховена: первая часть напомнила ему лунный свет над Люцернским озером. Сам Бетховен назвал её «соната в духе фантазии»."),
+  T("Номер op.",
+    "Op. — опус, «произведение» по-латыни. Это номер, который давал сам композитор или издатель. «Лунная» — op. 27 №2, то есть второе произведение в 27-м опусе."),
+  L("l10_moonlight", "Бетховен. «Лунная соната», I часть", "op. 27 №2 · Adagio sostenuto · 1801",
+    "Мерные тройки нот в правой руке, а в конце вступает мелодия."),
+  Q("q10a", "Кто дал сонате название «Лунная»?", ["Бетховен", "Критик Рельштаб", "Моцарт", "Издатель в Вене"], 1,
+    "Людвиг Рельштаб, уже после смерти композитора."),
+  Q("q10b", "Что значит «op.» в номере произведения?", ["Опера", "Опус, то есть произведение", "Оркестровая партия", "Оригинал"], 1,
+    "Opus — латинское «труд, произведение»."),
+]},
+
+{ id: "l11", era: "classical", title: "Бетховен: Пятая симфония", cards: [
+  T("Четыре ноты",
+    "Та-та-та-ТАМ. Пятая симфония (1808) начинается с самого узнаваемого мотива в истории. Есть легенда, что так «судьба стучится в дверь», но её, скорее всего, придумал секретарь Бетховена."),
+  T("Мост к романтизму",
+    "Формы у Бетховена классические, а чувства — уже романтические: борьба, драма, победа. Из четырёх нот он выращивает целую симфонию. После него композиторы стали думать о себе как о творцах, а не придворных слугах."),
+  L("l11_fifth", "Бетховен. Симфония №5, I часть", "op. 67 · Allegro con brio · 1808",
+    "Мотив из четырёх нот, а дальше он передаётся из голоса в голос."),
+  Q("q11a", "Какой ритм у мотива Пятой симфонии?", ["Длинная — три коротких", "Три коротких — длинная", "Две коротких — две длинных", "Все ноты равные"], 1,
+    "Три коротких и одна длинная: та-та-та-ТАМ."),
+  Q("q11b", "Угадай эпоху на слух", ERA_OPTS, 0,
+    "Барокко: Канон Пахельбеля, повторяющийся бас и голоса по очереди.", "l04_canon"),
+  Q("q11c", "Угадай эпоху на слух", ERA_OPTS, 1,
+    "Классицизм: Моцарт, ясный вопрос и ответ.", "l08_nachtmusik"),
+  Q("q11d", "Угадай эпоху на слух", ERA_OPTS, 0,
+    "Барокко: Гендель, «Аллилуйя».", "l06_hallelujah"),
+]},
+
+{ id: "l12", era: "romantic", title: "Шуберт: «Ave Maria»", cards: [
+  T("Век чувств",
+    "Романтизм ставит в центр личность и её переживания. Природа, любовь, одиночество, сказки, родная земля. Формы становятся свободнее, оркестр больше, а музыка всё чаще рассказывает истории."),
+  T("Король песни",
+    "Франц Шуберт (1797–1828) прожил всего 31 год и написал больше 600 песен. Песня для голоса и фортепиано по-немецки называется Lied, и именно Шуберт превратил её в большое искусство."),
+  T("Не совсем молитва",
+    "«Ave Maria» (1825) — на самом деле песня Эллен из поэмы Вальтера Скотта «Дева озера», в немецком переводе. Позже к мелодии подставили латинский текст молитвы, и в таком виде она прославилась. Здесь она звучит в инструментальном переложении."),
+  L("l12_avemaria", "Шуберт. «Ave Maria»", "D. 839 · 1825",
+    "Широкая мелодия, словно поётся на одном дыхании."),
+  Q("q12a", "Как по-немецки называется песня для голоса и фортепиано?", ["Ария", "Lied", "Мотет", "Шансон"], 1,
+    "Lied, во множественном числе Lieder."),
+  Q("q12b", "Сколько примерно песен написал Шуберт?", ["Около 20", "Около 100", "Больше 600", "Ни одной"], 2,
+    "Больше 600, при том что прожил он всего 31 год."),
+]},
+
+{ id: "l13", era: "romantic", title: "Шопен: Ноктюрн", cards: [
+  T("Поэт фортепиано",
+    "Фредерик Шопен (1810–1849) уехал из Польши в Париж в двадцать лет и больше не вернулся. Почти всё, что он написал, — для фортепиано. Его сердце по завещанию похоронено в Варшаве, в костёле Святого Креста."),
+  T("Ноктюрн",
+    "Ноктюрн — «ночная» пьеса: певучая мелодия в правой руке над плавным аккомпанементом в левой. Шопен играл их чуть свободно, то замедляя, то ускоряя. Такая гибкость темпа называется рубато."),
+  T("Эпоха виртуозов",
+    "В романтизме пианист стал звездой. Ференц Лист, друг Шопена, собирал залы, как рок-звезда: дамы падали в обморок и дрались за его перчатки. Шопен, наоборот, не любил большие залы и играл в салонах для своих."),
+  L("l13_nocturne", "Шопен. Ноктюрн ми-бемоль мажор", "op. 9 №2 · Andante · около 1831",
+    "Мелодия поёт, как голос, а левая рука качает её на волнах."),
+  Q("q13a", "Что такое рубато?", ["Очень громкая игра", "Гибкий темп: то медленнее, то быстрее", "Игра двумя руками в унисон", "Пьеса для оркестра"], 1,
+    "Rubato — «украденное время»: темп дышит вместе с мелодией."),
+  Q("q13b", "Для какого инструмента писал почти всю музыку Шопен?", ["Скрипка", "Орган", "Фортепиано", "Оркестр"], 2,
+    "Фортепиано. Его так и называют — «поэт фортепиано»."),
+]},
+
+{ id: "l14", era: "romantic", title: "Брамс: «Колыбельная»", cards: [
+  T("Романтик-классик",
+    "Иоганнес Брамс (1833–1897) из Гамбурга жил в Вене и считал себя наследником Бетховена. Чувства у него романтические, а форма строгая, классическая. Он двадцать лет не решался закончить Первую симфонию, потому что боялся сравнения."),
+  T("Подарок другу",
+    "«Колыбельную» (1868) Брамс написал в подарок знакомой, Берте Фабер, на рождение сына. Мелодия стала самой известной колыбельной в мире. Её крутят в музыкальных шкатулках и детских игрушках."),
+  T("Венгерские танцы",
+    "Другая сторона Брамса — зажигательные «Венгерские танцы». Романтиков вообще тянуло к народной музыке: так появлялись национальные школы в России, Чехии, Норвегии."),
+  L("l14_lullaby", "Брамс. «Колыбельная»", "op. 49 №4 · 1868",
+    "Запись 1915 года, поёт Эрнестина Шуман-Хайнк. Мелодия в три четверти, как будто колыбель покачивается."),
+  Q("q14a", "Кем считал себя Брамс?", ["Учеником Шопена", "Наследником Бетховена", "Оперным композитором", "Изобретателем джаза"], 1,
+    "Наследником Бетховена. Отсюда его любовь к строгим формам."),
+  Q("q14b", "Зачем Брамс написал «Колыбельную»?", ["По заказу короля", "В подарок на рождение сына знакомой", "Для оперы", "Для своих детей"], 1,
+    "В подарок Берте Фабер. Своих детей у Брамса не было."),
+]},
+
+{ id: "l15", era: "romantic", title: "Верди: опера", cards: [
+  T("Что такое опера",
+    "Опера — драма, где всё поётся. Ария — сольный номер, где герой раскрывает чувства. Речитатив — пение, близкое к речи, двигающее сюжет. Либретто — текст оперы."),
+  T("Верди",
+    "Джузеппе Верди (1813–1901) — главный итальянский оперный композитор. «Риголетто», «Травиата», «Аида». Его мелодии пела вся Италия, а хоры из опер становились почти народными песнями."),
+  T("Секретная ария",
+    "«La donna è mobile» («Сердце красавицы склонно к измене») поёт Герцог в «Риголетто» (1851). По легенде, Верди держал арию в секрете до самой премьеры: знал, что наутро её будут насвистывать на всех улицах Венеции. Так и вышло."),
+  L("l15_donna", "Верди. «La donna è mobile» из «Риголетто»", "1851 · Allegretto",
+    "Поёт тенор. Послушай, какой простой аккомпанемент у оркестра: «ум-па-па»."),
+  Q("q15a", "Как называется сольный номер героя в опере?", ["Либретто", "Ария", "Увертюра", "Речитатив"], 1,
+    "Ария. Речитатив — пение, близкое к речи, либретто — текст."),
+  Q("q15b", "Что такое либретто?", ["Текст оперы", "Маленькая книга нот", "Вступление оркестра", "Хор в финале"], 0,
+    "Текст оперы, буквально «книжечка»."),
+]},
+
+{ id: "l16", era: "romantic", title: "Вагнер: «Полёт валькирий»", cards: [
+  T("Ровесник Верди",
+    "Рихард Вагнер (1813–1883) родился в один год с Верди, но пошёл другим путём. Он хотел слить музыку, поэзию и театр в «тотальное произведение искусства» и сам писал тексты своих опер."),
+  T("Опера на четыре вечера",
+    "«Кольцо нибелунга» — цикл из четырёх опер общей длиной около 15 часов. Для него Вагнер построил собственный театр в Байройте, где цикл идёт до сих пор. Каждый герой и предмет там имеет свою музыкальную тему — лейтмотив."),
+  T("Валькирии",
+    "«Полёт валькирий» открывает третье действие оперы «Валькирия»: девы-воительницы скачут по небу. Сегодня его знают по фильму «Апокалипсис сегодня», где под эту музыку летят вертолёты."),
+  L("l16_valkyries", "Вагнер. «Полёт валькирий» из «Валькирии»", "WWV 86B · 1870",
+    "Скачущий ритм у валторн и тромбонов, а под ним тревожно дрожат струнные."),
+  Q("q16a", "Что такое лейтмотив?", ["Главная ария оперы", "Музыкальная тема, закреплённая за героем или идеей", "Вступление к опере", "Танец валькирий"], 1,
+    "Тема-«визитка», которая возвращается, когда появляется герой или идея."),
+  Q("q16b", "Сколько опер в цикле «Кольцо нибелунга»?", ["Одна", "Две", "Четыре", "Девять"], 2,
+    "Четыре, около 15 часов музыки."),
+]},
+
+{ id: "l17", era: "romantic", title: "Чайковский: балет", cards: [
+  T("Первый профессионал",
+    "Пётр Ильич Чайковский (1840–1893) бросил службу в министерстве ради музыки и окончил первую в России консерваторию, в Петербурге. Его симфонии, концерты и оперы сделали русскую музыку мировой."),
+  T("Три балета",
+    "До Чайковского балетную музыку считали прикладной, просто ритмом для танца. Его «Лебединое озеро» (1877), «Спящая красавица» и «Щелкунчик» превратили балет в настоящую симфоническую музыку."),
+  T("Провал, ставший легендой",
+    "Первая постановка «Лебединого озера» в Большом театре прошла неудачно. Успех пришёл только после смерти композитора, с новой постановкой Петипа и Иванова в 1895 году. Тему лебедей ведёт гобой."),
+  L("l17_swan", "Чайковский. «Лебединое озеро», тема лебедей", "op. 20 · 1877",
+    "Печальная мелодия гобоя над дрожью струнных и арфой."),
+  Q("q17a", "Какие балеты написал Чайковский?", ["«Жизель», «Корсар», «Дон Кихот»", "«Лебединое озеро», «Спящая красавица», «Щелкунчик»", "«Болеро», «Жар-птица», «Весна священная»", "«Кармен», «Аида», «Тоска»"], 1,
+    "Три балета Чайковского — основа мирового репертуара."),
+  Q("q17b", "Угадай эпоху на слух", ERA_OPTS, 2,
+    "Романтизм: Шопен, певучая мелодия и гибкий темп.", "l13_nocturne"),
+  Q("q17c", "Угадай эпоху на слух", ERA_OPTS, 1,
+    "Классицизм: Гайдн, ясная тема и шутка с аккордом.", "l07_surprise"),
+  Q("q17d", "Угадай эпоху на слух", ERA_OPTS, 2,
+    "Романтизм: Вагнер, мощная медь и драма.", "l16_valkyries"),
+]},
+
+{ id: "l18", era: "modern", title: "Дебюсси: «Лунный свет»", cards: [
+  T("Век экспериментов",
+    "В XX веке единого стиля больше нет. Импрессионизм, скандальная «Весна священная» Стравинского (1913), джаз, музыка без тональности, минимализм. Композиторы ищут новые краски и правила."),
+  T("Импрессионизм",
+    "Название пришло из живописи, от картины Моне «Впечатление. Восходящее солнце». Клод Дебюсси (1862–1918) пишет музыку как художник-импрессионист: размытые контуры, игра света, настроение вместо чёткой формы."),
+  T("Лунный свет",
+    "«Лунный свет» — третья пьеса «Бергамасской сюиты» (издана в 1905 году). Название взято из стихотворения Верлена. Сравни с «Лунной сонатой» Бетховена: там луну придумал критик, а здесь её задумал сам автор."),
+  L("l18_clairdelune", "Дебюсси. «Лунный свет» из «Бергамасской сюиты»", "L. 75 · Andante très expressif · 1905",
+    "Тихие парящие созвучия без чёткого пульса, словно свет на воде."),
+  Q("q18a", "Откуда название «импрессионизм»?", ["От картины Моне", "От французского «громко»", "От имени Дебюсси", "От оперы Вагнера"], 0,
+    "От картины Клода Моне «Впечатление. Восходящее солнце»."),
+  Q("q18b", "Чем «Лунный свет» Дебюсси отличается от «Лунной сонаты» в истории названия?", ["Ничем", "Название дал сам автор", "Его тоже назвал критик", "Названия нет"], 1,
+    "Дебюсси сам взял название из стихотворения Верлена."),
+]},
+
+{ id: "l19", era: "modern", title: "Рахманинов: Прелюдия", cards: [
+  T("Последний романтик",
+    "Сергей Рахманинов (1873–1943) жил уже в XX веке, но писал музыку в духе позднего романтизма. Он был одним из величайших пианистов, с огромными руками, легко бравшими аккорды, недоступные большинству."),
+  T("Слава без гонорара",
+    "Прелюдию до-диез минор он написал в 19 лет. Она стала мировым хитом, в Америке её называли «Колокола Москвы». Но между Россией и США тогда не было соглашения об авторских правах, и Рахманинов почти ничего с неё не заработал."),
+  T("Эмиграция",
+    "После 1917 года Рахманинов уехал из России, жил в США и Швейцарии, много гастролировал как пианист. Его Второй фортепианный концерт (1901) — одно из самых исполняемых произведений в мире."),
+  L("l19_prelude", "Рахманинов. Прелюдия до-диез минор", "op. 3 №2 · Lento · 1892",
+    "Играет сам Рахманинов. Три тяжёлые ноты, как удар колокола: ля, соль-диез, до-диез."),
+  Q("q19a", "Как в Америке называли Прелюдию до-диез минор?", ["«Колокола Москвы»", "«Русская зима»", "«Лунная прелюдия»", "«Вальс»"], 0,
+    "«Колокола Москвы», из-за звона тяжёлых аккордов."),
+  Q("q19b", "Сколько лет было Рахманинову, когда он написал Прелюдию?", ["9", "19", "39", "59"], 1,
+    "Девятнадцать. Самая известная его вещь — почти студенческая."),
+]},
+
+{ id: "l20", era: "modern", title: "Равель: «Болеро»", cards: [
+  T("Пьеса-эксперимент",
+    "Морис Равель (1875–1937) написал «Болеро» в 1928 году как балет для танцовщицы Иды Рубинштейн. Всё произведение — один ритм малого барабана и две мелодии, которые повторяются около 15 минут без изменений."),
+  T("Одно огромное крещендо",
+    "Меняется только оркестровка: мелодию передают от инструмента к инструменту, оркестр становится всё больше и громче. Сам Равель с иронией называл «Болеро» «пьесой для оркестра без музыки»."),
+  L("l20_bolero", "Равель. «Болеро»", "M. 81 · Tempo di Bolero · 1928",
+    "Историческая запись 1930 года. Сначала только барабан и пиццикато, потом вступает флейта с мелодией."),
+  Q("q20a", "Что меняется на протяжении «Болеро»?", ["Мелодия", "Ритм", "Оркестровка и громкость", "Темп"], 2,
+    "Ритм и мелодия стоят на месте, растут только громкость и состав оркестра."),
+  O("q20b", "Расставь композиторов по году рождения", ["Бах", "Моцарт", "Чайковский", "Равель"],
+    "Бах 1685, Моцарт 1756, Чайковский 1840, Равель 1875."),
+  Q("q20c", "Угадай эпоху на слух", ERA_OPTS, 3,
+    "XX век: Дебюсси, размытые созвучия импрессионизма.", "l18_clairdelune"),
+  Q("q20d", "Угадай эпоху на слух", ERA_OPTS, 0,
+    "Барокко: Бах, Токката.", "l05_toccata"),
+  Q("q20e", "Угадай эпоху на слух", ERA_OPTS, 1,
+    "Классицизм: Моцарт, «Турецкий марш».", "l09_turca"),
+]},
+];
+
+// ---- иллюстрации к карточкам ----
+const COMP = k => ({ type: "composer", key: k });
+const FIGMAP = {
+  l01: { 1: [{ type: "eras" }] },
+  l02: { 0: [{ type: "orchestra" }] },
+  l03: { 0: [COMP("vivaldi")], 2: [{ type: "dyn", mode: "terrace" }] },
+  l04: { 0: [COMP("pachelbel"), { type: "staff", clef: "bass", notes: "D3/q A2/q B2/q F#2/q G2/q D2/q G2/q A2/q",
+          labels: ["ре", "ля", "си", "фа♯", "соль", "ре", "соль", "ля"], cap: "Те самые восемь нот баса: они идут по кругу всю пьесу", aria: "Бас канона" }],
+         1: [{ type: "blocks", cap: "Каждая скрипка вступает с той же мелодией на круг позже", aria: "Схема канона", rows: [
+          { label: "Скрипка 1", blocks: [{ t: "мелодия", hi: 1 }, { t: "2-я фраза" }, { t: "3-я фраза" }] },
+          { label: "Скрипка 2", blocks: [{}, { t: "мелодия", hi: 1 }, { t: "2-я фраза" }] },
+          { label: "Скрипка 3", blocks: [{}, {}, { t: "мелодия", hi: 1 }] },
+          { label: "Бас", blocks: [{ t: "8 нот", fs: 11 }, { t: "8 нот", fs: 11 }, { t: "8 нот", fs: 11 }] }] }] },
+  l05: { 0: [COMP("bach")],
+         1: [{ type: "blocks", cap: "Фуга: тема по очереди появляется в каждом голосе", aria: "Схема фуги", rows: [
+          { label: "Верхний", blocks: [{ t: "тема", hi: 1 }, { t: "…" }, { t: "…" }, { t: "тема", hi: 1 }] },
+          { label: "Средний", blocks: [{}, { t: "тема", hi: 1 }, { t: "…" }, { t: "…" }] },
+          { label: "Нижний", blocks: [{}, {}, { t: "тема", hi: 1 }, { t: "…" }] }] }],
+         2: [{ type: "staff", notes: "A5/e G5/e A5/h r/e G5/e F5/e E5/e D5/e C#5/q D5/h", dx: 28, beams: [[0, 1], [4, 7]],
+          cap: "Начало Токкаты: «завиток» ля–соль–ля и быстрый спуск", aria: "Начало Токкаты ре минор" }] },
+  l06: { 0: [COMP("handel")] },
+  l07: { 1: [COMP("haydn"), { type: "blocks", cap: "Типичная классическая симфония из четырёх частей", aria: "Части симфонии", rows: [
+          { blocks: [{ t: "I · быстро", hi: 1 }, { t: "II · медленно" }, { t: "III · менуэт" }, { t: "IV · финал", hi: 1 }] }] }] },
+  l08: { 0: [COMP("mozart")],
+         2: [{ type: "blocks", cap: "Классицизм любит симметрию: фраза-вопрос и фраза-ответ", aria: "Вопрос и ответ", rows: [
+          { blocks: [{ t: "вопрос", hi: 1 }, { t: "ответ" }, { t: "вопрос", hi: 1 }, { t: "ответ" }] }] }] },
+  l09: { 1: [{ type: "blocks", cap: "Рондо: тема А возвращается после каждого эпизода", aria: "Форма рондо", rows: [
+          { blocks: [{ t: "А", hi: 1 }, { t: "Б" }, { t: "А", hi: 1 }, { t: "В" }, { t: "А", hi: 1 }] }] }],
+         2: [{ type: "mech" }] },
+  l10: { 0: [COMP("beethoven")],
+         3: [{ type: "staff", notes: "G#3/e C#4/e E4/e G#3/e C#4/e E4/e", dx: 46, beams: [[0, 2], [3, 5]], groups: [[0, 2, "3"], [3, 5, "3"]],
+          cap: "Тройки нот покачиваются через всю первую часть", aria: "Триоли Лунной сонаты" }] },
+  l11: { 0: [{ type: "staff", notes: "r/e G4/e G4/e G4/e Eb4/h^ r/e F4/e F4/e F4/e D4/h^", dx: 30, beams: [[1, 3], [6, 8]],
+          cap: "Три коротких и длинная. Дуга с точкой — фермата: держать, сколько нужно", aria: "Мотив Пятой симфонии" }] },
+  l12: { 1: [COMP("schubert")] },
+  l13: { 0: [COMP("chopin")], 1: [{ type: "dyn", mode: "rubato" }] },
+  l14: { 0: [COMP("brahms")] },
+  l15: { 0: [{ type: "blocks", cap: "Из чего состоит опера", aria: "Части оперы", rows: [
+          { blocks: [{ t: "увертюра", fs: 11 }, { t: "речитатив", fs: 11 }, { t: "ария", hi: 1 }, { t: "речитатив", fs: 11 }, { t: "хор", fs: 11 }] }] }],
+         1: [COMP("verdi")] },
+  l16: { 0: [COMP("wagner")],
+         1: [{ type: "blocks", total: 4.5, lw: 100, cap: "Длительность опер «Кольца», примерно в часах", aria: "Длительность опер Кольца", rows: [
+          { label: "Золото Рейна", blocks: [{ t: "2,5 ч", w: 2.5 }] },
+          { label: "Валькирия", blocks: [{ t: "4 ч", w: 4, hi: 1 }] },
+          { label: "Зигфрид", blocks: [{ t: "4 ч", w: 4 }] },
+          { label: "Гибель богов", blocks: [{ t: "4,5 ч", w: 4.5 }] }] }] },
+  l17: { 0: [COMP("tchaikovsky")],
+         1: [{ type: "blocks", cap: "Три балета Чайковского", aria: "Балеты Чайковского", rows: [
+          { blocks: [{ t: "1877 · Лебединое", fs: 11, hi: 1 }, { t: "1890 · Спящая", fs: 11 }, { t: "1892 · Щелкунчик", fs: 11 }] }] }] },
+  l18: { 1: [COMP("debussy")], 2: [{ type: "moon" }] },
+  l19: { 0: [COMP("rachmaninoff")],
+         3: [{ type: "staff", notes: "A4/q G#4/q C#4/h", dx: 70, dyn: "fff", labels: ["ля", "соль♯", "до♯"],
+          cap: "Три ноты, на которых держится вся прелюдия", aria: "Мотив прелюдии" }] },
+  l20: { 0: [COMP("ravel")], 1: [{ type: "dyn", mode: "cresc" }] },
+};
+const INSTMAP = {
+  l01: ["violin", "strings", "cello"], l02: ["strings", "flute", "clarinet", "trumpet", "trombone", "timpani"],
+  l03: ["violin", "strings", "cello"], l04: ["violin", "cello"], l05: ["organ"], l06: ["choir", "trumpet", "strings", "timpani"],
+  l07: ["violin", "strings", "horn", "timpani"], l08: ["violin", "strings", "cello"], l09: ["piano"], l10: ["piano"],
+  l11: ["strings", "clarinet", "cello"], l12: ["violin", "piano"], l13: ["piano"], l14: ["piano"], l15: ["trumpet", "clarinet", "strings"],
+  l16: ["horn", "trombone", "trumpet", "strings", "timpani"], l17: ["oboe", "strings", "harp"], l18: ["piano"], l19: ["piano"],
+  l20: ["snare", "flute", "strings"],
+};
+LESSONS.forEach(l => l.cards.forEach((c, i) => {
+  const f = (FIGMAP[l.id] || {})[i]; if (f) c.figs = f;
+  if (c.t === "listen") c.inst = INSTMAP[l.id];
+}));
+
+// ---- настоящие записи с Wikimedia Commons: файл, начало и длина фрагмента в секундах ----
+const AUDIO = {
+  l01_ode: { file: "Anthem of Europe (US Navy instrumental long version).ogg", dur: 45, who: "оркестр ВМС США" },
+  l03_spring: { file: "Vivaldi - Four Seasons 1 Spring mvt 1 Allegro - John Harrison violin.oga", dur: 40, who: "Джон Харрисон, скрипка" },
+  l04_canon: { file: "Pachelbel's Canon.ogg", dur: 50 },
+  l05_toccata: { file: "Toccata et Fugue BWV565.ogg", dur: 40 },
+  l06_hallelujah: { file: "Handel - messiah - 44 hallelujah.ogg", dur: 40 },
+  l07_surprise: { file: 'Haydn; Symphony No. 94 "Surprise", 2. Andante.ogg', dur: 50 },
+  l08_nachtmusik: { file: "Mozart - Eine kleine Nachtmusik - 1. Allegro.ogg", dur: 35 },
+  l09_turca: { file: "Rondo Alla Turka.ogg", dur: 35 },
+  l10_moonlight: { file: "Ludwig van Beethoven - sonata no. 14 in c sharp minor 'moonlight', op. 27 no. 2 - i. adagio sostenuto.ogg", dur: 50 },
+  l11_fifth: { file: "Ludwig van Beethoven - Symphonie 5 c-moll - 1. Allegro con brio.ogg", dur: 35 },
+  l12_avemaria: { file: "Ave Maria (USNB).ogg", dur: 50, who: "оркестр ВМС США" },
+  l13_nocturne: { file: "Chopin Nocturne Op 9 No 2.ogg", dur: 50 },
+  l14_lullaby: { file: "Brahms - Schumann-Heink - Wiegenlied (Berceuse) (1915).ogg", dur: 50, who: "Э. Шуман-Хайнк, 1915" },
+  l15_donna: { file: "La Donna E Mobile Rigoletto.ogg", dur: 45 },
+  l16_valkyries: { file: "Richard Wagner - Ride of the Valkyries.ogg", dur: 50 },
+  l17_swan: { file: "Tchaikovsky Swan Lake Op.20 No.10. Scène.ogg", dur: 50 },
+  l18_clairdelune: { file: "Clair de lune (Claude Debussy) Suite bergamasque.ogg", dur: 50 },
+  l19_prelude: { file: "Sergei Rachmaninoff performs Rachmaninoff's Prelude in C sharp minor, Op. 3.ogg", dur: 45, who: "играет Рахманинов" },
+  l20_bolero: { file: "Bolero-Maurice Ravel-1930.ogg", dur: 45, who: "запись 1930 года" },
+};
+// для записей с неизвестным составом не показываем инструменты
+["l04", "l12", "l15"].forEach(id => { const l = LESSONS.find(x => x.id === id); l.cards.forEach(c => { if (c.t === "listen") delete c.inst; }); });
+LESSONS.find(x => x.id === "l14").cards.forEach(c => { if (c.t === "listen") c.inst = ["voice", "piano"]; });
+
+// Иллюстрации: композиторы, нотные примеры, схемы форм, инструменты
+const COMPOSERS = {
+  beethoven:   { name: "Людвиг ван Бетховен", ini: "LvB", b: 1770, d: 1827, city: "Бонн → Вена", era: "classical", wiki: "Ludwig_van_Beethoven" },
+  vivaldi:     { name: "Антонио Вивальди", ini: "AV", b: 1678, d: 1741, city: "Венеция", era: "baroque", wiki: "Antonio_Vivaldi" },
+  pachelbel:   { name: "Иоганн Пахельбель", ini: "JP", b: 1653, d: 1706, city: "Нюрнберг", era: "baroque", wiki: "Johann_Pachelbel" },
+  bach:        { name: "Иоганн Себастьян Бах", ini: "JSB", b: 1685, d: 1750, city: "Лейпциг", era: "baroque", wiki: "Johann_Sebastian_Bach" },
+  handel:      { name: "Георг Фридрих Гендель", ini: "GFH", b: 1685, d: 1759, city: "Галле → Лондон", era: "baroque", wiki: "George_Frideric_Handel" },
+  haydn:       { name: "Йозеф Гайдн", ini: "JH", b: 1732, d: 1809, city: "Эстерхаза · Вена", era: "classical", wiki: "Joseph_Haydn" },
+  mozart:      { name: "Вольфганг Амадей Моцарт", ini: "WAM", b: 1756, d: 1791, city: "Зальцбург → Вена", era: "classical", wiki: "Wolfgang_Amadeus_Mozart" },
+  schubert:    { name: "Франц Шуберт", ini: "FS", b: 1797, d: 1828, city: "Вена", era: "romantic", wiki: "Franz_Schubert" },
+  chopin:      { name: "Фредерик Шопен", ini: "FC", b: 1810, d: 1849, city: "Варшава → Париж", era: "romantic", wiki: "Frédéric_Chopin" },
+  brahms:      { name: "Иоганнес Брамс", ini: "JB", b: 1833, d: 1897, city: "Гамбург → Вена", era: "romantic", wiki: "Johannes_Brahms" },
+  verdi:       { name: "Джузеппе Верди", ini: "GV", b: 1813, d: 1901, city: "Буссето · Милан", era: "romantic", wiki: "Giuseppe_Verdi" },
+  wagner:      { name: "Рихард Вагнер", ini: "RW", b: 1813, d: 1883, city: "Лейпциг → Байройт", era: "romantic", wiki: "Richard_Wagner" },
+  tchaikovsky: { name: "Пётр Ильич Чайковский", ini: "ПЧ", b: 1840, d: 1893, city: "Петербург · Москва", era: "romantic", wiki: "Pyotr_Ilyich_Tchaikovsky" },
+  debussy:     { name: "Клод Дебюсси", ini: "CD", b: 1862, d: 1918, city: "Париж", era: "modern", wiki: "Claude_Debussy" },
+  rachmaninoff:{ name: "Сергей Рахманинов", ini: "СР", b: 1873, d: 1943, city: "Москва → США", era: "modern", wiki: "Sergei_Rachmaninoff" },
+  ravel:       { name: "Морис Равель", ini: "MR", b: 1875, d: 1937, city: "Париж", era: "modern", wiki: "Maurice_Ravel" },
+};
+
+const FIG = (() => {
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  const MONO = 'font-family="IBM Plex Mono, ui-monospace, monospace"';
+  const BODY = 'font-family="Golos Text, system-ui, sans-serif"';
+  const wrap = (svg, cap) => `<figure class="fig">${svg}${cap ? `<figcaption>${esc(cap)}</figcaption>` : ""}</figure>`;
+  const ERA_BANDS = [["baroque", 1600, 1750, "Барокко"], ["classical", 1750, 1820, "Классицизм"], ["romantic", 1820, 1900, "Романтизм"], ["modern", 1900, 1950, "XX век"]];
+
+  /* --- composer card: medallion + lifespan on the era axis --- */
+  function composer(key, seen) {
+    const c = COMPOSERS[key]; if (!c) return "";
+    const W = 340, x0 = 14, x1 = W - 14, yr = y => x0 + (y - 1600) / 350 * (x1 - x0);
+    let s = `<svg viewBox="0 0 ${W} 80" class="fsvg" role="img" aria-label="Годы жизни: ${c.b}–${c.d}">`;
+    ERA_BANDS.forEach(([e, a, b]) => { s += `<rect x="${yr(a)}" y="40" width="${yr(b) - yr(a) - 1}" height="6" rx="1" fill="var(--${e})" opacity=".28"/>`; });
+    (seen || []).filter(k => k !== key && COMPOSERS[k]).forEach(k => { const o = COMPOSERS[k];
+      s += `<line x1="${yr(o.b)}" x2="${yr(o.d)}" y1="56" y2="56" stroke="var(--muted)" stroke-width="2" opacity=".35" stroke-linecap="round"/>`; });
+    s += `<rect x="${yr(c.b)}" y="36" width="${yr(c.d) - yr(c.b)}" height="14" rx="7" fill="var(--era)"/>`;
+    [1600, 1700, 1800, 1900].forEach(y => { s += `<text x="${yr(y)}" y="74" ${MONO} font-size="9.5" fill="var(--muted)" text-anchor="${y === 1600 ? "start" : "middle"}">${y}</text>`; });
+    s += `</svg>`;
+    return `<figure class="fig comp"><div class="medal" aria-hidden="true" data-wiki="${esc(c.wiki || "")}"><span>${esc(c.ini)}</span></div>
+      <div class="cinfo"><div class="cname">${esc(c.name)}</div><div class="cmeta">${c.b}–${c.d} · ${c.d - c.b} лет · ${esc(c.city)}</div></div>${s}</figure>`;
+  }
+
+  /* --- era timeline --- */
+  function eras() {
+    const W = 340, x0 = 8, x1 = W - 8, yr = y => x0 + (y - 1600) / 350 * (x1 - x0);
+    let s = `<svg viewBox="0 0 ${W} 108" class="fsvg" role="img" aria-label="Четыре эпохи">`;
+    const who = { baroque: "Вивальди · Бах", classical: "Гайдн · Моцарт", romantic: "Шопен · Вагнер", modern: "Дебюсси · Равель" };
+    ERA_BANDS.forEach(([e, a, b, n], i) => {
+      const x = yr(a), w = yr(b) - yr(a) - 2, last = i === 3, tx = last ? x1 : x + 2, anc = last ? "end" : "start";
+      const ny = i % 2 ? 84 : 16, wy = i % 2 ? 98 : 30;
+      s += `<rect x="${x}" y="40" width="${w}" height="26" rx="4" fill="var(--${e})"/>`;
+      s += `<text x="${tx}" y="${ny}" text-anchor="${anc}" ${BODY} font-size="12.5" font-weight="600" fill="var(--${e})">${n}</text>`;
+      s += `<text x="${tx}" y="${wy}" text-anchor="${anc}" ${MONO} font-size="9.5" fill="var(--muted)">${who[e]}</text>`;
+      s += `<text x="${x + 4}" y="57" ${MONO} font-size="10" fill="var(--surface)">${a}</text>`;
+    });
+    s += `</svg>`;
+    return wrap(s, "Границы эпох условные: стиль менялся постепенно");
+  }
+
+  /* --- orchestra seating --- */
+  function orchestra() {
+    const cx = 170, cy = 168;
+    const arc = (r0, r1, a0, a1, fill, label) => {
+      const p = (r, a) => [cx + r * Math.cos(a), cy - r * Math.sin(a)];
+      const [x1, y1] = p(r1, a0), [x2, y2] = p(r1, a1), [x3, y3] = p(r0, a1), [x4, y4] = p(r0, a0);
+      const big = a1 - a0 > Math.PI ? 1 : 0;
+      const am = (a0 + a1) / 2, [lx, ly] = p((r0 + r1) / 2, am);
+      return `<path d="M${x1},${y1} A${r1},${r1} 0 ${big} 0 ${x2},${y2} L${x3},${y3} A${r0},${r0} 0 ${big} 1 ${x4},${y4}Z" fill="${fill}" stroke="var(--surface)" stroke-width="2"/>
+        <text x="${lx}" y="${ly + 4}" text-anchor="middle" ${BODY} font-size="11" font-weight="600" fill="var(--surface)">${label}</text>`;
+    };
+    const P = Math.PI;
+    let s = `<svg viewBox="0 0 340 176" class="fsvg" role="img" aria-label="Схема рассадки оркестра">`;
+    s += arc(136, 162, 0.12 * P, 0.88 * P, "var(--muted)", "Ударные");
+    s += arc(108, 134, 0.15 * P, 0.85 * P, "var(--romantic)", "Медные");
+    s += arc(80, 106, 0.2 * P, 0.8 * P, "var(--modern)", "Деревянные");
+    s += arc(22, 78, 0.5 * P, 1.0 * P, "var(--classical)", "Скрипки");
+    s += arc(22, 78, 0.0 * P, 0.5 * P, "var(--baroque)", "Виолончели");
+    s += `<circle cx="${cx}" cy="${cy}" r="7" fill="var(--ink)"/><text x="${cx}" y="${cy + 4}" text-anchor="middle" ${MONO} font-size="0">.</text>`;
+    s += `</svg>`;
+    return wrap(s, "Вид сверху, внизу точка — дирижёр. Справа от него альты и виолончели. Чем громче группа, тем дальше она от публики");
+  }
+
+  /* --- staff notation --- */
+  const LET = { C: 0, D: 1, E: 2, F: 3, G: 4, A: 5, B: 6 };
+  function staff(spec) {
+    const sp = 8, top = 30, bottom = top + 4 * sp, x0 = 24, dx = spec.dx || 34;
+    const base = spec.clef === "bass" ? 2 * 7 + 4 : 4 * 7 + 2;
+    const notes = spec.notes.split(" ");
+    const W = Math.max(340, x0 + notes.length * dx + 20), H = bottom + (spec.labels ? 40 : 22);
+    let s = `<svg viewBox="0 0 ${W} ${H}" class="fsvg" role="img" aria-label="${esc(spec.aria || "Нотный пример")}">`;
+    for (let i = 0; i < 5; i++) s += `<line x1="6" x2="${W - 6}" y1="${top + i * sp}" y2="${top + i * sp}" stroke="var(--muted)" stroke-width="1" opacity=".55"/>`;
+    s += `<text x="6" y="${top - 12}" ${MONO} font-size="10" fill="var(--muted)">${spec.clef === "bass" ? "басовый ключ" : ""}</text>`;
+    if (spec.dyn) s += `<text x="${x0 - 4}" y="${H - 6}" font-family="Prata, Georgia, serif" font-style="italic" font-size="15" fill="var(--era)">${esc(spec.dyn)}</text>`;
+    const xs = [], tips = [];
+    notes.forEach((tok, i) => {
+      const x = x0 + i * dx + dx / 2; xs.push(x);
+      let [p, d] = tok.split("/"); const ferm = d.endsWith("^"); d = d.replace("^", "");
+      if (p === "r") { // rest
+        const y = top + 2 * sp;
+        s += d === "e" ? `<path d="M${x - 2},${y - 4} q3,3 6,-1 L${x},${y + 8}" fill="none" stroke="var(--ink)" stroke-width="1.6"/><circle cx="${x - 1}" cy="${y - 4}" r="2" fill="var(--ink)"/>`
+                       : `<path d="M${x - 3},${y - 9} l5,5 l-5,5 l5,5" fill="none" stroke="var(--ink)" stroke-width="2"/>`;
+        return;
+      }
+      const m = p.match(/^([A-G])([#b]?)(\d)$/); const step = (+m[3] * 7 + LET[m[1]]) - base;
+      const y = bottom - step * sp / 2;
+      for (let l = -2; l >= step; l -= 2) { const ly = bottom - l * sp / 2; s += `<line x1="${x - 9}" x2="${x + 9}" y1="${ly}" y2="${ly}" stroke="var(--muted)" stroke-width="1"/>`; }
+      for (let l = 10; l <= step; l += 2) { const ly = bottom - l * sp / 2; s += `<line x1="${x - 9}" x2="${x + 9}" y1="${ly}" y2="${ly}" stroke="var(--muted)" stroke-width="1"/>`; }
+      if (m[2]) s += `<text x="${x - 15}" y="${y + 4}" ${BODY} font-size="13" fill="var(--ink)">${m[2] === "#" ? "♯" : "♭"}</text>`;
+      const hollow = d === "h" || d === "w";
+      s += `<ellipse cx="${x}" cy="${y}" rx="5.4" ry="3.9" transform="rotate(-20 ${x} ${y})" fill="${hollow ? "var(--surface)" : "var(--ink)"}" stroke="var(--ink)" stroke-width="1.4"/>`;
+      if (d !== "w") {
+        const up = step < 4, sx = up ? x + 5 : x - 5, sy2 = up ? y - 26 : y + 26;
+        s += `<line x1="${sx}" x2="${sx}" y1="${y}" y2="${sy2}" stroke="var(--ink)" stroke-width="1.3"/>`;
+        tips[i] = [sx, sy2];
+        if (d === "e" && !(spec.beams || []).some(([a, b]) => i >= a && i <= b)) s += `<path d="M${sx},${sy2} q7,${up ? 6 : -6} 4,${up ? 14 : -14}" fill="none" stroke="var(--ink)" stroke-width="1.5"/>`;
+      }
+      if (ferm) s += `<path d="M${x - 7},${top - 8} a7,7 0 0 1 14,0" fill="none" stroke="var(--era)" stroke-width="1.6"/><circle cx="${x}" cy="${top - 9}" r="1.6" fill="var(--era)"/>`;
+      if (spec.labels && spec.labels[i]) s += `<text x="${x}" y="${H - 8}" text-anchor="middle" ${MONO} font-size="10" fill="var(--muted)">${esc(spec.labels[i])}</text>`;
+    });
+    (spec.beams || []).forEach(([a, b]) => { if (tips[a] && tips[b]) s += `<line x1="${tips[a][0]}" y1="${tips[a][1]}" x2="${tips[b][0]}" y2="${tips[b][1]}" stroke="var(--ink)" stroke-width="3.2"/>`; });
+    (spec.groups || []).forEach(([a, b, t]) => { const xa = xs[a] - 6, xb = xs[b] + 6;
+      s += `<path d="M${xa},${top - 10} v-5 h${xb - xa} v5" fill="none" stroke="var(--era)" stroke-width="1.2"/><text x="${(xa + xb) / 2}" y="${top - 18}" text-anchor="middle" ${MONO} font-size="10" fill="var(--era)">${esc(t)}</text>`; });
+    s += `</svg>`;
+    return `<figure class="fig"><div class="xscroll">${s}</div>${spec.cap ? `<figcaption>${esc(spec.cap)}</figcaption>` : ""}</figure>`;
+  }
+
+  /* --- form blocks (rondo, symphony, canon, fugue, opera) --- */
+  function blocks(spec) {
+    const W = 340, lw = spec.lw || (spec.rows.some(r => r.label) ? 74 : 0), rh = 30, gap = 8;
+    const total = spec.total || Math.max(...spec.rows.map(r => r.blocks.reduce((a, b) => a + (b.w || 1), 0)));
+    const unit = (W - lw - 4) / total;
+    const H = spec.rows.length * (rh + gap) + 4;
+    let s = `<svg viewBox="0 0 ${W} ${H}" class="fsvg" role="img" aria-label="${esc(spec.aria || "Схема формы")}">`;
+    spec.rows.forEach((r, i) => {
+      const y = 2 + i * (rh + gap); let x = lw;
+      if (r.label) s += `<text x="0" y="${y + rh / 2 + 4}" ${BODY} font-size="11.5" fill="var(--muted)">${esc(r.label)}</text>`;
+      r.blocks.forEach(b => {
+        const w = (b.w || 1) * unit;
+        if (b.t != null) {
+          const fill = b.hi ? "var(--era)" : "var(--line)", fg = b.hi ? "var(--surface)" : "var(--ink)";
+          s += `<rect x="${x + 1}" y="${y}" width="${w - 3}" height="${rh}" rx="6" fill="${fill}"/>`;
+          s += `<text x="${x + w / 2}" y="${y + rh / 2 + 4}" text-anchor="middle" ${BODY} font-size="${b.fs || 12}" font-weight="600" fill="${fg}">${esc(b.t)}</text>`;
+        }
+        x += w;
+      });
+    });
+    s += `</svg>`;
+    return wrap(s, spec.cap);
+  }
+
+  /* --- dynamics: terraced vs crescendo; rubato tempo line --- */
+  function dyn(mode) {
+    const W = 340, H = 110, L = 30, B = 92, T = 14;
+    let s = `<svg viewBox="0 0 ${W} ${H}" class="fsvg" role="img" aria-label="Схема громкости">`;
+    s += `<line x1="${L}" x2="${W - 6}" y1="${B}" y2="${B}" stroke="var(--line)"/><line x1="${L}" x2="${L}" y1="${T}" y2="${B}" stroke="var(--line)"/>`;
+    const lab = (y, t) => `<text x="${L - 6}" y="${y + 4}" text-anchor="end" font-family="Prata, Georgia, serif" font-style="italic" font-size="13" fill="var(--muted)">${t}</text>`;
+    if (mode === "terrace") {
+      const f = 26, p = 66; s += lab(f, "f") + lab(p, "p");
+      const xs = [L, 90, 150, 210, 270, W - 6], ys = [f, p, f, p, f];
+      let d = `M${xs[0]},${ys[0]}`; for (let i = 0; i < ys.length; i++) { d += ` H${xs[i + 1]}`; if (i + 1 < ys.length) d += ` V${ys[i + 1]}`; }
+      s += `<path d="${d}" fill="none" stroke="var(--era)" stroke-width="3" stroke-linejoin="round"/>`;
+      s += `<text x="${W - 8}" y="${H - 2}" text-anchor="end" ${MONO} font-size="10" fill="var(--muted)">время →</text>`;
+      s += `</svg>`; return wrap(s, "Барокко: громкость меняется ступенями, как террасы");
+    }
+    if (mode === "cresc") {
+      s += lab(22, "ff") + lab(84, "pp");
+      s += `<path d="M${L},86 C140,82 230,62 ${W - 30},20 L${W - 22},86" fill="none" stroke="var(--era)" stroke-width="3" stroke-linejoin="round"/>`;
+      s += `<text x="${W - 8}" y="${H - 2}" text-anchor="end" ${MONO} font-size="10" fill="var(--muted)">~15 минут →</text>`;
+      s += `</svg>`; return wrap(s, "«Болеро»: одно непрерывное нарастание и обрыв в конце");
+    }
+    // rubato
+    s += lab(53, "темп");
+    s += `<line x1="${L}" x2="${W - 6}" y1="53" y2="53" stroke="var(--muted)" stroke-dasharray="4 4"/>`;
+    s += `<path d="M${L},53 C70,30 100,30 130,55 S190,82 220,58 S280,28 ${W - 6},50" fill="none" stroke="var(--era)" stroke-width="3"/>`;
+    s += `<text x="${W - 8}" y="${H - 2}" text-anchor="end" ${MONO} font-size="10" fill="var(--muted)">пунктир — ровный темп</text>`;
+    s += `</svg>`; return wrap(s, "Рубато: темп дышит вокруг ровной линии");
+  }
+
+  /* --- harpsichord vs piano mechanism --- */
+  function mech() {
+    let s = `<svg viewBox="0 0 340 130" class="fsvg" role="img" aria-label="Механика клавесина и фортепиано">`;
+    const string = (x0, x1, y) => `<line x1="${x0}" x2="${x1}" y1="${y}" y2="${y}" stroke="var(--ink)" stroke-width="2"/>`;
+    // harpsichord: jack with plectrum plucking upward
+    s += string(16, 154, 40);
+    s += `<rect x="72" y="46" width="12" height="54" rx="2" fill="var(--line)" stroke="var(--muted)"/><path d="M84,52 l14,-10" stroke="var(--era)" stroke-width="3" stroke-linecap="round"/>`;
+    s += `<path d="M78,108 v-6 M72,104 l6,-6 l6,6" fill="none" stroke="var(--muted)" stroke-width="1.5"/>`;
+    s += `<text x="85" y="126" text-anchor="middle" font-family="Golos Text, sans-serif" font-size="12" font-weight="600" fill="var(--ink)">Клавесин: щипок</text>`;
+    // piano: hammer striking from below
+    s += string(186, 324, 40);
+    s += `<line x1="236" y1="100" x2="252" y2="56" stroke="var(--muted)" stroke-width="3"/><rect x="244" y="44" width="18" height="12" rx="5" fill="var(--era)"/>`;
+    s += `<path d="M252,34 l-6,-8 M258,34 l6,-8 M255,32 v-10" stroke="var(--era)" stroke-width="1.5"/>`;
+    s += `<text x="255" y="126" text-anchor="middle" font-family="Golos Text, sans-serif" font-size="12" font-weight="600" fill="var(--ink)">Фортепиано: удар</text>`;
+    s += `</svg>`;
+    return wrap(s, "Перо цепляет струну всегда одинаково, а молоточек бьёт так сильно, как нажал палец");
+  }
+
+  /* --- moon over water (Debussy) --- */
+  function moon() {
+    let s = `<svg viewBox="0 0 340 120" class="fsvg" role="img" aria-label="Луна над водой">`;
+    s += `<circle cx="170" cy="40" r="26" fill="var(--era)" opacity=".9"/><circle cx="182" cy="34" r="24" fill="var(--surface)"/>`;
+    for (let i = 0; i < 7; i++) { const y = 80 + i * 5.5, w = 70 - i * 8 + (i % 2) * 6;
+      s += `<line x1="${170 - w / 2 + (i % 2) * 4}" x2="${170 + w / 2}" y1="${y}" y2="${y}" stroke="var(--era)" stroke-width="2" stroke-linecap="round" opacity="${0.8 - i * 0.09}"/>`; }
+    s += `<line x1="20" x2="320" y1="76" y2="76" stroke="var(--line)"/>`;
+    s += `</svg>`;
+    return wrap(s, "Импрессионизм: не предмет, а впечатление от него");
+  }
+
+  /* --- small instrument icons for listen cards --- */
+  const ICONS = {
+    violin: '<path d="M12 2v6"/><path d="M10 2h4"/><path d="M12 8c-2.6 0-3.8 1.6-3.2 3.3.3.9-.6 1.3-.6 2.6C8.2 17 9.8 21 12 21s3.8-4 3.8-7.1c0-1.3-.9-1.7-.6-2.6C15.8 9.6 14.6 8 12 8Z"/><path d="M10.7 13.2h.1M13.2 13.2h.1"/><path d="M10 19.5h4"/>',
+    strings: '<path d="M7 3v5M9 3v5"/><path d="M8 8c-2 0-2.8 1.2-2.4 2.5.2.7-.5 1-.5 2C5.1 15 6.3 18 8 18s2.9-3 2.9-5.5c0-1-.7-1.3-.5-2C10.8 9.2 10 8 8 8Z"/><path d="M15 6v5M17 6v5"/><path d="M16 11c-2 0-2.8 1.2-2.4 2.5.2.7-.5 1-.5 2 0 2.5 1.2 5.5 2.9 5.5s2.9-3 2.9-5.5c0-1-.7-1.3-.5-2 .4-1.3-.4-2.5-2.4-2.5Z"/>',
+    cello: '<path d="M12 1v7M12 21v2"/><path d="M12 8c-3 0-4.4 1.8-3.7 3.8.3 1-.7 1.5-.7 3 0 3.5 1.9 6.2 4.4 6.2s4.4-2.7 4.4-6.2c0-1.5-1-2-.7-3 .7-2-.7-3.8-3.7-3.8Z"/>',
+    flute: '<path d="M2 14 22 9"/><path d="M2 14l.4 1.4L22 10.5 21.6 9"/><path d="M8 12.2v.1M11 11.4v.1M14 10.7v.1M17 9.9v.1"/>',
+    oboe: '<path d="M12 2v3"/><path d="M11 5h2l.6 12h-3.2z"/><path d="M10.4 17 9 22h6l-1.4-5"/><path d="M12 8.5v.1M12 11v.1M12 13.5v.1"/>',
+    clarinet: '<path d="M11.2 2h1.6v3h-1.6z"/><path d="M11 5h2v12h-2z"/><path d="M11 17 9.5 22h5L13 17"/><path d="M12 8.5v.1M12 11v.1M12 13.5v.1"/>',
+    trumpet: '<path d="M2 12h12"/><path d="M14 12l7-5v10z"/><path d="M5 12v-4h7v4"/><path d="M7 8V5.5M9 8V5.5M11 8V5.5"/>',
+    horn: '<circle cx="10" cy="12" r="6"/><circle cx="10" cy="12" r="3"/><path d="M15 9l6-4v9l-5-1"/>',
+    trombone: '<path d="M2 9h15M2 13h15"/><path d="M2 9v4"/><path d="M17 9l5-3v10l-5-3"/><path d="M8 9v4"/>',
+    timpani: '<ellipse cx="12" cy="9" rx="8" ry="2.5"/><path d="M4 9c0 6 3.5 9 8 9s8-3 8-9"/><path d="M7 17.5 6 21M17 17.5l1 3.5"/>',
+    snare: '<ellipse cx="12" cy="11" rx="7" ry="2.3"/><path d="M5 11v6c0 1.3 3.1 2.3 7 2.3s7-1 7-2.3v-6"/><path d="M5 13.5 19 17M19 13.5 5 17"/><path d="M4 3l6 7M20 3l-6 7"/>',
+    organ: '<path d="M3 21V12M6 21V8M9 21V5M12 21V3M15 21V5M18 21V8M21 21V12"/><path d="M2 21h20"/>',
+    piano: '<rect x="2" y="7" width="20" height="11" rx="1"/><path d="M6 7v11M10 7v11M14 7v11M18 7v11"/><path d="M5 7v6M9 7v6M13 7v6M17 7v6" stroke-width="2.4"/>',
+    harp: '<path d="M5 21 5 3c4 0 7 3 9 6s4 4 6 4"/><path d="M5 21h15V13"/><path d="M8 5v16M11 7v14M14 10v11M17 12v9"/>',
+    voice: '<circle cx="12" cy="7" r="3.5"/><path d="M5 21c0-4 3-7 7-7s7 3 7 7"/><path d="M18 6c1 1 1.5 2 1.5 3.5M20 4c1.6 1.5 2.4 3.3 2.4 5.5"/>',
+    choir: '<circle cx="6" cy="9" r="2.5"/><circle cx="12" cy="7" r="2.5"/><circle cx="18" cy="9" r="2.5"/><path d="M2 20c0-3 1.8-5 4-5s4 2 4 5M8 18c0-3 1.8-5 4-5s4 2 4 5M14 20c0-3 1.8-5 4-5s4 2 4 5"/>',
+  };
+  const INAME = { violin: "скрипка", strings: "струнные", cello: "виолончель", flute: "флейта", oboe: "гобой", clarinet: "кларнет",
+    trumpet: "труба", horn: "валторна", trombone: "тромбон", timpani: "литавры", snare: "малый барабан", organ: "орган",
+    piano: "фортепиано", harp: "арфа", choir: "хор", voice: "голос" };
+  function chips(list) {
+    return `<div class="insts">${list.map(k => `<span class="ichip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS[k] || ""}</svg>${INAME[k] || k}</span>`).join("")}</div>`;
+  }
+  function bigInst(k, cap) {
+    return wrap(`<svg viewBox="0 0 24 24" class="bigicon" fill="none" stroke="var(--era)" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="${INAME[k] || k}">${ICONS[k] || ""}</svg>`, cap);
+  }
+
+  function render(f, seen) {
+    if (!f) return "";
+    switch (f.type) {
+      case "composer": return composer(f.key, seen);
+      case "eras": return eras();
+      case "orchestra": return orchestra();
+      case "staff": return staff(f);
+      case "blocks": return blocks(f);
+      case "dyn": return dyn(f.mode);
+      case "mech": return mech();
+      case "moon": return moon();
+      case "inst": return bigInst(f.key, f.cap);
+    }
+    return "";
+  }
+  return { render, chips };
+})();
+
+</script>
+<script>
+(() => {
+"use strict";
+const $ = (s, r = document) => r.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const DAY = 86400000;
+const todayKey = (d = new Date()) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+const fmtMin = s => `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, "0")}`;
+
+/* ---------- content index ---------- */
+const QBYID = {};
+LESSONS.forEach((l, li) => l.cards.forEach(c => { if (c.t === "q") QBYID[c.id] = { ...c, li }; }));
+
+/* ---------- state ---------- */
+const LS = "antrakt.v1";
+const blank = () => ({ v: 1, updated: 0, pos: { li: 0, ci: 0 }, done: {}, cards: {}, days: {}, answers: { ok: 0, all: 0 } });
+let S = blank();
+try { const raw = localStorage.getItem(LS); if (raw) S = Object.assign(blank(), JSON.parse(raw)); } catch (e) {}
+
+let db = null, uid = null, saveTimer = null, syncNote = "Прогресс хранится на этом устройстве";
+function save(soon) {
+  S.updated = Date.now();
+  try { localStorage.setItem(LS, JSON.stringify(S)); } catch (e) {}
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(pushRemote, soon ? 300 : 4000);
+}
+let pushing = false;
+async function pushRemote() {
+  if (!db || !uid || pushing) return;
+  pushing = true;
+  try { await db.doc(`data/users/${uid}/progress`).set({ json: JSON.stringify(S), updated: S.updated }); syncNote = "Прогресс сохранён в облаке"; }
+  catch (e) { syncNote = "Облако недоступно, прогресс на устройстве"; }
+  pushing = false;
+}
+function merge(remote) {
+  const out = remote.updated > S.updated ? Object.assign(blank(), remote) : S;
+  const other = out === S ? remote : S;
+  for (const [k, d] of Object.entries(other.days || {})) {
+    const m = out.days[k] || { sec: 0, opens: 0, cards: 0 };
+    out.days[k] = { sec: Math.max(m.sec, d.sec || 0), opens: Math.max(m.opens, d.opens || 0), cards: Math.max(m.cards, d.cards || 0) };
+  }
+  for (const [k, c] of Object.entries(other.cards || {})) if (!out.cards[k] || (c.last || 0) > (out.cards[k].last || 0)) out.cards[k] = c;
+  for (const [k, t] of Object.entries(other.done || {})) if (!out.done[k]) out.done[k] = t;
+  return out;
+}
+(async () => {
+  try {
+    if (!window.claude || !window.claude.use) return;
+    const [dbNs, user] = await Promise.all([claude.use("db"), claude.use("user")]);
+    if (!dbNs || !user) return;
+    const id = await user.id();
+    if (!id) return;
+    db = dbNs; uid = id;
+    const snap = await db.doc(`data/users/${uid}/progress`).get();
+    if (snap.exists) {
+      const d = snap.data();
+      const remote = JSON.parse(d.json || "{}");
+      const wasLi = S.pos.li, wasCi = S.pos.ci;
+      S = merge(remote);
+      try { localStorage.setItem(LS, JSON.stringify(S)); } catch (e) {}
+      syncNote = "Прогресс сохранён в облаке";
+      if (S.pos.li !== wasLi || S.pos.ci !== wasCi) { buildQueue(); render(); }
+      paintTop();
+    } else { pushRemote(); }
+  } catch (e) {}
+})();
+
+/* ---------- FSRS-4.5 (default weights) ---------- */
+const W = [0.4872, 1.4003, 3.7145, 13.8206, 5.1618, 1.2298, 0.8975, 0.031, 1.6474, 0.1367, 1.0461, 2.1072, 0.0793, 0.3246, 1.587, 0.2272, 2.8755];
+const clampD = d => Math.min(10, Math.max(1, d));
+const D0 = g => clampD(W[4] - (g - 3) * W[5]);
+const R = (t, s) => Math.pow(1 + t / (9 * s), -1);
+function grade(id, ok) {
+  const g = ok ? 3 : 1, now = Date.now();
+  let c = S.cards[id];
+  if (!c) c = { s: W[g - 1], d: D0(g), reps: 0, lapses: 0 };
+  else {
+    const t = Math.max(0, (now - c.last) / DAY), r = R(t, c.s);
+    const dn = c.d - W[6] * (g - 3);
+    c.d = clampD(W[7] * D0(3) + (1 - W[7]) * dn);
+    if (ok) c.s = c.s * (Math.exp(W[8]) * (11 - c.d) * Math.pow(c.s, -W[9]) * (Math.exp(W[10] * (1 - r)) - 1) + 1);
+    else { c.s = Math.min(c.s, W[11] * Math.pow(c.d, -W[12]) * (Math.pow(c.s + 1, W[13]) - 1) * Math.exp(W[14] * (1 - r))); c.lapses++; }
+  }
+  c.reps++; c.last = now;
+  // interval at 90% target retention equals stability (days); wrong answers come back in ~20 min
+  c.due = now + (ok ? Math.max(1, c.s) * DAY : 20 * 60000);
+  S.cards[id] = c;
+  S.answers.all++; if (ok) S.answers.ok++;
+  dayRec().cards++;
+}
+const dueList = () => Object.entries(S.cards).filter(([id, c]) => c.due <= Date.now() && QBYID[id]).sort((a, b) => a[1].due - b[1].due).map(([id]) => id);
+
+/* ---------- time tracking ---------- */
+function dayRec() { const k = todayKey(); return S.days[k] || (S.days[k] = { sec: 0, opens: 0, cards: 0 }); }
+let lastAct = Date.now(), hiddenAt = 0, tick = 0;
+function countOpen() { dayRec().opens++; save(); }
+["pointerdown", "keydown", "touchstart", "wheel"].forEach(e => addEventListener(e, () => { lastAct = Date.now(); }, { passive: true }));
+document.addEventListener("visibilitychange", () => {
+  if (document.visibilityState === "hidden") { hiddenAt = Date.now(); save(true); }
+  else { if (hiddenAt && Date.now() - hiddenAt > 120000) { countOpen(); buildQueue(); render(); } hiddenAt = 0; lastAct = Date.now(); }
+});
+setInterval(() => {
+  if (document.visibilityState !== "visible") return;
+  if (Date.now() - lastAct > 90000 && !playing) return; // idle: phone left open
+  dayRec().sec++;
+  if (++tick % 10 === 0) save();
+  paintTop();
+}, 1000);
+function streak() {
+  let n = 0, d = new Date();
+  const active = k => S.days[k] && (S.days[k].cards > 0 || S.days[k].sec >= 60);
+  if (!active(todayKey(d))) d = new Date(d - DAY);
+  while (active(todayKey(d))) { n++; d = new Date(d - DAY); }
+  return n;
+}
+function paintTop() { $("#streak").textContent = streak(); $("#today").textContent = fmtMin(dayRec().sec); }
+
+/* ---------- audio: real recordings from Wikimedia Commons, synth fallback ---------- */
+const el = new Audio(); el.preload = "auto"; el.setAttribute("playsinline", "");
+let curTrack = null, curUI = null, playing = false, win = null; // win = {start, end} of the fragment
+const RES_KEY = "antrakt.audio.v1";
+let resolved = {}; try { resolved = JSON.parse(localStorage.getItem(RES_KEY) || "{}"); } catch (e) {}
+const pending = {};
+const commonsPage = f => "https://commons.wikimedia.org/wiki/File:" + encodeURIComponent(f.replace(/ /g, "_"));
+function resolveSrc(track) {
+  const a = (typeof AUDIO !== "undefined") && AUDIO[track];
+  if (!a) return Promise.resolve({ url: `audio/${track}.mp3`, real: false });
+  if (resolved[track]) return Promise.resolve({ url: resolved[track], real: true });
+  if (pending[track]) return pending[track];
+  const api = "https://commons.wikimedia.org/w/api.php?action=query&format=json&origin=*&prop=videoinfo&viprop=url|derivatives&titles=" + encodeURIComponent("File:" + a.file);
+  pending[track] = fetch(api).then(r => r.json()).then(j => {
+    const pg = Object.values(j.query.pages)[0], vi = pg.videoinfo && pg.videoinfo[0];
+    if (!vi) throw new Error("нет файла");
+    const mp3 = (vi.derivatives || []).find(d => /audio\/mpeg/.test(d.type));
+    const url = mp3 ? mp3.src : (el.canPlayType("audio/ogg") ? vi.url : null);
+    if (!url) throw new Error("нет mp3");
+    resolved[track] = url; try { localStorage.setItem(RES_KEY, JSON.stringify(resolved)); } catch (e) {}
+    return { url, real: true };
+  }).catch(() => ({ url: `audio/${track}.mp3`, real: false }));
+  return pending[track];
+}
+const fragOf = track => { const a = (typeof AUDIO !== "undefined") && AUDIO[track]; return a ? { start: a.start || 0, len: a.dur || 45 } : { start: 0, len: 0 }; };
+el.addEventListener("timeupdate", () => {
+  if (!curUI) return;
+  if (win && win.end && el.currentTime >= win.end) { const ui = curUI; stopAudio(); ui.done && ui.done(); return; }
+  const s = win ? win.start : 0, e = win && win.end ? win.end : (el.duration || 0);
+  curUI.prog(Math.max(0, el.currentTime - s), Math.max(0, e - s));
+});
+el.addEventListener("playing", () => { playing = true; if (curUI) curUI.state("play"); });
+el.addEventListener("pause", () => { playing = false; });
+el.addEventListener("ended", () => { const ui = curUI; stopAudio(); ui && ui.done && ui.done(); });
+function stopAudio() {
+  if (!el.paused) el.pause();
+  if (curUI) { curUI.state("idle"); curUI.prog(0, curUI.len || 0); }
+  curTrack = null; curUI = null; playing = false;
+}
+async function toggle(track, ui, full) {
+  if (curTrack === track && !el.paused && !full) { stopAudio(); return; }
+  stopAudio();
+  curTrack = track; curUI = ui; ui.state("load");
+  const src = await resolveSrc(track);
+  if (curTrack !== track) return;
+  const fr = fragOf(track);
+  const tryPlay = async (url, real) => {
+    if (el.src !== url) el.src = url;
+    const start = real ? fr.start : 0;
+    win = { start, end: real && !full && fr.len ? start + fr.len : 0 };
+    ui.setSource(real);
+    const seek = () => { try { el.currentTime = start; } catch (e) {} };
+    if (el.readyState >= 1) seek(); else el.addEventListener("loadedmetadata", seek, { once: true });
+    await el.play();
+  };
+  try { await tryPlay(src.url, src.real); }
+  catch (e1) {
+    if (curTrack !== track) return;
+    try { await tryPlay(`audio/${track}.mp3`, false); }
+    catch (e2) { ui.state("err", (e2 && (e2.name || e2.message)) || "ошибка"); curTrack = null; curUI = null; }
+  }
+}
+function probe(track, cb) { const fr = fragOf(track); if (fr.len) { cb(fr.len); return; } const a = new Audio(); a.preload = "metadata"; a.addEventListener("loadedmetadata", () => cb(a.duration), { once: true }); a.src = `audio/${track}.mp3`; }
+const ICON = {
+  play: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 4.5v15l13-7.5z"/></svg>',
+  stop: '<svg viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="6" width="12" height="12" rx="1.5"/></svg>',
+  load: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 3a9 9 0 1 0 9 9"><animateTransform attributeName="transform" type="rotate" from="0 12 12" to="360 12 12" dur=".8s" repeatCount="indefinite"/></path></svg>',
+};
+function playerUI(root, track) {
+  const btn = $(".play", root), bar = $(".bar i", root), tm = $(".ptime", root), src = $(".src", root), more = $(".more", root);
+  const ui = {
+    len: 0,
+    state(s, why) { btn.innerHTML = s === "play" ? ICON.stop : s === "load" ? ICON.load : ICON.play;
+      btn.setAttribute("aria-label", s === "play" ? "Остановить" : "Слушать");
+      if (s === "err" && tm) tm.innerHTML = `<span>Запись не воспроизводится (${esc(why || "")}). Нажми ещё раз</span>`; },
+    prog(t, d) { if (bar) bar.style.width = (d ? t / d * 100 : 0) + "%"; if (tm) tm.innerHTML = `<span>${fmtMin(t)}</span><span>${d ? fmtMin(d) : "—"}</span>`; },
+    setSource(real) {
+      const a = (typeof AUDIO !== "undefined") && AUDIO[track];
+      if (src) src.innerHTML = real && a ? `Запись: <a href="${commonsPage(a.file)}" target="_blank" rel="noopener">Wikimedia Commons</a>${a.who ? " · " + esc(a.who) : ""}` : "Фрагмент синтезирован по нотам";
+    },
+    done() { if (more && (typeof AUDIO !== "undefined") && AUDIO[track]) more.hidden = false; },
+  };
+  btn.addEventListener("click", () => { toggle(track, ui); lastAct = Date.now(); });
+  if (more) more.addEventListener("click", () => { more.hidden = true; toggle(track, ui, true); lastAct = Date.now(); });
+  probe(track, d => { ui.len = d; if (curUI !== ui) ui.prog(0, d); });
+  const a = (typeof AUDIO !== "undefined") && AUDIO[track];
+  if (src) src.textContent = a ? "Запись: Wikimedia Commons" : "Фрагмент синтезирован по нотам";
+  return ui;
+}
+
+/* ---------- composer portraits (Wikipedia summary thumbnails) ---------- */
+const POR_KEY = "antrakt.portraits.v1";
+let portraits = {}; try { portraits = JSON.parse(localStorage.getItem(POR_KEY) || "{}"); } catch (e) {}
+function hydratePortraits(root) {
+  root.querySelectorAll(".medal[data-wiki]").forEach(m => {
+    const t = m.dataset.wiki; if (!t) return;
+    const put = url => { const img = new Image(); img.alt = ""; img.onload = () => { m.classList.add("has-img"); m.prepend(img); }; img.src = url; };
+    if (portraits[t]) return put(portraits[t]);
+    fetch("https://en.wikipedia.org/api/rest_v1/page/summary/" + encodeURIComponent(t)).then(r => r.json()).then(j => {
+      const u = j.thumbnail && j.thumbnail.source; if (!u) return;
+      portraits[t] = u; try { localStorage.setItem(POR_KEY, JSON.stringify(portraits)); } catch (e) {}
+      put(u);
+    }).catch(() => {});
+  });
+}
+
+/* ---------- learning queue ---------- */
+let queue = [];   // items: {kind:'lesson', li, ci} | {kind:'review', id} | {kind:'done', li}
+let qi = 0;
+let answered = null; // for current question: {ok, picked}
+let hist = {};       // answers given in this session, by queue position (for going back)
+function buildQueue() {
+  queue = []; qi = 0; answered = null; hist = {};
+  dueList().slice(0, 3).forEach(id => queue.push({ kind: "review", id }));
+  pushLesson();
+}
+function pushLesson() {
+  const { li, ci } = S.pos;
+  if (li >= LESSONS.length) { queue.push({ kind: "finale" }); return; }
+  for (let c = ci; c < LESSONS[li].cards.length; c++) queue.push({ kind: "lesson", li, ci: c });
+  queue.push({ kind: "done", li });
+}
+const item = () => queue[qi];
+
+function eraOf(it) {
+  if (!it) return "intro";
+  if (it.kind === "review") return LESSONS[QBYID[it.id].li].era;
+  if (it.kind === "finale") return "modern";
+  return LESSONS[it.li].era;
+}
+
+/* ---------- rendering ---------- */
+const stage = $("#stage"), actions = $("#actions"), hint = $("#hint");
+function setEra(e) { $("#app").style.setProperty("--era", `var(--${e})`); }
+
+function paintStaff() {
+  const it = item(); const host = $("#staff");
+  let total, done;
+  if (it && it.kind === "review") { const r = queue.filter(x => x.kind === "review"); total = r.length; done = r.indexOf(it); }
+  else if (it && (it.kind === "lesson" || it.kind === "done")) { total = LESSONS[it.li].cards.length; done = it.kind === "done" ? total : it.ci; }
+  else { host.innerHTML = ""; return; }
+  const w = 1000, h = 34, pad = 16, step = (w - pad * 2) / Math.max(1, total);
+  let s = `<svg viewBox="0 0 ${w} ${h}" preserveAspectRatio="none">`;
+  for (let i = 0; i < 5; i++) s += `<line x1="0" x2="${w}" y1="${5 + i * 6}" y2="${5 + i * 6}" stroke="var(--line)" stroke-width="1" vector-effect="non-scaling-stroke"/>`;
+  s += `</svg>`;
+  // note heads as HTML so they keep their shape at any width
+  let heads = "";
+  for (let i = 0; i < total; i++) {
+    const x = (pad + step * (i + .5)) / w * 100, y = [23, 17, 11, 20, 14, 8, 17, 23, 11][i % 9];
+    const filled = i < done, now = i === done;
+    heads += `<span style="position:absolute;left:calc(${x}% - 6px);top:${y - 4}px;width:12px;height:9px;border-radius:50%;transform:rotate(-20deg);
+      ${filled ? "background:var(--era)" : `border:1.5px solid ${now ? "var(--ink)" : "var(--line)"};box-sizing:border-box;background:var(--surface)`}"></span>`;
+  }
+  host.innerHTML = s + heads;
+}
+
+function header() {
+  const it = item();
+  if (!it) return;
+  if (it.kind === "review") { $("#lnum").textContent = "Повторение"; $("#lttl").textContent = `${queue.filter(x => x.kind === "review").indexOf(it) + 1} из ${queue.filter(x => x.kind === "review").length}`; return; }
+  if (it.kind === "finale") { $("#lnum").textContent = "Финал"; $("#lttl").textContent = "Трек пройден"; return; }
+  const l = LESSONS[it.li];
+  $("#lnum").textContent = `Урок ${it.li + 1} · ${ERAS[l.era].name}`;
+  $("#lttl").textContent = l.title;
+}
+
+function render() {
+  const it = item();
+  setEra(eraOf(it));
+  header(); paintStaff();
+  stopAudio();
+  answered = null;
+  const card = document.createElement("article");
+  card.className = "card enter";
+  stage.replaceChildren(card);
+  actions.innerHTML = ""; hint.textContent = "";
+  if (!it) return;
+  if (it.kind === "review") renderQ(card, QBYID[it.id], true);
+  else if (it.kind === "done") renderDone(card, it.li);
+  else if (it.kind === "finale") renderFinale(card);
+  else {
+    const c = LESSONS[it.li].cards[it.ci];
+    if (c.t === "text") renderText(card, c, it);
+    else if (c.t === "listen") renderListen(card, c, it);
+    else renderQ(card, c, false);
+  }
+  hydratePortraits(card);
+  // preload upcoming audio
+  for (let k = qi + 1; k < Math.min(queue.length, qi + 4); k++) {
+    const n = queue[k]; let c = n.kind === "lesson" ? LESSONS[n.li].cards[n.ci] : n.kind === "review" ? QBYID[n.id] : null;
+    if (c && c.track) probe(c.track, () => {});
+  }
+}
+
+const BACK = `<button class="btn ghost back" id="back" aria-label="Назад"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button>`;
+function wireBack() { const b = $("#back"); if (b) b.addEventListener("click", back); }
+function nextBtn(label = "Дальше", enabled = true) {
+  actions.innerHTML = `${qi > 0 ? BACK : ""}<button class="btn" id="next" ${enabled ? "" : "disabled"}>${label}</button>`;
+  $("#next").addEventListener("click", advance); wireBack();
+  hint.textContent = enabled ? (qi > 0 ? "смахни вверх — дальше, вниз — назад" : "или смахни вверх") : "";
+}
+function back() {
+  if (qi <= 0) return;
+  qi--;
+  const it = item();
+  if (it.kind === "lesson") { S.pos = { li: it.li, ci: it.ci }; save(); }
+  render();
+}
+const figs = (c, it) => (c.figs || []).map(f => FIG.render(f, seenComposers(it))).join("");
+function seenComposers(it) {
+  const upto = it && it.li != null ? it.li : LESSONS.length;
+  const out = [];
+  LESSONS.slice(0, upto + 1).forEach(l => l.cards.forEach(c => (c.figs || []).forEach(f => { if (f.type === "composer") out.push(f.key); })));
+  return out;
+}
+
+function renderText(card, c, it) {
+  card.innerHTML = `<div class="kicker">${esc(ERAS[LESSONS[it.li].era].name)}${ERAS[LESSONS[it.li].era].years ? " · " + ERAS[LESSONS[it.li].era].years : ""}</div>
+    <h2>${esc(c.h)}</h2>${figs(c, it)}<p>${esc(c.b)}</p>`;
+  nextBtn();
+}
+
+function renderListen(card, c, it) {
+  card.innerHTML = `<div class="kicker">Слушаем</div>
+    <div class="work">${esc(c.work)}</div>
+    <div class="meta">${esc(c.meta)}</div>
+    <div class="player"><button class="play" aria-label="Слушать">${ICON.play}</button>
+      <div class="ptrack"><div class="bar"><i></i></div><div class="ptime"><span>0:00</span><span>—</span></div></div></div>
+    ${c.inst ? FIG.chips(c.inst) : ""}
+    <p class="note">${esc(c.note)}</p>
+    ${figs(c, it)}
+    <div class="grow"></div>
+    <button class="more" hidden>Дослушать целиком</button>
+    <div class="synth src"></div>`;
+  playerUI(card, c.track);
+  nextBtn();
+}
+
+function renderQ(card, c, isReview) {
+  const head = isReview ? `<span class="review-tag">Повторение · ${esc(LESSONS[QBYID[c.id].li].title)}</span>` : `<div class="kicker">Вопрос</div>`;
+  const audio = c.track ? `<div class="mini"><button class="play" aria-label="Слушать">${ICON.play}</button><div class="ptrack"><div class="bar"><i></i></div><div class="ptime"><span>0:00</span><span>—</span></div></div></div>` : "";
+  if (c.kind === "order") return renderOrder(card, c, head);
+  const letters = "АБВГ";
+  card.innerHTML = `${head}<div class="qtext">${esc(c.q)}</div>${audio}
+    <div class="opts">${c.opts.map((o, i) => `<button class="opt" data-i="${i}"><span class="k">${letters[i]}</span><span>${esc(o)}</span></button>`).join("")}</div>
+    <div id="why"></div>`;
+  if (c.track) playerUI(card, c.track);
+  const apply = (i, fresh) => {
+    const ok = i === c.a;
+    answered = { ok }; hist[qi] = { i };
+    card.querySelectorAll(".opt").forEach(x => { x.disabled = true; const j = +x.dataset.i; if (j === c.a) x.classList.add("right"); else if (j === i) x.classList.add("wrong"); });
+    showWhy(card, ok, c.why, !fresh);
+    if (fresh) { grade(c.id, ok); save(); }
+    nextBtn();
+  };
+  card.querySelectorAll(".opt").forEach(b => b.addEventListener("click", () => { if (!answered) apply(+b.dataset.i, true); }));
+  if (hist[qi]) { apply(hist[qi].i, false); return; }
+  nextBtn("Дальше", false); hint.textContent = "выбери ответ";
+}
+
+function renderOrder(card, c, head) {
+  if (hist[qi]) {
+    const pk = hist[qi].picked;
+    card.innerHTML = `${head}<div class="qtext">${esc(c.q)}</div>
+      <div class="opts">${pk.map((i, k) => `<button class="opt ${i === k ? "right" : "wrong"}" disabled><span class="k">${k + 1}</span><span>${esc(c.items[i])}</span></button>`).join("")}</div><div id="why"></div>`;
+    answered = { ok: pk.every((v, k) => v === k) };
+    showWhy(card, answered.ok, c.why, true); nextBtn(); return;
+  }
+  const shuffled = c.items.map((x, i) => ({ x, i })).sort(() => Math.random() - .5);
+  if (shuffled.every((s, k) => s.i === k)) shuffled.reverse();
+  const picked = [];
+  card.innerHTML = `${head}<div class="qtext">${esc(c.q)}</div>
+    <div class="opts">${shuffled.map(s => `<button class="opt" data-i="${s.i}"><span class="k"></span><span>${esc(s.x)}</span></button>`).join("")}</div><div id="why"></div>`;
+  card.querySelectorAll(".opt").forEach(b => b.addEventListener("click", () => {
+    if (answered) return;
+    const i = +b.dataset.i, at = picked.indexOf(i);
+    if (at >= 0) picked.splice(at, 1); else picked.push(i);
+    card.querySelectorAll(".opt").forEach(x => { const p = picked.indexOf(+x.dataset.i); x.classList.toggle("picked", p >= 0); $(".k", x).textContent = p >= 0 ? p + 1 : ""; });
+    if (picked.length === c.items.length) {
+      const ok = picked.every((v, k) => v === k);
+      answered = { ok }; hist[qi] = { picked: picked.slice() };
+      card.querySelectorAll(".opt").forEach(x => { x.disabled = true; x.classList.remove("picked"); const p = picked.indexOf(+x.dataset.i); x.classList.add(p === +x.dataset.i ? "right" : "wrong"); });
+      showWhy(card, ok, c.why);
+      grade(c.id, ok); save();
+      nextBtn();
+    }
+  }));
+  nextBtn("Дальше", false); hint.textContent = "нажимай по порядку";
+}
+
+function showWhy(card, ok, why, quiet) {
+  const box = $("#why", card);
+  box.innerHTML = `<div class="why ${ok ? "" : "no"}"><b>${ok ? "Верно" : "Не совсем"}</b>${esc(why)}</div>`;
+  if (!quiet) box.scrollIntoView({ block: "nearest", behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+}
+
+function renderDone(card, li) {
+  const l = LESSONS[li];
+  const qs = l.cards.filter(c => c.t === "q").map(c => S.cards[c.id]).filter(Boolean);
+  const next = LESSONS[li + 1];
+  const due = dueList().length;
+  card.innerHTML = `<div class="kicker">Урок ${li + 1} пройден</div>
+    <svg class="done-mark" viewBox="0 0 64 36" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" aria-hidden="true"><path d="M6 32C6 14 18 4 32 4s26 10 26 28"/><circle cx="32" cy="27" r="4.5" fill="currentColor" stroke="none"/></svg>
+    <h2>${esc(l.title)}</h2>
+    <div class="facts">
+      <div><b>${Object.keys(S.done).length}/${LESSONS.length}</b><span>уроков</span></div>
+      <div><b>${fmtMin(dayRec().sec)}</b><span>сегодня</span></div>
+      <div><b>${streak()}</b><span>дней подряд</span></div>
+    </div>
+    <p style="color:var(--muted);font-size:15px;margin-top:10px">${next ? `Дальше: ${esc(next.title)}. ` : ""}Вопросы из урока вернутся на повторение через несколько дней.</p>`;
+  actions.innerHTML = `${qi > 0 ? BACK : ""}<button class="btn" id="next">${next ? "Следующий урок" : "Завершить"}</button>`;
+  $("#next").addEventListener("click", advance); wireBack();
+  if (due) hint.textContent = `${due} на повторение — появятся при следующем заходе`;
+}
+
+function renderFinale(card) {
+  const due = dueList().length;
+  card.innerHTML = `<div class="kicker">Трек пройден</div><svg class="done-mark" viewBox="0 0 64 40" aria-hidden="true"><rect x="38" y="4" width="3" height="32" fill="currentColor"/><rect x="47" y="4" width="9" height="32" fill="currentColor"/><circle cx="29" cy="15" r="3.2" fill="currentColor"/><circle cx="29" cy="25" r="3.2" fill="currentColor"/></svg>
+    <h2>Все 20 уроков позади</h2>
+    <p>Теперь главное — повторения: они будут приходить сами, по несколько карточек за заход.</p>
+    <p style="color:var(--muted)">${due ? `Сейчас к повторению: ${due}.` : "Сейчас повторять нечего, загляни завтра."}</p>`;
+  actions.innerHTML = due ? `<button class="btn" id="next">Повторить</button>` : `<button class="btn ghost" id="next" style="flex:1">Открыть программу</button>`;
+  $("#next").addEventListener("click", () => { if (due) { buildQueue(); render(); } else showTab("prog"); });
+}
+
+function advance() {
+  const it = item();
+  if (!it) return;
+  if (it.kind === "lesson") {
+    const c = LESSONS[it.li].cards[it.ci];
+    if (c.t === "q" && !answered) return;
+    S.pos = { li: it.li, ci: it.ci + 1 };
+  } else if (it.kind === "review") {
+    if (!answered) return;
+  } else if (it.kind === "done") {
+    S.done[LESSONS[it.li].id] = S.done[LESSONS[it.li].id] || Date.now();
+    S.pos = { li: it.li + 1, ci: 0 };
+    queue.splice(qi + 1);
+    Object.keys(hist).forEach(k => { if (+k > qi) delete hist[k]; });
+    dueList().filter(id => !queue.some(q => q.id === id)).slice(0, 2).forEach(id => queue.push({ kind: "review", id }));
+    pushLesson();
+  } else return;
+  save();
+  qi++;
+  if (qi >= queue.length) { buildQueue(); }
+  render();
+}
+
+/* swipe up to advance */
+let ty = null, tx = null;
+stage.addEventListener("touchstart", e => { ty = e.touches[0].clientY; tx = e.touches[0].clientX; }, { passive: true });
+stage.addEventListener("touchend", e => {
+  if (ty == null) return;
+  const dy = ty - e.changedTouches[0].clientY, dx = Math.abs(tx - e.changedTouches[0].clientX); ty = null;
+  const card = $(".card", stage);
+  const atBottom = !card || card.scrollTop + card.clientHeight >= card.scrollHeight - 4;
+  if (dy > 70 && dy > dx * 1.5 && atBottom) { const b = $("#next"); if (b && !b.disabled) b.click(); }
+  else if (dy < -90 && -dy > dx * 1.5 && card && card.scrollTop <= 0 && qi > 0) back();
+}, { passive: true });
+document.addEventListener("keydown", e => {
+  if ($("#s-learn").hidden) return;
+  if (e.key === "Enter" || e.key === "ArrowDown" || e.key === " ") { const b = $("#next"); if (b && !b.disabled && document.activeElement?.tagName !== "BUTTON") { e.preventDefault(); b.click(); } }
+});
+
+/* ---------- programme ---------- */
+function renderProg() {
+  let html = `<h1>Программа</h1><p class="sub">Классическая музыка: база · 20 уроков, по одному фрагменту в каждом</p>`;
+  let era = null;
+  LESSONS.forEach((l, i) => {
+    if (l.era !== era) { era = l.era; const E = ERAS[era];
+      html += `<div class="era-h" style="--era:var(--${era})"><span class="n">${E.name}</span><span class="tm">${E.tempo}</span><span class="y">${E.years}</span></div>`; }
+    const done = !!S.done[l.id], curL = S.pos.li === i;
+    const st = done ? "пройден" : curL ? (S.pos.ci > 0 ? "продолжить" : "следующий") : "";
+    html += `<button class="row ${done ? "done" : ""} ${curL ? "cur" : ""}" data-li="${i}" style="--era:var(--${l.era})">
+      <span class="no">${String(i + 1).padStart(2, "0")}</span><span class="dot"></span><span class="tt">${esc(l.title)}</span><span class="st">${st}</span></button>`;
+  });
+  html += `<p class="foot">Аудио — короткие фрагменты, синтезированные по нотам: сами произведения давно в общественном достоянии. Нажми на любой урок, чтобы пройти или переслушать его.</p>`;
+  $("#prog").innerHTML = html;
+  $("#prog").querySelectorAll(".row").forEach(b => b.addEventListener("click", () => {
+    const li = +b.dataset.li;
+    if (li !== S.pos.li) S.pos = { li, ci: 0 };
+    save(); queue = []; qi = 0; hist = {}; pushLesson(); showTab("learn"); render();
+  }));
+}
+
+/* ---------- stats ---------- */
+function renderStats() {
+  const d = dayRec(), days = [];
+  for (let i = 6; i >= 0; i--) { const dt = new Date(Date.now() - i * DAY); const k = todayKey(dt); days.push({ k, dt, sec: (S.days[k] || {}).sec || 0 }); }
+  const week = days.reduce((a, x) => a + x.sec, 0);
+  const avg = d.opens ? d.sec / d.opens : 0;
+  const pct = S.answers.all ? Math.round(S.answers.ok / S.answers.all * 100) : 0;
+  const learned = Object.keys(S.cards).length;
+  const max = Math.max(300, ...days.map(x => x.sec));
+  const niceMax = Math.ceil(max / 300) * 300; // 5-minute steps
+  const W_ = 320, H_ = 150, l = 30, b = 22, t = 10, cw = (W_ - l - 4) / 7;
+  const y = v => t + (H_ - t - b) * (1 - v / niceMax);
+  let svg = `<svg viewBox="0 0 ${W_} ${H_}" role="img" aria-label="Минуты за 7 дней">`;
+  [0, niceMax / 2, niceMax].forEach(v => {
+    svg += `<line x1="${l}" x2="${W_}" y1="${y(v)}" y2="${y(v)}" stroke="var(--line)" stroke-width="1"/>
+            <text x="${l - 6}" y="${y(v) + 4}" text-anchor="end" font-size="10" fill="var(--muted)" font-family="IBM Plex Mono, monospace">${Math.round(v / 60)}</text>`;
+  });
+  const wd = ["вс", "пн", "вт", "ср", "чт", "пт", "сб"];
+  days.forEach((x, i) => {
+    const bx = l + 4 + i * cw + cw * .2, bw = cw * .6, by = y(x.sec), isT = i === 6;
+    svg += `<rect x="${bx}" y="${by}" width="${bw}" height="${Math.max(0, y(0) - by)}" rx="3" fill="${isT ? "var(--ink)" : "var(--muted)"}" opacity="${isT ? 1 : .45}"/>
+            <text x="${bx + bw / 2}" y="${H_ - 6}" text-anchor="middle" font-size="10.5" fill="${isT ? "var(--ink)" : "var(--muted)"}" font-family="IBM Plex Mono, monospace">${wd[x.dt.getDay()]}</text>`;
+  });
+  svg += `</svg>`;
+  $("#stats").innerHTML = `<h1>Статистика</h1><p class="sub">Время считается, только пока приложение открыто и ты им пользуешься.</p>
+    <div class="tiles">
+      <div class="tile"><b>${fmtMin(d.sec)}</b><span>сегодня, мин:сек</span></div>
+      <div class="tile"><b>${d.opens}</b><span>заходов сегодня</span></div>
+      <div class="tile"><b>${fmtMin(avg)}</b><span>средний заход</span></div>
+      <div class="tile"><b>${Math.round(week / 60)}</b><span>минут за 7 дней</span></div>
+      <div class="tile"><b>${streak()}</b><span>дней подряд</span></div>
+      <div class="tile"><b>${Object.keys(S.done).length}/${LESSONS.length}</b><span>уроков пройдено</span></div>
+      <div class="tile"><b>${learned}</b><span>карточек в повторении</span></div>
+      <div class="tile"><b>${S.answers.all ? pct + "%" : "—"}</b><span>верных ответов</span></div>
+    </div>
+    <div class="chart"><h3>Минуты по дням</h3>${svg}</div>
+    <div class="tools"><h3>Резервная копия</h3>
+      <div class="rowb"><button class="btn ghost" id="exp">Скопировать прогресс</button><button class="btn ghost" id="imp">Вставить из копии</button><button class="btn ghost" id="rst">Сбросить</button></div>
+      <textarea id="io" hidden aria-label="Данные прогресса"></textarea><div class="msg" id="msg"></div></div>
+    <div class="sync">${esc(syncNote)}</div>`;
+  const io = $("#io"), msg = $("#msg");
+  $("#exp").onclick = async () => { io.hidden = false; io.value = JSON.stringify(S); try { await navigator.clipboard.writeText(io.value); msg.textContent = "Скопировано. Сохрани текст в заметках."; } catch (e) { io.select(); msg.textContent = "Выдели текст и скопируй вручную."; } };
+  $("#imp").onclick = () => {
+    if (io.hidden || !io.value.trim() || io.dataset.mode !== "imp") { io.hidden = false; io.value = ""; io.dataset.mode = "imp"; io.placeholder = "Вставь сюда сохранённый текст и нажми ещё раз"; msg.textContent = ""; return; }
+    try { const r = JSON.parse(io.value); if (!r.pos || !r.days) throw 0; S = merge(Object.assign(blank(), r, { updated: Date.now() })); save(true); buildQueue(); msg.textContent = "Прогресс восстановлен."; renderStats(); }
+    catch (e) { msg.textContent = "Не получилось прочитать текст. Проверь, что он скопирован целиком."; }
+  };
+  $("#rst").onclick = e => {
+    const b = e.currentTarget;
+    if (b.dataset.arm) { S = blank(); save(true); buildQueue(); renderStats(); return; }
+    b.dataset.arm = "1"; b.textContent = "Точно сбросить всё?"; b.style.borderColor = "var(--bad)"; b.style.color = "var(--bad)";
+  };
+}
+
+/* ---------- tabs ---------- */
+function showTab(t) {
+  stopAudio();
+  ["learn", "prog", "stats"].forEach(x => { $("#s-" + x).hidden = x !== t; });
+  document.querySelectorAll(".tabs button").forEach(b => { if (b.dataset.tab === t) b.setAttribute("aria-current", "page"); else b.removeAttribute("aria-current"); });
+  if (t === "prog") renderProg();
+  if (t === "stats") renderStats();
+  if (t === "learn") setEra(eraOf(item()));
+}
+document.querySelectorAll(".tabs button").forEach(b => b.addEventListener("click", () => showTab(b.dataset.tab)));
+
+/* ---------- boot ---------- */
+countOpen();
+buildQueue();
+render();
+paintTop();
+})();
+</script>
+
+<script>
+if ("serviceWorker" in navigator) addEventListener("load", () => navigator.serviceWorker.register("sw.js").catch(() => {}));
+if (navigator.storage && navigator.storage.persist) navigator.storage.persist().catch(() => {});
+</script>
+</body>
+</html>
