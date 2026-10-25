@@ -145,6 +145,14 @@ button:focus-visible, [tabindex]:focus-visible { outline: 2px solid var(--era); 
 .facts b { display: block; font-family: var(--f-mono); font-weight: 500; font-size: 20px; font-variant-numeric: tabular-nums; }
 .facts span { font-size: 12.5px; color: var(--muted); }
 
+/* pause */
+.pausecover { position: absolute; inset: 0; border-radius: 18px; display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 10px; text-align: center; padding: 24px; background: color-mix(in srgb, var(--surface) 88%, transparent);
+  -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); border: 1px solid var(--line); }
+.pausecover svg { width: 46px; height: 46px; color: var(--era); }
+.pausecover .pt { font-family: var(--f-display); font-size: 28px; }
+.pausecover .ps { font-size: 15px; color: var(--muted); max-width: 30ch; }
+
 /* home */
 .home .hello { font-size: clamp(30px, 8.5vw, 38px); margin-bottom: 18px; }
 .hstats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 22px; }
@@ -1046,10 +1054,10 @@ function countOpen() { dayRec().opens++; save(); }
 ["pointerdown", "keydown", "touchstart", "wheel"].forEach(e => addEventListener(e, () => { lastAct = Date.now(); }, { passive: true }));
 document.addEventListener("visibilitychange", () => {
   if (document.visibilityState === "hidden") { hiddenAt = Date.now(); save(true); }
-  else { if (hiddenAt && Date.now() - hiddenAt > 120000) { countOpen(); buildQueue(); home = true; if (!$("#s-learn").hidden) render(); } hiddenAt = 0; lastAct = Date.now(); }
+  else { if (paused) { hiddenAt = 0; return; } if (hiddenAt && Date.now() - hiddenAt > 120000) { countOpen(); buildQueue(); home = true; if (!$("#s-learn").hidden) render(); } hiddenAt = 0; lastAct = Date.now(); }
 });
 setInterval(() => {
-  if (document.visibilityState !== "visible") return;
+  if (document.visibilityState !== "visible" || paused) return;
   if (Date.now() - lastAct > 90000 && !playing) return; // idle: phone left open
   dayRec().sec++;
   if (++tick % 10 === 0) save();
@@ -1296,6 +1304,10 @@ function renderHome() {
 
 function render() {
   if (home) return renderHome();
+  if (paused) { renderCard(); showPaused(); return; }
+  renderCard();
+}
+function renderCard() {
   $(".lhead").hidden = false; $("#staff").hidden = false;
   const it = item();
   setEra(eraOf(it));
@@ -1326,11 +1338,40 @@ function render() {
 
 const BACK = `<button class="btn ghost back" id="back" aria-label="Назад"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button>`;
 function wireBack() { const b = $("#back"); if (b) b.addEventListener("click", back); }
+const PAUSE = `<button class="btn ghost back" id="pausebtn" aria-label="Пауза"><svg viewBox="0 0 24 24" fill="currentColor"><rect x="6.5" y="5" width="3.6" height="14" rx="1"/><rect x="13.9" y="5" width="3.6" height="14" rx="1"/></svg></button>`;
+function wirePause() { const b = $("#pausebtn"); if (b) b.addEventListener("click", pause); }
 function nextBtn(label = "Дальше", enabled = true) {
-  actions.innerHTML = `${qi > 0 ? BACK : ""}<button class="btn" id="next" ${enabled ? "" : "disabled"}>${label}</button>`;
-  $("#next").addEventListener("click", advance); wireBack();
-  hint.textContent = enabled ? (qi > 0 ? "смахни вверх — дальше, вниз — назад" : "или смахни вверх") : "";
+  actions.innerHTML = `${qi > 0 ? BACK : ""}${PAUSE}<button class="btn" id="next" ${enabled ? "" : "disabled"}>${label}</button>`;
+  $("#next").addEventListener("click", advance); wireBack(); wirePause();
+  hint.textContent = "";
 }
+/* ---------- pause: stops the timer and holds the current card, also across restarts ---------- */
+let paused = false;
+function pause() {
+  const it = item(); if (!it) return;
+  paused = true; stopAudio();
+  S.paused = { kind: it.kind, id: it.id || null, li: it.li, ci: it.ci, at: Date.now() };
+  if (it.kind === "lesson") S.pos = { li: it.li, ci: it.ci };
+  save(true);
+  showPaused();
+}
+function showPaused() {
+  const ov = document.createElement("div");
+  ov.className = "pausecover";
+  ov.innerHTML = `<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6.5" y="5" width="3.6" height="14" rx="1"/><rect x="13.9" y="5" width="3.6" height="14" rx="1"/></svg>
+    <div class="pt">Пауза</div><div class="ps">Таймер остановлен. Можно свернуть приложение — вернёшься на это же место.</div>`;
+  stage.appendChild(ov);
+  actions.innerHTML = `<button class="btn" id="resume">Продолжить</button>`;
+  hint.textContent = "";
+  $("#resume").addEventListener("click", resume);
+  paintTop();
+}
+function resume() {
+  paused = false; delete S.paused; save(true);
+  lastAct = Date.now();
+  render();
+}
+
 function back() {
   if (qi <= 0) return;
   qi--;
@@ -1479,19 +1520,8 @@ function advance() {
   render();
 }
 
-/* swipe up to advance */
-let ty = null, tx = null;
-stage.addEventListener("touchstart", e => { ty = e.touches[0].clientY; tx = e.touches[0].clientX; }, { passive: true });
-stage.addEventListener("touchend", e => {
-  if (ty == null) return;
-  const dy = ty - e.changedTouches[0].clientY, dx = Math.abs(tx - e.changedTouches[0].clientX); ty = null;
-  const card = $(".card", stage);
-  const atBottom = !card || card.scrollTop + card.clientHeight >= card.scrollHeight - 4;
-  if (dy > 70 && dy > dx * 1.5 && atBottom) { const b = $("#next"); if (b && !b.disabled) b.click(); }
-  else if (dy < -90 && -dy > dx * 1.5 && card && card.scrollTop <= 0 && qi > 0) back();
-}, { passive: true });
 document.addEventListener("keydown", e => {
-  if ($("#s-learn").hidden) return;
+  if ($("#s-learn").hidden || paused) return;
   if (e.key === "Enter" || e.key === "ArrowDown" || e.key === " ") { const b = $("#next"); if (b && !b.disabled && document.activeElement?.tagName !== "BUTTON") { e.preventDefault(); b.click(); } }
 });
 
@@ -1588,7 +1618,12 @@ $(".top .brand").addEventListener("click", () => { showTab("learn"); home = true
 /* ---------- boot ---------- */
 countOpen();
 buildQueue();
-render();
+if (S.paused) {
+  const P = S.paused;
+  if (P.kind === "review" && QBYID[P.id]) { queue = queue.filter(x => x.id !== P.id); queue.unshift({ kind: "review", id: P.id }); qi = 0; }
+  else { queue = queue.filter(x => x.kind !== "review"); qi = 0; }
+  home = false; render(); paused = true; showPaused();
+} else render();
 paintTop();
 })();
 </script>
