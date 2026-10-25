@@ -1054,7 +1054,7 @@ function countOpen() { dayRec().opens++; save(); }
 ["pointerdown", "keydown", "touchstart", "wheel"].forEach(e => addEventListener(e, () => { lastAct = Date.now(); }, { passive: true }));
 document.addEventListener("visibilitychange", () => {
   if (document.visibilityState === "hidden") { hiddenAt = Date.now(); save(true); }
-  else { if (paused) { hiddenAt = 0; return; } if (hiddenAt && Date.now() - hiddenAt > 120000) { countOpen(); buildQueue(); home = true; if (!$("#s-learn").hidden) render(); } hiddenAt = 0; lastAct = Date.now(); }
+  else { if (paused) { hiddenAt = 0; return; } if (hiddenAt && Date.now() - hiddenAt > 120000) { countOpen(); paintTop(); } hiddenAt = 0; lastAct = Date.now(); }
 });
 setInterval(() => {
   if (document.visibilityState !== "visible" || paused) return;
@@ -1341,7 +1341,7 @@ function wireBack() { const b = $("#back"); if (b) b.addEventListener("click", b
 const PAUSE = `<button class="btn ghost back" id="pausebtn" aria-label="Пауза"><svg viewBox="0 0 24 24" fill="currentColor"><rect x="6.5" y="5" width="3.6" height="14" rx="1"/><rect x="13.9" y="5" width="3.6" height="14" rx="1"/></svg></button>`;
 function wirePause() { const b = $("#pausebtn"); if (b) b.addEventListener("click", pause); }
 function nextBtn(label = "Дальше", enabled = true) {
-  actions.innerHTML = `${qi > 0 ? BACK : ""}${PAUSE}<button class="btn" id="next" ${enabled ? "" : "disabled"}>${label}</button>`;
+  actions.innerHTML = `${qi > 0 ? BACK : ""}<button class="btn" id="next" ${enabled ? "" : "disabled"}>${label}</button>`;
   $("#next").addEventListener("click", advance); wireBack(); wirePause();
   hint.textContent = "";
 }
