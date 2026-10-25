@@ -459,9 +459,9 @@ const LESSONS = [
   T("Король песни",
     "Франц Шуберт (1797–1828) прожил всего 31 год и написал больше 600 песен. Песня для голоса и фортепиано по-немецки называется Lied, и именно Шуберт превратил её в большое искусство."),
   T("Не совсем молитва",
-    "«Ave Maria» (1825) — на самом деле песня Эллен из поэмы Вальтера Скотта «Дева озера», в немецком переводе. Позже к мелодии подставили латинский текст молитвы, и в таком виде она прославилась. Здесь она звучит в инструментальном переложении."),
+    "«Ave Maria» (1825) — на самом деле песня Эллен из поэмы Вальтера Скотта «Дева озера», в немецком переводе. Позже к мелодии подставили латинский текст молитвы, и в таком виде она прославилась. Здесь звучит оригинал на немецком: голос и фортепиано."),
   L("l12_avemaria", "Шуберт. «Ave Maria»", "D. 839 · 1825",
-    "Широкая мелодия, словно поётся на одном дыхании."),
+    "Широкая мелодия, словно поётся на одном дыхании, а под ней переливы фортепиано."),
   Q("q12a", "Как по-немецки называется песня для голоса и фортепиано?", ["Ария", "Lied", "Мотет", "Шансон"], 1,
     "Lied, во множественном числе Lieder."),
   Q("q12b", "Сколько примерно песен написал Шуберт?", ["Около 20", "Около 100", "Больше 600", "Ни одной"], 2,
@@ -675,9 +675,9 @@ const AUDIO = {
   l07_surprise: { file: 'Haydn; Symphony No. 94 "Surprise", 2. Andante.ogg', dur: 50 },
   l08_nachtmusik: { file: "Mozart - Eine kleine Nachtmusik - 1. Allegro.ogg", dur: 35 },
   l09_turca: { file: "Rondo Alla Turka.ogg", dur: 35 },
-  l10_moonlight: { file: "Ludwig van Beethoven - sonata no. 14 in c sharp minor 'moonlight', op. 27 no. 2 - i. adagio sostenuto.ogg", dur: 50 },
+  l10_moonlight: { start: 3, file: "Ludwig van Beethoven - sonata no. 14 in c sharp minor 'moonlight', op. 27 no. 2 - i. adagio sostenuto.ogg", dur: 50 },
   l11_fifth: { file: "Ludwig van Beethoven - Symphonie 5 c-moll - 1. Allegro con brio.ogg", dur: 35 },
-  l12_avemaria: { file: "Ave Maria (USNB).ogg", dur: 50, who: "оркестр ВМС США" },
+  l12_avemaria: { file: "Franz Schubert - Ellens dritter Gesang.oga", dur: 55, who: "оригинал: голос и фортепиано" },
   l13_nocturne: { file: "Chopin Nocturne Op 9 No 2.ogg", dur: 50 },
   l14_lullaby: { file: "Brahms - Schumann-Heink - Wiegenlied (Berceuse) (1915).ogg", dur: 50, who: "Э. Шуман-Хайнк, 1915" },
   l15_donna: { file: "La Donna E Mobile Rigoletto.ogg", dur: 45 },
@@ -688,8 +688,9 @@ const AUDIO = {
   l20_bolero: { file: "Bolero-Maurice Ravel-1930.ogg", dur: 45, who: "запись 1930 года" },
 };
 // для записей с неизвестным составом не показываем инструменты
-["l04", "l12", "l15"].forEach(id => { const l = LESSONS.find(x => x.id === id); l.cards.forEach(c => { if (c.t === "listen") delete c.inst; }); });
+["l04", "l15"].forEach(id => { const l = LESSONS.find(x => x.id === id); l.cards.forEach(c => { if (c.t === "listen") delete c.inst; }); });
 LESSONS.find(x => x.id === "l14").cards.forEach(c => { if (c.t === "listen") c.inst = ["voice", "piano"]; });
+LESSONS.find(x => x.id === "l12").cards.forEach(c => { if (c.t === "listen") c.inst = ["voice", "piano"]; });
 
 // Иллюстрации: композиторы, нотные примеры, схемы форм, инструменты
 const COMPOSERS = {

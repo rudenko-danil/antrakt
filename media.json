@@ -69,9 +69,9 @@
    "dur": 35
   },
   "l12_avemaria": {
-   "file": "Ave Maria (USNB).ogg",
+   "file": "Franz Schubert - Ellens dritter Gesang.oga",
    "start": 0,
-   "dur": 50
+   "dur": 55
   },
   "l13_nocturne": {
    "file": "Chopin Nocturne Op 9 No 2.ogg",
@@ -114,8 +114,5 @@
    "dur": 45
   }
  },
- "queries": [
-  "Category:D 839 – Ave Maria, Op. 52 No. 6 (Schubert)",
-  "Category:Audio files of music by Franz Schubert"
- ]
+ "queries": []
 }
