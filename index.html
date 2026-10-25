@@ -9,7 +9,8 @@
 <meta name="theme-color" content="#111317" media="(prefers-color-scheme: dark)">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
-<link rel="icon" href="icons/icon-192.png">
+<link rel="icon" href="icons/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon.ico" sizes="48x48">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
@@ -66,7 +67,7 @@ button:focus-visible, [tabindex]:focus-visible { outline: 2px solid var(--era); 
 /* status strip */
 .top { display: flex; align-items: center; gap: 12px; padding-block: 12px 6px; font-family: var(--f-mono); font-size: 12px;
   letter-spacing: .04em; color: var(--muted); font-variant-numeric: tabular-nums; }
-.top .brand { font-family: var(--f-display); font-size: 19px; letter-spacing: 0; color: var(--ink); margin-right: auto; }
+.top .brand { font-family: var(--f-display); font-size: 19px; letter-spacing: 0; color: var(--ink); margin-right: auto; cursor: pointer; }
 .top b { color: var(--ink); font-weight: 500; }
 .chip { display: inline-flex; align-items: center; gap: 5px; }
 .chip svg { width: 14px; height: 14px; }
@@ -143,6 +144,27 @@ button:focus-visible, [tabindex]:focus-visible { outline: 2px solid var(--era); 
 .facts div { border-top: 1px solid var(--line); padding-top: 8px; }
 .facts b { display: block; font-family: var(--f-mono); font-weight: 500; font-size: 20px; font-variant-numeric: tabular-nums; }
 .facts span { font-size: 12.5px; color: var(--muted); }
+
+/* home */
+.home .hello { font-size: clamp(30px, 8.5vw, 38px); margin-bottom: 18px; }
+.hstats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 22px; }
+.hstats div { border-top: 1px solid var(--line); padding-top: 8px; }
+.hstats b { display: block; font-family: var(--f-mono); font-weight: 500; font-size: 20px; font-variant-numeric: tabular-nums; }
+.hstats span { font-size: 12.5px; color: var(--muted); }
+.next { display: flex; gap: 14px; align-items: center; padding: 16px; border-radius: 14px;
+  background: color-mix(in srgb, var(--era) 8%, var(--surface)); border: 1px solid color-mix(in srgb, var(--era) 28%, var(--line)); }
+.ninfo { min-width: 0; }
+.ntitle { font-family: var(--f-display); font-size: 21px; line-height: 1.2; }
+.nmeta { font-size: 13px; color: var(--muted); margin-top: 4px; }
+.medal.sm { width: 60px; height: 60px; flex: none; }
+.course { position: relative; height: 34px; margin-top: 22px; }
+.course i { position: absolute; left: 0; right: 0; height: 1px; background: var(--line); }
+.cn { position: absolute; width: 10px; height: 8px; border-radius: 50%; transform: rotate(-20deg); box-sizing: border-box;
+  border: 1.5px solid color-mix(in srgb, var(--era) 55%, var(--line)); background: var(--surface); }
+.cn.on { background: var(--era); border-color: var(--era); }
+.cn.cur { border-color: var(--ink); border-width: 2px; }
+.ccap { font-family: var(--f-mono); font-size: 11px; color: var(--muted); margin-top: 6px; }
+.duenote { font-size: 14px; color: var(--muted); margin: 14px 0 0; }
 
 /* figures */
 .fig { margin: 0 0 16px; }
@@ -707,7 +729,7 @@ const FIG = (() => {
     s += `<rect x="${yr(c.b)}" y="36" width="${yr(c.d) - yr(c.b)}" height="14" rx="7" fill="var(--era)"/>`;
     [1600, 1700, 1800, 1900].forEach(y => { s += `<text x="${yr(y)}" y="74" ${MONO} font-size="9.5" fill="var(--muted)" text-anchor="${y === 1600 ? "start" : "middle"}">${y}</text>`; });
     s += `</svg>`;
-    return `<figure class="fig comp"><div class="medal" aria-hidden="true" data-wiki="${esc(c.wiki || "")}"><span>${esc(c.ini)}</span></div>
+    return `<figure class="fig comp"><div class="medal" aria-hidden="true" data-key="${esc(key)}" data-wiki="${esc(c.wiki || "")}"><span>${esc(c.ini)}</span></div>
       <div class="cinfo"><div class="cname">${esc(c.name)}</div><div class="cmeta">${c.b}–${c.d} · ${c.d - c.b} лет · ${esc(c.city)}</div></div>${s}</figure>`;
   }
 
@@ -1023,7 +1045,7 @@ function countOpen() { dayRec().opens++; save(); }
 ["pointerdown", "keydown", "touchstart", "wheel"].forEach(e => addEventListener(e, () => { lastAct = Date.now(); }, { passive: true }));
 document.addEventListener("visibilitychange", () => {
   if (document.visibilityState === "hidden") { hiddenAt = Date.now(); save(true); }
-  else { if (hiddenAt && Date.now() - hiddenAt > 120000) { countOpen(); buildQueue(); render(); } hiddenAt = 0; lastAct = Date.now(); }
+  else { if (hiddenAt && Date.now() - hiddenAt > 120000) { countOpen(); buildQueue(); home = true; if (!$("#s-learn").hidden) render(); } hiddenAt = 0; lastAct = Date.now(); }
 });
 setInterval(() => {
   if (document.visibilityState !== "visible") return;
@@ -1080,27 +1102,34 @@ function stopAudio() {
   if (curUI) { curUI.state("idle"); curUI.prog(0, curUI.len || 0); }
   curTrack = null; curUI = null; playing = false;
 }
+// which trimmed recordings are bundled in the repo (written by the fetch-media workflow)
+let localReal = {};
+fetch("audio/real/credits.json", { cache: "no-cache" }).then(r => r.ok ? r.json() : {}).then(j => { localReal = j || {}; }).catch(() => {});
+function pick(track, full) {
+  const fr = fragOf(track);
+  if (fr.len && !full && localReal[track]) return { url: `audio/real/${track}.mp3`, real: true, start: 0, end: 0 };
+  if (fr.len && resolved[track]) return { url: resolved[track], real: true, start: fr.start, end: full ? 0 : fr.start + fr.len };
+  return { url: `audio/${track}.mp3`, real: false, start: 0, end: 0 };
+}
 async function toggle(track, ui, full) {
   if (curTrack === track && !el.paused && !full) { stopAudio(); return; }
   stopAudio();
   curTrack = track; curUI = ui; ui.state("load");
-  const src = await resolveSrc(track);
-  if (curTrack !== track) return;
-  const fr = fragOf(track);
-  const tryPlay = async (url, real) => {
-    if (el.src !== url) el.src = url;
-    const start = real ? fr.start : 0;
-    win = { start, end: real && !full && fr.len ? start + fr.len : 0 };
-    ui.setSource(real);
-    const seek = () => { try { el.currentTime = start; } catch (e) {} };
+  const go = c => {
+    if (el.src !== new URL(c.url, location.href).href) el.src = c.url;
+    win = { start: c.start, end: c.end };
+    ui.setSource(c.real);
+    const seek = () => { try { if (c.start) el.currentTime = c.start; } catch (e) {} };
     if (el.readyState >= 1) seek(); else el.addEventListener("loadedmetadata", seek, { once: true });
-    await el.play();
+    return el.play();
   };
-  try { await tryPlay(src.url, src.real); }
+  const c = pick(track, full);
+  try { await go(c); }
   catch (e1) {
     if (curTrack !== track) return;
-    try { await tryPlay(`audio/${track}.mp3`, false); }
-    catch (e2) { ui.state("err", (e2 && (e2.name || e2.message)) || "ошибка"); curTrack = null; curUI = null; }
+    if (!c.real) { ui.state("err", e1.name || "ошибка"); curTrack = null; curUI = null; return; }
+    try { await go({ url: `audio/${track}.mp3`, real: false, start: 0, end: 0 }); }
+    catch (e2) { ui.state("err", (e2 && e2.name) || "ошибка"); curTrack = null; curUI = null; }
   }
 }
 function probe(track, cb) { const fr = fragOf(track); if (fr.len) { cb(fr.len); return; } const a = new Audio(); a.preload = "metadata"; a.addEventListener("loadedmetadata", () => cb(a.duration), { once: true }); a.src = `audio/${track}.mp3`; }
@@ -1126,6 +1155,7 @@ function playerUI(root, track) {
   btn.addEventListener("click", () => { toggle(track, ui); lastAct = Date.now(); });
   if (more) more.addEventListener("click", () => { more.hidden = true; toggle(track, ui, true); lastAct = Date.now(); });
   probe(track, d => { ui.len = d; if (curUI !== ui) ui.prog(0, d); });
+  resolveSrc(track);
   const a = (typeof AUDIO !== "undefined") && AUDIO[track];
   if (src) src.textContent = a ? "Запись: Wikimedia Commons" : "Фрагмент синтезирован по нотам";
   return ui;
@@ -1135,15 +1165,19 @@ function playerUI(root, track) {
 const POR_KEY = "antrakt.portraits.v1";
 let portraits = {}; try { portraits = JSON.parse(localStorage.getItem(POR_KEY) || "{}"); } catch (e) {}
 function hydratePortraits(root) {
-  root.querySelectorAll(".medal[data-wiki]").forEach(m => {
-    const t = m.dataset.wiki; if (!t) return;
-    const put = url => { const img = new Image(); img.alt = ""; img.onload = () => { m.classList.add("has-img"); m.prepend(img); }; img.src = url; };
-    if (portraits[t]) return put(portraits[t]);
-    fetch("https://en.wikipedia.org/api/rest_v1/page/summary/" + encodeURIComponent(t)).then(r => r.json()).then(j => {
-      const u = j.thumbnail && j.thumbnail.source; if (!u) return;
-      portraits[t] = u; try { localStorage.setItem(POR_KEY, JSON.stringify(portraits)); } catch (e) {}
-      put(u);
-    }).catch(() => {});
+  root.querySelectorAll(".medal[data-key]").forEach(m => {
+    const key = m.dataset.key, t = m.dataset.wiki;
+    const put = (url, onfail) => { const img = new Image(); img.alt = ""; img.onload = () => { m.classList.add("has-img"); m.prepend(img); }; img.onerror = onfail || null; img.src = url; };
+    const remote = () => {
+      if (!t) return;
+      if (portraits[t]) return put(portraits[t]);
+      fetch("https://en.wikipedia.org/api/rest_v1/page/summary/" + encodeURIComponent(t)).then(r => r.json()).then(j => {
+        const u = j.thumbnail && j.thumbnail.source; if (!u) return;
+        portraits[t] = u; try { localStorage.setItem(POR_KEY, JSON.stringify(portraits)); } catch (e) {}
+        put(u);
+      }).catch(() => {});
+    };
+    put(`portraits/${key}.jpg`, remote);
   });
 }
 
@@ -1207,7 +1241,61 @@ function header() {
   $("#lttl").textContent = l.title;
 }
 
+let home = true;
+function lessonComposer(l) { for (const c of l.cards) for (const f of (c.figs || [])) if (f.type === "composer") return f.key; return null; }
+function renderHome() {
+  home = true; stopAudio();
+  const { li, ci } = S.pos, finished = li >= LESSONS.length;
+  const l = finished ? null : LESSONS[li];
+  setEra(l ? l.era : "modern");
+  $("#lnum").textContent = ""; $("#lttl").textContent = ""; $("#staff").innerHTML = "";
+  $(".lhead").hidden = true; $("#staff").hidden = true;
+  const due = dueList().length, d = dayRec();
+  const days = ["воскресенье", "понедельник", "вторник", "среда", "четверг", "пятница", "суббота"];
+  const now = new Date(), months = ["января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа", "сентября", "октября", "ноября", "декабря"];
+  const h = now.getHours(), hello = h < 5 ? "Доброй ночи" : h < 12 ? "Доброе утро" : h < 18 ? "Добрый день" : "Добрый вечер";
+  const ck = l && lessonComposer(l), C = ck && COMPOSERS[ck];
+  const total = l ? l.cards.length : 0;
+  // whole course as note heads on a staff
+  let notes = "";
+  LESSONS.forEach((x, i) => {
+    const y = [20, 14, 8, 17, 11, 5, 14, 20, 8, 17][i % 10], done = !!S.done[x.id], cur = i === li;
+    notes += `<span class="cn ${done ? "on" : ""} ${cur ? "cur" : ""}" style="left:calc(${(i + .5) / LESSONS.length * 100}% - 5px);top:${y}px;--era:var(--${x.era})"></span>`;
+  });
+  const card = document.createElement("article");
+  card.className = "card home enter";
+  card.innerHTML = `
+    <div class="kicker" style="color:var(--muted)">${days[now.getDay()]}, ${now.getDate()} ${months[now.getMonth()]}</div>
+    <h2 class="hello">${hello}</h2>
+    <div class="hstats">
+      <div><b>${fmtMin(d.sec)}</b><span>сегодня</span></div>
+      <div><b>${streak()}</b><span>дней подряд</span></div>
+      <div><b>${Object.keys(S.done).length}/${LESSONS.length}</b><span>уроков</span></div>
+    </div>
+    ${l ? `<div class="next">
+      ${C ? `<div class="medal sm" aria-hidden="true" data-key="${ck}" data-wiki="${esc(C.wiki || "")}"><span>${esc(C.ini)}</span></div>` : `<div class="medal sm" aria-hidden="true"><span>♪</span></div>`}
+      <div class="ninfo"><div class="kicker" style="margin:0 0 4px">Урок ${li + 1} · ${esc(ERAS[l.era].name)}</div>
+        <div class="ntitle">${esc(l.title)}</div>
+        <div class="nmeta">${ci > 0 ? `пройдено ${ci} из ${total} карточек` : `${total} карточек · около 2 минут`}</div></div>
+    </div>` : `<div class="next"><div class="ninfo"><div class="ntitle">Трек пройден</div><div class="nmeta">Остались только повторения</div></div></div>`}
+    <div class="course" aria-label="Прогресс курса">${[0, 1, 2, 3, 4].map(i => `<i style="top:${4 + i * 6}px"></i>`).join("")}${notes}</div>
+    <div class="ccap">Курс «Классическая музыка: база» · каждая нота — урок</div>
+    <div class="grow"></div>
+    ${due ? `<p class="duenote">Сначала ${due} ${due === 1 ? "карточка" : due < 5 ? "карточки" : "карточек"} на повторение, потом урок.</p>` : ""}`;
+  stage.replaceChildren(card);
+  hydratePortraits(card);
+  const label = finished ? (due ? "Повторить" : "Открыть программу") : (ci > 0 || due ? "Продолжить" : "Начать урок");
+  actions.innerHTML = `<button class="btn" id="go">${label}</button>`;
+  hint.textContent = "один заход — около двух минут";
+  $("#go").addEventListener("click", () => {
+    if (finished && !due) { showTab("prog"); return; }
+    home = false; buildQueue(); render();
+  });
+}
+
 function render() {
+  if (home) return renderHome();
+  $(".lhead").hidden = false; $("#staff").hidden = false;
   const it = item();
   setEra(eraOf(it));
   header(); paintStaff();
@@ -1351,8 +1439,9 @@ function renderDone(card, li) {
       <div><b>${streak()}</b><span>дней подряд</span></div>
     </div>
     <p style="color:var(--muted);font-size:15px;margin-top:10px">${next ? `Дальше: ${esc(next.title)}. ` : ""}Вопросы из урока вернутся на повторение через несколько дней.</p>`;
-  actions.innerHTML = `${qi > 0 ? BACK : ""}<button class="btn" id="next">${next ? "Следующий урок" : "Завершить"}</button>`;
+  actions.innerHTML = `${qi > 0 ? BACK : ""}<button class="btn ghost" id="tohome">Главная</button><button class="btn" id="next">${next ? "Следующий урок" : "Завершить"}</button>`;
   $("#next").addEventListener("click", advance); wireBack();
+  $("#tohome").addEventListener("click", () => { S.done[l.id] = S.done[l.id] || Date.now(); S.pos = { li: li + 1, ci: 0 }; save(); buildQueue(); home = true; render(); });
   if (due) hint.textContent = `${due} на повторение — появятся при следующем заходе`;
 }
 
@@ -1422,7 +1511,7 @@ function renderProg() {
   $("#prog").querySelectorAll(".row").forEach(b => b.addEventListener("click", () => {
     const li = +b.dataset.li;
     if (li !== S.pos.li) S.pos = { li, ci: 0 };
-    save(); queue = []; qi = 0; hist = {}; pushLesson(); showTab("learn"); render();
+    save(); queue = []; qi = 0; hist = {}; pushLesson(); home = false; showTab("learn"); render();
   }));
 }
 
@@ -1487,9 +1576,13 @@ function showTab(t) {
   document.querySelectorAll(".tabs button").forEach(b => { if (b.dataset.tab === t) b.setAttribute("aria-current", "page"); else b.removeAttribute("aria-current"); });
   if (t === "prog") renderProg();
   if (t === "stats") renderStats();
-  if (t === "learn") setEra(eraOf(item()));
+  if (t === "learn") { if (home) renderHome(); else setEra(eraOf(item())); }
 }
-document.querySelectorAll(".tabs button").forEach(b => b.addEventListener("click", () => showTab(b.dataset.tab)));
+document.querySelectorAll(".tabs button").forEach(b => b.addEventListener("click", () => {
+  if (b.dataset.tab === "learn" && !$("#s-learn").hidden && !home) { home = true; render(); return; }
+  showTab(b.dataset.tab);
+}));
+$(".top .brand").addEventListener("click", () => { showTab("learn"); home = true; render(); });
 
 /* ---------- boot ---------- */
 countOpen();

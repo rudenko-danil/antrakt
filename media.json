@@ -1,0 +1,117 @@
+{
+ "portraits": {
+  "beethoven": "Ludwig_van_Beethoven",
+  "vivaldi": "Antonio_Vivaldi",
+  "pachelbel": "Johann_Pachelbel",
+  "bach": "Johann_Sebastian_Bach",
+  "handel": "George_Frideric_Handel",
+  "haydn": "Joseph_Haydn",
+  "mozart": "Wolfgang_Amadeus_Mozart",
+  "schubert": "Franz_Schubert",
+  "chopin": "Frédéric_Chopin",
+  "brahms": "Johannes_Brahms",
+  "verdi": "Giuseppe_Verdi",
+  "wagner": "Richard_Wagner",
+  "tchaikovsky": "Pyotr_Ilyich_Tchaikovsky",
+  "debussy": "Claude_Debussy",
+  "rachmaninoff": "Sergei_Rachmaninoff",
+  "ravel": "Maurice_Ravel"
+ },
+ "audio": {
+  "l01_ode": {
+   "file": "Anthem of Europe (US Navy instrumental long version).ogg",
+   "start": 0,
+   "dur": 45
+  },
+  "l03_spring": {
+   "file": "Vivaldi - Four Seasons 1 Spring mvt 1 Allegro - John Harrison violin.oga",
+   "start": 0,
+   "dur": 40
+  },
+  "l04_canon": {
+   "file": "Pachelbel's Canon.ogg",
+   "start": 0,
+   "dur": 50
+  },
+  "l05_toccata": {
+   "file": "Toccata et Fugue BWV565.ogg",
+   "start": 0,
+   "dur": 40
+  },
+  "l06_hallelujah": {
+   "file": "Handel - messiah - 44 hallelujah.ogg",
+   "start": 0,
+   "dur": 40
+  },
+  "l07_surprise": {
+   "file": "Haydn; Symphony No. 94 \"Surprise\", 2. Andante.ogg",
+   "start": 0,
+   "dur": 50
+  },
+  "l08_nachtmusik": {
+   "file": "Mozart - Eine kleine Nachtmusik - 1. Allegro.ogg",
+   "start": 0,
+   "dur": 35
+  },
+  "l09_turca": {
+   "file": "Rondo Alla Turka.ogg",
+   "start": 0,
+   "dur": 35
+  },
+  "l10_moonlight": {
+   "file": "Ludwig van Beethoven - sonata no. 14 in c sharp minor 'moonlight', op. 27 no. 2 - i. adagio sostenuto.ogg",
+   "start": 0,
+   "dur": 50
+  },
+  "l11_fifth": {
+   "file": "Ludwig van Beethoven - Symphonie 5 c-moll - 1. Allegro con brio.ogg",
+   "start": 0,
+   "dur": 35
+  },
+  "l12_avemaria": {
+   "file": "Ave Maria (USNB).ogg",
+   "start": 0,
+   "dur": 50
+  },
+  "l13_nocturne": {
+   "file": "Chopin Nocturne Op 9 No 2.ogg",
+   "start": 0,
+   "dur": 50
+  },
+  "l14_lullaby": {
+   "file": "Brahms - Schumann-Heink - Wiegenlied (Berceuse) (1915).ogg",
+   "start": 0,
+   "dur": 50
+  },
+  "l15_donna": {
+   "file": "La Donna E Mobile Rigoletto.ogg",
+   "start": 0,
+   "dur": 45
+  },
+  "l16_valkyries": {
+   "file": "Richard Wagner - Ride of the Valkyries.ogg",
+   "start": 0,
+   "dur": 50
+  },
+  "l17_swan": {
+   "file": "Tchaikovsky Swan Lake Op.20 No.10. Scène.ogg",
+   "start": 0,
+   "dur": 50
+  },
+  "l18_clairdelune": {
+   "file": "Clair de lune (Claude Debussy) Suite bergamasque.ogg",
+   "start": 0,
+   "dur": 50
+  },
+  "l19_prelude": {
+   "file": "Sergei Rachmaninoff performs Rachmaninoff's Prelude in C sharp minor, Op. 3.ogg",
+   "start": 0,
+   "dur": 45
+  },
+  "l20_bolero": {
+   "file": "Bolero-Maurice Ravel-1930.ogg",
+   "start": 0,
+   "dur": 45
+  }
+ }
+}
