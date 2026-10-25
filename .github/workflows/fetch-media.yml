@@ -3,7 +3,7 @@ name: Скачать записи и портреты
 on:
   push:
     branches: [main]
-    paths: ["media.json", "tools/fetch_media.py", ".github/workflows/fetch-media.yml"]
+    paths: ["media.json", "tools/**", ".github/workflows/fetch-media.yml"]
   workflow_dispatch:
 
 permissions:
@@ -18,10 +18,12 @@ jobs:
         run: sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
       - name: Fetch media
         run: python3 tools/fetch_media.py
+      - name: Commons listing
+        run: python3 tools/commons_query.py || true
       - name: Commit
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add portraits audio/real tools/last_fetch.txt
+          git add portraits audio/real tools/last_fetch.txt tools/query_results.txt
           git diff --cached --quiet || git commit -m "Записи и портреты с Wikimedia"
           git push

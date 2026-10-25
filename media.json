@@ -60,7 +60,7 @@
   },
   "l10_moonlight": {
    "file": "Ludwig van Beethoven - sonata no. 14 in c sharp minor 'moonlight', op. 27 no. 2 - i. adagio sostenuto.ogg",
-   "start": 0,
+   "start": 3,
    "dur": 50
   },
   "l11_fifth": {
@@ -113,5 +113,9 @@
    "start": 0,
    "dur": 45
   }
- }
+ },
+ "queries": [
+  "Category:D 839 – Ave Maria, Op. 52 No. 6 (Schubert)",
+  "Category:Audio files of music by Franz Schubert"
+ ]
 }
