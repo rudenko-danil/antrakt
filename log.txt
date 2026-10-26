@@ -36,3 +36,14 @@ AUDIT [l17_swan] Tchaikovsky Swan Lake Op.20 No.10. Scène.ogg | Pyotr Ilyich Tc
 AUDIT [l18_clairdelune] Clair de lune (Claude Debussy) Suite bergamasque.ogg | Claude Debussy | Public domain | date: 2011-08-20 | "Clair de lune" in the Suite bergamasque by Claude Debussy performed by Laurens Goedhart (pf) in 2011.
 AUDIT [l19_prelude] Sergei Rachmaninoff performs Rachmaninoff's Prelude in C sharp minor, Op. 3.ogg | Sergei Rachmaninoff | Public domain | date: 1920-12 | Sergei Rachmaninoff's "Prelude in C-sharp minor, Op. 3", second of his five Morceaux de fantaisie (Fantasy Pieces), performed by the author himself. This is Edison Diamond Disc 82187-R, Matrix 6742-C-2-3 [2-1]. Recorded in 1919, released in December 1920.
 AUDIT [l20_bolero] Bolero-Maurice Ravel-1930.ogg | Maurice Ravel | Public domain | date: 1928 | Ravel's Boléro. Conducted by Ravel, 1930.
+[k525_3] search candidates: File:Mozart Eine kleine Nachtmusik KV525 Satz 4 Rondo.ogg
+[k525_3] OK File:Mozart Eine kleine Nachtmusik KV525 Satz 4 Rondo.ogg | Wolfgang Amadeus Mozart | CC BY-SA 2.5 | date: 2006-04-06 | A synthesized version of the Fourth Movement of Mozart's Eine Kleine Nachtmusik
+[k525_4] OK File:Mozart Eine kleine Nachtmusik KV525 Satz 4 Rondo.ogg | Wolfgang Amadeus Mozart | CC BY-SA 2.5 | date: 2006-04-06 | A synthesized version of the Fourth Movement of Mozart's Eine Kleine Nachtmusik
+[danube] OK File:"An der schönen, blauen Donau" performed by the U.S. Marine Band.mp3 |  | Public domain | date:  | "An der schönen, blauen Donau" (The Beautiful Blue Danube) , Op. 314 (arr. for wind ensemble)
+[sousa] OK File:John Philip Sousa - Comrades of the Legion.ogg | "The President's Own" United States Marine Band | Public domain | date: Composed 1920, recorded late 20th century | John Philip Sousa's march "Comrades of the Legion" (1920), from "The President's Own" United States Marine Band's album "Semper Fidelis": Music of John Philip Sousa; Colonel John R. Bourgeois, Directo
+[swan2] OK File:Tchaikovsky - Swan Lake Op.20 - Act II Pt.1.ogg | European Archive | Public domain | date: Unknown date | Tchaikovsky - Swan Lake Op.20 - Act II Pt.1
+?? KV525 Satz 3: File:Mozart Eine kleine Nachtmusik KV525 Satz 4 Rondo.ogg
+?? Eine kleine Nachtmusik Menuett: 
+?? Nachtmusik Menuetto: 
+?? Bach chorale: File:From Bach chorale, Wachet auf 01.wav || File:Bach St Matthew Passion No 3 Chorale Herzliebster Jesu.wav || File:Bach-Busoni - Chorale - Nun freut euch, liebe Christen.ogg || File:Bach St Matthew Passion No 46 Chorale Herzliebster Jesu different harmonization.wav || File:J.S.Bach, from chorale prelude ̊Wachet auf̊.wav || File:Bach - cantata 140. 7. chorale.ogg || File:Bach - cantata 140. 4. chorale.ogg
+?? Carnival of the Animals swan cello: File:JOHN MICHEL CELLO-SAINT SAENS CARNIVAL OF ANIMALS THE SWAN.ogg
