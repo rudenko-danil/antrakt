@@ -36,6 +36,8 @@ spec = json.load(open(os.path.join(ROOT, "media_full.json"), encoding="utf-8"))
 log = []
 
 for key, s in spec.get("full", {}).items():
+    if os.path.exists(os.path.join(OUT, key + ".mp3")):
+        continue
     try:
         title = "File:" + s["file"] if "file" in s else None
         ii = info(title) if title else None
@@ -74,5 +76,6 @@ for key, fname in spec.get("audit", {}).items():
     except Exception as e:
         log.append(f"AUDIT [{key}] ERROR {e}")
 
-open(os.path.join(OUT, "log.txt"), "w").write("\n".join(log) + "\n")
+prev = open(os.path.join(OUT, "log.txt")).read() if os.path.exists(os.path.join(OUT, "log.txt")) else ""
+open(os.path.join(OUT, "log.txt"), "w").write(prev + "\n".join(log) + "\n")
 print("\n".join(log))

@@ -16,13 +16,15 @@ jobs:
       - uses: actions/checkout@v4
       - name: Install ffmpeg
         run: sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
+      - name: Previous files
+        run: git clone -q --depth 1 -b media-src "https://github.com/${{ github.repository }}.git" out || mkdir -p out
       - name: Fetch
         run: python3 tools/fetch_full.py
       - name: Publish to media-src branch
         run: |
           cd out
-          git init -q -b media-src
+          [ -d .git ] || git init -q -b media-src
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -A && git commit -qm "Полные записи и аудит $(date -u +%F)"
+          git add -A && (git diff --cached --quiet || git commit -qm "Полные записи и аудит $(date -u +%F)")
           git push -f "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" media-src

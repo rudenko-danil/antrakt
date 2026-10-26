@@ -1,0 +1,275 @@
+{
+ "chorale_all": {
+  "dur": 51.09,
+  "voices": [
+   "S",
+   "A",
+   "T",
+   "B"
+  ]
+ },
+ "chorale_S": {
+  "dur": 51.09,
+  "voices": [
+   "S"
+  ]
+ },
+ "chorale_A": {
+  "dur": 51.09,
+  "voices": [
+   "A"
+  ]
+ },
+ "chorale_T": {
+  "dur": 51.09,
+  "voices": [
+   "T"
+  ]
+ },
+ "chorale_B": {
+  "dur": 51.09,
+  "voices": [
+   "B"
+  ]
+ },
+ "chorale_SB": {
+  "dur": 51.09,
+  "voices": [
+   "S",
+   "B"
+  ]
+ },
+ "chorale_ATB": {
+  "dur": 51.09,
+  "voices": [
+   "A",
+   "T",
+   "B"
+  ]
+ },
+ "fj_1": {
+  "dur": 21.2,
+  "entries": [
+   0.0
+  ]
+ },
+ "fj_1piano": {
+  "dur": 21.2,
+  "entries": [
+   0.0
+  ]
+ },
+ "fj_2": {
+  "dur": 45.2,
+  "entries": [
+   0.0,
+   4.8
+  ]
+ },
+ "fj_3": {
+  "dur": 50.0,
+  "entries": [
+   0.0,
+   4.8,
+   9.6
+  ]
+ },
+ "fj_4": {
+  "dur": 54.8,
+  "entries": [
+   0.0,
+   4.8,
+   9.6,
+   14.4
+  ]
+ },
+ "fj_2same": {
+  "dur": 45.2,
+  "entries": [
+   0.0,
+   4.8
+  ]
+ },
+ "canon_bass": {
+  "dur": 29.0,
+  "loop_sec": 8.0
+ },
+ "canon_full": {
+  "dur": 62.0,
+  "entries": [
+   8.0,
+   16.0,
+   24.0
+  ]
+ },
+ "canon_v1": {
+  "dur": 62.0,
+  "entries": [
+   8.0
+  ]
+ },
+ "tim_violin": {
+  "dur": 11.23,
+  "inst": "violin"
+ },
+ "tim_viola": {
+  "dur": 11.23,
+  "inst": "viola"
+ },
+ "tim_cello": {
+  "dur": 11.23,
+  "inst": "cello"
+ },
+ "tim_contrabass": {
+  "dur": 11.23,
+  "inst": "contrabass"
+ },
+ "tim_flute": {
+  "dur": 11.23,
+  "inst": "flute"
+ },
+ "tim_oboe": {
+  "dur": 11.23,
+  "inst": "oboe"
+ },
+ "tim_clarinet": {
+  "dur": 11.23,
+  "inst": "clarinet"
+ },
+ "tim_bassoon": {
+  "dur": 11.23,
+  "inst": "bassoon"
+ },
+ "tim_trumpet": {
+  "dur": 11.23,
+  "inst": "trumpet"
+ },
+ "tim_horn": {
+  "dur": 11.23,
+  "inst": "horn"
+ },
+ "tim_trombone": {
+  "dur": 11.23,
+  "inst": "trombone"
+ },
+ "tim_tuba": {
+  "dur": 11.23,
+  "inst": "tuba"
+ },
+ "tim_piano": {
+  "dur": 11.23,
+  "inst": "piano"
+ },
+ "tim_harp": {
+  "dur": 11.23,
+  "inst": "harp"
+ },
+ "tim_organ": {
+  "dur": 11.23,
+  "inst": "organ"
+ },
+ "tim_timpani": {
+  "dur": 7.77,
+  "inst": "timpani"
+ },
+ "tim_solo": {
+  "dur": 11.23,
+  "kind": "solo"
+ },
+ "tim_tutti": {
+  "dur": 11.23,
+  "kind": "tutti"
+ },
+ "tw_major": {
+  "dur": 10.73,
+  "mode": "major"
+ },
+ "tw_minor": {
+  "dur": 10.73,
+  "mode": "minor"
+ },
+ "tw_period": {
+  "dur": 10.73,
+  "ends": "tonic"
+ },
+ "tw_comma": {
+  "dur": 6.36,
+  "ends": "dominant"
+ },
+ "tw_question": {
+  "dur": 6.36,
+  "ends": "open"
+ },
+ "tw_theme": {
+  "dur": 28.18,
+  "sections": [
+   [
+    "A",
+    0.0
+   ],
+   [
+    "B",
+    8.727272727272727
+   ],
+   [
+    "B",
+    13.090909090909092
+   ],
+   [
+    "A",
+    17.454545454545453
+   ]
+  ],
+  "cadences": [
+   4.363636363636363,
+   8.727272727272727,
+   13.090909090909092,
+   17.454545454545453,
+   26.181818181818183
+  ]
+ },
+ "tex_mono": {
+  "dur": 10.73,
+  "texture": "mono"
+ },
+ "tex_unison": {
+  "dur": 10.73,
+  "texture": "unison"
+ },
+ "tex_homo": {
+  "dur": 10.73,
+  "texture": "homophony"
+ },
+ "meter_2": {
+  "dur": 11.64,
+  "meter": 2
+ },
+ "meter_3": {
+  "dur": 20.0,
+  "meter": 3
+ },
+ "art_legato": {
+  "dur": 12.0,
+  "art": "legato"
+ },
+ "art_staccato": {
+  "dur": 12.0,
+  "art": "staccato"
+ },
+ "dyn_cresc": {
+  "dur": 12.0,
+  "dyn": "crescendo"
+ },
+ "dyn_dim": {
+  "dur": 12.0,
+  "dyn": "diminuendo"
+ },
+ "tempo_fast": {
+  "dur": 7.71,
+  "tempo": "allegro"
+ },
+ "tempo_slow": {
+  "dur": 18.55,
+  "tempo": "adagio"
+ }
+}

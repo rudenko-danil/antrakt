@@ -8,8 +8,8 @@
    "search": "Eine kleine Nachtmusik Romanze"
   },
   "k525_3": {
-   "file": "Mozart - Eine kleine Nachtmusik - 3. Menuetto.ogg",
-   "search": "Eine kleine Nachtmusik Menuetto"
+   "file": "Mozart Eine kleine Nachtmusik KV525 Satz 3 Menuetto.ogg",
+   "search": "KV525 Satz 3"
   },
   "k265": {
    "file": "Mozart Ah vous dirai-je, Maman.ogg"
@@ -39,34 +39,26 @@
   },
   "spring": {
    "file": "Vivaldi - Four Seasons 1 Spring mvt 1 Allegro - John Harrison violin.oga"
+  },
+  "k525_4": {
+   "file": "Mozart Eine kleine Nachtmusik KV525 Satz 4 Rondo.ogg"
+  },
+  "danube": {
+   "file": "\"An der schönen, blauen Donau\" performed by the U.S. Marine Band.mp3"
+  },
+  "sousa": {
+   "file": "John Philip Sousa - Comrades of the Legion.ogg"
+  },
+  "swan2": {
+   "file": "Tchaikovsky - Swan Lake Op.20 - Act II Pt.1.ogg"
   }
  },
  "searches": [
-  "Eine kleine Nachtmusik",
-  "Smetana Moldau",
-  "Bach chorale four voices",
-  "Strauss waltz Blue Danube",
-  "Sousa march"
+  "KV525 Satz 3",
+  "Eine kleine Nachtmusik Menuett",
+  "Nachtmusik Menuetto",
+  "Bach chorale",
+  "Carnival of the Animals swan cello"
  ],
- "audit": {
-  "l01_ode": "Anthem of Europe (US Navy instrumental long version).ogg",
-  "l03_spring": "Vivaldi - Four Seasons 1 Spring mvt 1 Allegro - John Harrison violin.oga",
-  "l04_canon": "Pachelbel's Canon.ogg",
-  "l05_toccata": "Toccata et Fugue BWV565.ogg",
-  "l06_hallelujah": "Handel - messiah - 44 hallelujah.ogg",
-  "l07_surprise": "Haydn; Symphony No. 94 \"Surprise\", 2. Andante.ogg",
-  "l08_nachtmusik": "Mozart - Eine kleine Nachtmusik - 1. Allegro.ogg",
-  "l09_turca": "Rondo Alla Turka.ogg",
-  "l10_moonlight": "Ludwig van Beethoven - sonata no. 14 in c sharp minor 'moonlight', op. 27 no. 2 - i. adagio sostenuto.ogg",
-  "l11_fifth": "Ludwig van Beethoven - Symphonie 5 c-moll - 1. Allegro con brio.ogg",
-  "l12_avemaria": "Franz Schubert - Ellens dritter Gesang.oga",
-  "l13_nocturne": "Chopin Nocturne Op 9 No 2.ogg",
-  "l14_lullaby": "Brahms - Schumann-Heink - Wiegenlied (Berceuse) (1915).ogg",
-  "l15_donna": "La Donna E Mobile Rigoletto.ogg",
-  "l16_valkyries": "Richard Wagner - Ride of the Valkyries.ogg",
-  "l17_swan": "Tchaikovsky Swan Lake Op.20 No.10. Scène.ogg",
-  "l18_clairdelune": "Clair de lune (Claude Debussy) Suite bergamasque.ogg",
-  "l19_prelude": "Sergei Rachmaninoff performs Rachmaninoff's Prelude in C sharp minor, Op. 3.ogg",
-  "l20_bolero": "Bolero-Maurice Ravel-1930.ogg"
- }
+ "audit": {}
 }
