@@ -83,9 +83,15 @@ button:focus-visible, [tabindex]:focus-visible { outline: 2px solid var(--era); 
 .lhead .num { font-family: var(--f-mono); font-size: 12px; color: var(--era); letter-spacing: .08em; text-transform: uppercase; white-space: nowrap; }
 .lhead .ttl { font-size: 13px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
 
-/* staff progress */
-.staff { position: relative; height: 34px; margin-block: 4px 6px; }
-.staff svg { width: 100%; height: 100%; display: block; overflow: visible; }
+/* stories progress */
+.staff { margin-block: 6px 8px; min-height: 4px; }
+.segs { display: flex; gap: 4px; }
+.segs i { flex: 1; height: 4px; border-radius: 2px; background: var(--line); overflow: hidden; position: relative; }
+.segs i.f { background: var(--era); }
+.segs i.c::after { content: ""; position: absolute; inset: 0; width: 35%; background: var(--era); border-radius: 2px; animation: segfill 1.4s ease-out both; }
+@keyframes segfill { from { width: 0; } to { width: 35%; } }
+@media (prefers-reduced-motion: reduce) { .segs i.c::after { animation: none; } }
+.taphint { position: absolute; left: 0; right: 0; bottom: 10px; text-align: center; pointer-events: none; font-family: var(--f-mono); font-size: 11px; color: var(--muted); }
 
 /* card stage */
 .stage { flex: 1; min-height: 0; position: relative; }
@@ -97,6 +103,9 @@ button:focus-visible, [tabindex]:focus-visible { outline: 2px solid var(--era); 
 .kicker { font-family: var(--f-mono); font-size: 11.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--era); margin-bottom: 14px; }
 .card h2 { font-family: var(--f-display); font-weight: 400; font-size: clamp(25px, 7vw, 31px); line-height: 1.18; margin: 0 0 16px; text-wrap: balance; }
 .card p { margin: 0 0 12px; font-size: 17px; line-height: 1.6; max-width: 62ch; }
+.card.story { cursor: pointer; padding-bottom: 34px; }
+.card.story h2 { font-size: clamp(27px, 7.6vw, 33px); }
+.card.story p { font-size: 18px; line-height: 1.62; }
 .card .grow { flex: 1; }
 
 /* listen card */
@@ -146,6 +155,31 @@ button:focus-visible, [tabindex]:focus-visible { outline: 2px solid var(--era); 
 .facts b { display: block; font-family: var(--f-mono); font-weight: 500; font-size: 20px; font-variant-numeric: tabular-nums; }
 .facts span { font-size: 12.5px; color: var(--muted); }
 
+/* letters */
+.card.chat { padding: 18px 16px 14px; cursor: pointer; }
+.chead { display: flex; gap: 12px; align-items: center; padding-bottom: 12px; border-bottom: 1px solid var(--line); }
+.cht { display: flex; flex-direction: column; min-width: 0; }
+.cht b { font-family: var(--f-display); font-weight: 400; font-size: 19px; line-height: 1.2; }
+.cht span { font-size: 13px; color: var(--muted); }
+.cmeta2 { align-self: center; font-family: var(--f-mono); font-size: 11px; color: var(--muted); margin: 12px 0 8px; padding: 3px 10px; border-radius: 99px; background: var(--bg); }
+.medal.xs { width: 46px; height: 46px; flex: none; }
+.medal.xs span { font-size: 13px; }
+.medal.alt { border-color: var(--muted); }
+.medal.alt span { color: var(--muted); }
+.msgs { display: flex; flex-direction: column; gap: 8px; }
+.msg { max-width: 86%; padding: 10px 13px; border-radius: 16px; font-size: 16px; line-height: 1.45; }
+.msg i { display: block; font-style: normal; font-size: 11.5px; font-weight: 600; color: var(--era); margin-bottom: 2px; }
+.msg.l { align-self: flex-start; background: var(--bg); border: 1px solid var(--line); border-bottom-left-radius: 5px; }
+.msg.r { align-self: flex-end; background: color-mix(in srgb, var(--era) 16%, var(--surface)); border-bottom-right-radius: 5px; }
+.msg.pop { animation: pop .28s cubic-bezier(.2,.9,.3,1.2); }
+@keyframes pop { from { transform: translateY(8px) scale(.96); opacity: 0; } to { transform: none; opacity: 1; } }
+.msg.typing { display: flex; gap: 4px; padding: 13px 14px; }
+.msg.typing span { width: 7px; height: 7px; border-radius: 50%; background: var(--muted); animation: dots 1s infinite; }
+.msg.typing span:nth-child(2) { animation-delay: .15s; } .msg.typing span:nth-child(3) { animation-delay: .3s; }
+@keyframes dots { 0%, 60%, 100% { opacity: .3; } 30% { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .msg.pop, .msg.typing span { animation: none; } }
+.csrc { font-family: var(--f-mono); font-size: 10.5px; color: var(--muted); margin-top: 14px; }
+
 /* listening module */
 .marks { display: grid; gap: 6px; margin: 2px 0 16px; }
 .mark { display: flex; gap: 10px; align-items: baseline; text-align: left; padding: 8px 10px; border-radius: 10px; border: 1px solid var(--line); background: var(--bg); font-size: 14.5px; }
@@ -185,6 +219,52 @@ button:focus-visible, [tabindex]:focus-visible { outline: 2px solid var(--era); 
 .plist i { font-style: normal; font-size: 13px; color: var(--muted); }
 .plist li.pd .pn { background: var(--era); color: var(--surface); }
 .plist li.pc { border-color: var(--era); background: color-mix(in srgb, var(--era) 8%, var(--surface)); }
+
+/* memory, radar, path */
+.medal.mini2 { width: 30px; height: 30px; flex: none; border-width: 1px; box-shadow: none; }
+.medal.mini2 span { font-size: 10px; }
+.medal.mini2 img { inset: 2px; width: calc(100% - 4px); height: calc(100% - 4px); }
+.membar { display: block; height: 3px; border-radius: 2px; background: var(--line); margin-top: 5px; max-width: 160px; overflow: hidden; }
+.membar i { display: block; height: 100%; background: var(--era); }
+.row.fading .st { color: var(--bad); }
+.chart svg.radar { width: 100%; height: auto; display: block; overflow: visible; margin: 6px 0 4px; }
+.rnote { font-size: 12.5px; color: var(--muted); margin: 6px 0 0; line-height: 1.45; }
+.path { margin: 0 0 18px; }
+.ph { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 6px; }
+.ph b { font-weight: 600; font-size: 14px; }
+.ph span { font-family: var(--f-mono); font-size: 13px; color: var(--era); }
+.pbar { height: 10px; border-radius: 6px; background: var(--line); overflow: hidden; }
+.pbar i { display: block; height: 100%; border-radius: 6px; background: linear-gradient(90deg, var(--listen), var(--era)); }
+.psub { font-size: 12.5px; color: var(--muted); margin-top: 6px; }
+.fade { margin: 4px 0 18px; display: grid; gap: 8px; }
+.fh { font-family: var(--f-mono); font-size: 11.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--bad); }
+.frow { display: flex; align-items: center; gap: 12px; }
+.frow .dot { width: 12px; height: 12px; }
+.ft { flex: 1; min-width: 0; font-size: 15px; }
+.fbtn { height: 36px; flex: none; padding-inline: 14px; font-size: 13.5px; }
+
+/* finds */
+.heart { width: 44px; height: 44px; flex: none; display: grid; place-items: center; border-radius: 50%; }
+.heart svg { width: 24px; height: 24px; fill: none; stroke: var(--muted); stroke-width: 1.7; transition: fill .15s, stroke .15s; }
+.heart.on svg { fill: var(--bad); stroke: var(--bad); }
+.heart.beat { animation: beat .35s ease-out; }
+@keyframes beat { 0% { transform: scale(1); } 40% { transform: scale(1.3); } 100% { transform: scale(1); } }
+@media (prefers-reduced-motion: reduce) { .heart.beat { animation: none; } }
+.finds h1 { font-family: var(--f-display); font-weight: 400; font-size: 30px; margin: 8px 0 4px; }
+.empty { text-align: center; padding: 40px 20px; color: var(--muted); }
+.empty svg { width: 54px; height: 54px; fill: none; stroke: var(--line); stroke-width: 1.4; }
+.taste { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 14px; margin-bottom: 16px; }
+.taste h3 { font-size: 13px; font-weight: 600; margin: 0 0 10px; }
+.tbar { display: flex; height: 12px; border-radius: 6px; overflow: hidden; gap: 2px; }
+.tleg { display: flex; flex-wrap: wrap; gap: 6px 14px; margin-top: 10px; font-size: 13px; }
+.tleg b { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 5px; }
+.flist { display: grid; gap: 10px; grid-template-columns: minmax(0, 1fr); }
+.fitem { min-width: 0; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 12px; }
+.fitem .mini { margin: 0; }
+.fitem .ptrack { flex: 1; min-width: 0; }
+.fitem .play { background: var(--era); }
+.fi-t { font-size: 14.5px; font-weight: 600; color: var(--ink); font-family: var(--f-body); margin-bottom: 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.fi-m { font-family: var(--f-mono); font-size: 11px; color: var(--muted); margin-top: 6px; }
 
 /* home */
 .home .hello { font-size: clamp(30px, 8.5vw, 38px); margin-bottom: 18px; }
@@ -299,6 +379,10 @@ button:focus-visible, [tabindex]:focus-visible { outline: 2px solid var(--era); 
     <div class="scroll prog" id="prog"></div>
   </section>
 
+  <section class="screen" id="s-finds" hidden>
+    <div class="scroll finds" id="finds"></div>
+  </section>
+
   <section class="screen" id="s-stats" hidden>
     <div class="scroll stats" id="stats"></div>
   </section>
@@ -306,6 +390,7 @@ button:focus-visible, [tabindex]:focus-visible { outline: 2px solid var(--era); 
   <nav class="tabs" aria-label="Разделы">
     <button data-tab="learn" aria-current="page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 18V5l11-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="17" cy="16" r="3"/></svg>Слушать</button>
     <button data-tab="prog"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 3h11l3 3v15H5z"/><path d="M8 9h8M8 13h8M8 17h5"/></svg>Программа</button>
+    <button data-tab="finds"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10Z"/></svg>Находки</button>
     <button data-tab="stats"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>Статистика</button>
   </nav>
 </div>
@@ -1968,6 +2053,85 @@ const LISTEN = [
 
 LESSONS.unshift(...LISTEN);
 
+// Письма композиторов: пересказ подлинных писем, по сообщению за тап.
+// from: "who" — композитор (слева), "to" — адресат (справа).
+const W_ = text => ({ from: "who", text });
+const R_ = (name, text) => ({ from: "to", name, text });
+const CHAT = (who, title, date, msgs, src) => ({ t: "chat", who, title, date, msgs, src });
+
+const LETTERS = {
+  l03: CHAT("vivaldi", "маркизу Гвидо Бентивольо", "Венеция, 16 ноября 1737", [
+    W_("Ваше превосходительство, кардинал запретил мне въезд в Феррару. Говорят, потому что я священник, который не служит мессу, и потому что дружу с певицей Анной Жиро."),
+    W_("Я не служу мессу уже двадцать пять лет и не буду. Но не из-за запрета, а из-за болезни: с самого рождения меня мучает стеснение в груди."),
+    W_("Когда меня только рукоположили, я служил чуть больше года и трижды уходил от алтаря, не закончив службу, — так мне становилось плохо."),
+    W_("Поэтому я почти всегда дома и выезжаю только в гондоле или в карете: ходить пешком мне трудно."),
+    W_("А синьора Жиро живёт отдельно, вместе с сестрой. Всё прочее — злые языки."),
+  ], "Пересказ письма Вивальди, сокращено. Поездка в Феррару так и не состоялась."),
+
+  l05: CHAT("bach", "другу юности Георгу Эрдману", "Лейпциг, 28 октября 1730", [
+    W_("Дорогой друг, ты спрашиваешь, как мне живётся. Место кантора оказалось далеко не таким выгодным, как мне его описали."),
+    W_("Жизнь здесь дорогая, а начальство странное и мало любит музыку. Так что живу я почти в постоянной досаде, зависти и притеснениях."),
+    W_("Мой доход — около семисот талеров. Если похорон больше обычного, растёт и доход. Но стоит подуть здоровому ветру — и он падает."),
+    W_("В прошлом году из-за здорового воздуха я недосчитался на похоронах больше ста талеров."),
+    W_("Если узнаешь о хорошем месте в Данциге, замолви за меня слово."),
+    W_("Зато семья у меня музыкальная: жена поёт чистым сопрано, старшая дочь тоже неплохо. Из своих домашних я могу составить и хор, и оркестр."),
+  ], "Пересказ письма Баха, сокращено. В Лейпциге он остался до конца жизни."),
+
+  l07: CHAT("haydn", "Марианне фон Генцингер", "Эстерхаза, 9 февраля 1790", [
+    W_("Милостивая государыня, вот я сижу в своей глуши, покинутый, как бедный сирота, почти без человеческого общества."),
+    W_("Я так и не понял, кто я здесь: капельмейстер или капельдинер."),
+    W_("После Вены всё кажется печальным. Вместо отличной говядины мне дали кусок коровы лет пятидесяти от роду."),
+    W_("Вместо лёгкого рагу — старую баранину с жёлтой морковью, а вместо хорошего вина — кислятину."),
+    W_("Простите, что жалуюсь: здесь мне просто не с кем поговорить."),
+  ], "Пересказ письма Гайдна, сокращено. Через несколько месяцев князь умер, и Гайдн уехал в Лондон."),
+
+  l08: CHAT("mozart", "отцу Леопольду", "Вена, май — июнь 1781", [
+    W_("Отец, я больше не могу. Архиепископ обращается со мной как с уличным мальчишкой. Я ненавижу его до бешенства."),
+    W_("Я подал прошение об отставке. В Зальцбург я больше не вернусь."),
+    W_("Знаю, вы хотите, чтобы я помирился и вернулся. Но здесь, в Вене, у меня ученики, концерты, друзья. Здесь я могу жить музыкой."),
+    W_("Сегодня граф Арко выставил меня за дверь пинком под зад. Вот как здесь уговаривают людей!"),
+    W_("Теперь я свободен. Не беспокойтесь обо мне: всё сложится."),
+  ], "Пересказ нескольких писем Моцарта, сокращено. Ответы отца за эти месяцы не сохранились."),
+
+  l10: CHAT("beethoven", "другу Францу Вегелеру", "Вена, 29 июня и 16 ноября 1801", [
+    W_("Дорогой Вегелер, открою тебе тайну: мой слух в последние три года становится всё слабее."),
+    W_("Почти два года я избегаю общества, потому что не могу сказать людям: я глухой. Будь у меня другая профессия, ещё куда ни шло. Но в моей это ужасно."),
+    W_("В театре мне приходится садиться у самого оркестра, чтобы понимать актёров. Высоких звуков инструментов и голосов издали я не слышу."),
+    W_("Не говори об этом никому, даже Лорхен."),
+    W_("Теперь мне живётся немного легче. Эту перемену произвела милая, очаровательная девушка, которая любит меня и которую люблю я."),
+    W_("Впервые за два года у меня счастливые минуты. Жаль только, что она не моего круга, и сейчас я никак не мог бы жениться."),
+  ], "Пересказ двух писем Бетховена, сокращено. «Девушка», вероятно, — Джульетта Гвиччарди."),
+
+  l12: CHAT("schubert", "другу, художнику Леопольду Купельвизеру", "Вена, 31 марта 1824", [
+    W_("Дорогой Купельвизер, я чувствую себя самым несчастным, самым жалким человеком на свете."),
+    W_("Представь себе человека, чьё здоровье, похоже, уже никогда не поправится, и чьи лучшие надежды обратились в ничто."),
+    W_("Наше общество распалось: друзья разъехались, по вечерам почти не с кем поговорить."),
+    W_("Зато я много сочинял: два квартета и октет. Хочу проложить ими путь к большой симфонии."),
+    W_("Главная новость в Вене: Бетховен даёт концерт со своей новой симфонией. Бог даст, через год и я устрою такой же концерт."),
+  ], "Пересказ письма Шуберта, сокращено. «Большую» симфонию он написал, но так и не услышал её."),
+
+  l13: CHAT("chopin", "запись в дневнике", "Штутгарт, сентябрь 1831", [
+    W_("Пришли вести: Варшава взята. Предместья разрушены, сожжены."),
+    W_("Где мои близкие? Где отец, мать, сёстры? Может быть, друзья уже погибли в окопах."),
+    W_("Я здесь, в чужом городе, бессилен. Ничего не могу сделать."),
+    W_("Остаётся только одно: изливать горе за фортепиано."),
+  ], "Пересказ Штутгартского дневника Шопена, сокращено. Это не письмо, а записи для себя."),
+
+  l17: CHAT("tchaikovsky", "переписка с Надеждой фон Мекк", "Москва, 1876–1878", [
+    R_("Н. Ф. фон Мекк", "Позвольте поблагодарить вас за быстрое исполнение моей просьбы. Ваша музыка делает мою жизнь легче и приятнее."),
+    W_("Благодарю за добрые слова. Музыкант встречает столько неудач, что каждая искренняя поддержка — драгоценность."),
+    R_("Н. Ф. фон Мекк", "Я назначаю вам ежегодную помощь, чтобы вы могли посвятить себя только сочинению. Об одном прошу: давайте никогда не встречаться."),
+    W_("Вы спасли меня. Теперь я пишу симфонию — нашу симфонию. Надеюсь, слушая её, вы почувствуете, что я думал о вас."),
+    W_("В ней есть фатум, роковая сила, которая мешает нам дойти до счастья. Она нависает над головой, как дамоклов меч."),
+  ], "Пересказ писем 1876–1878 годов, сокращено. Речь о Четвёртой симфонии, посвящённой «моему лучшему другу»."),
+};
+
+for (const [id, chat] of Object.entries(LETTERS)) {
+  const l = LESSONS.find(x => x.id === id);
+  const p2 = l.cards.findIndex(c => c.t === "part" && c.n === 2);
+  l.cards.splice(p2 + 2, 0, chat);   // после первой карточки части «Человек»
+}
+
 const XMETA = {
  "chorale_all": {
   "dur": 51.09,
@@ -2873,7 +3037,36 @@ function grade(id, ok) {
 }
 const dueList = () => Object.entries(S.cards).filter(([id, c]) => c.due <= Date.now() && QBYID[id]).sort((a, b) => a[1].due - b[1].due).map(([id]) => id);
 
-/* ---------- time tracking ---------- */
+/* ---------- память и навыки ---------- */
+// вероятность вспомнить карточку сейчас; после ошибки — с понижением
+function recall(id) {
+  const c = S.cards[id]; if (!c) return 0;
+  const r = R(Math.max(0, (Date.now() - c.last) / DAY), c.s);
+  return (c.due - c.last < DAY) ? r * 0.4 : r;
+}
+const lessonQs = l => l.cards.filter(c => c.t === "q").map(c => c.id);
+function lessonMemory(l) {
+  const ids = lessonQs(l).filter(id => S.cards[id]);
+  if (!ids.length) return null;
+  return ids.reduce((a, id) => a + recall(id), 0) / ids.length;
+}
+const SKILLS = [["rhythm", "Ритм и темп"], ["timbre", "Тембр"], ["melody", "Мелодия"], ["texture", "Голоса"], ["form", "Форма"], ["ear", "Эпохи"], ["history", "История"]];
+const SKILL_BY_LESSON = { h01: "rhythm", h02: "rhythm", h03: "timbre", h04: "melody", h05: "melody", h06: "melody", h07: "texture", h08: "texture", h11: "texture", h09: "form", h10: "form", h12: "form", h13: "form" };
+function skillOf(id) {
+  const q = QBYID[id], l = LESSONS[q.li];
+  if (SKILL_BY_LESSON[l.id]) return SKILL_BY_LESSON[l.id];
+  if (q.track && /Угадай/.test(q.q)) return "ear";
+  return "history";
+}
+function skillScores() {
+  const tot = {}, sum = {};
+  Object.keys(QBYID).forEach(id => { const k = skillOf(id); tot[k] = (tot[k] || 0) + 1; sum[k] = (sum[k] || 0) + recall(id); });
+  return SKILLS.map(([k, name]) => ({ k, name, v: tot[k] ? sum[k] / tot[k] : 0, n: tot[k] || 0 }));
+}
+const memWord = m => m >= 0.85 ? "крепко" : m >= 0.6 ? "помню" : "тускнеет";
+const fadeStyle = m => m == null ? "" : `filter:grayscale(${Math.round((1 - m) * 100) / 100}) opacity(${(0.45 + 0.55 * m).toFixed(2)})`;
+
+/* ---------- время ---------- */
 function dayRec() { const k = todayKey(); return S.days[k] || (S.days[k] = { sec: 0, opens: 0, cards: 0 }); }
 let lastAct = Date.now(), hiddenAt = 0, tick = 0;
 function countOpen() { dayRec().opens++; save(); }
@@ -3108,21 +3301,11 @@ function paintStaff() {
     const l = LESSONS[it.li], { cur } = partAt(l, it.kind === "done" ? l.cards.length - 1 : it.ci);
     if (cur) { total = cur.end - cur.start - 1; done = it.kind === "done" ? total : Math.max(0, it.ci - cur.start - 1); }
     else { total = l.cards.length; done = it.kind === "done" ? total : it.ci; }
+    if (it.kind === "lesson" && LESSONS[it.li].cards[it.ci].t === "part") { total = 0; }
   }
-  else { host.innerHTML = ""; return; }
-  const w = 1000, h = 34, pad = 16, step = (w - pad * 2) / Math.max(1, total);
-  let s = `<svg viewBox="0 0 ${w} ${h}" preserveAspectRatio="none">`;
-  for (let i = 0; i < 5; i++) s += `<line x1="0" x2="${w}" y1="${5 + i * 6}" y2="${5 + i * 6}" stroke="var(--line)" stroke-width="1" vector-effect="non-scaling-stroke"/>`;
-  s += `</svg>`;
-  // note heads as HTML so they keep their shape at any width
-  let heads = "";
-  for (let i = 0; i < total; i++) {
-    const x = (pad + step * (i + .5)) / w * 100, y = [23, 17, 11, 20, 14, 8, 17, 23, 11][i % 9];
-    const filled = i < done, now = i === done;
-    heads += `<span style="position:absolute;left:calc(${x}% - 6px);top:${y - 4}px;width:12px;height:9px;border-radius:50%;transform:rotate(-20deg);
-      ${filled ? "background:var(--era)" : `border:1.5px solid ${now ? "var(--ink)" : "var(--line)"};box-sizing:border-box;background:var(--surface)`}"></span>`;
-  }
-  host.innerHTML = s + heads;
+  if (!total) { host.innerHTML = ""; return; }
+  // сторис: по полоске на карточку текущей части
+  host.innerHTML = `<div class="segs">${Array.from({ length: total }, (_, i) => `<i class="${i < done ? "f" : i === done ? "c" : ""}"></i>`).join("")}</div>`;
 }
 
 function header() {
@@ -3175,12 +3358,13 @@ function renderHome() {
           if (ps.length) return cur && ci > 0 ? `часть ${cur.n} из ${ps.length} · ${esc(cur.title)}` : `${ps.length} части по 2–3 минуты`;
           return ci > 0 ? `пройдено ${ci} из ${total} карточек` : `${total} карточек · около 2 минут`; })()}</div></div>
     </div>` : `<div class="next"><div class="ninfo"><div class="ntitle">Трек пройден</div><div class="nmeta">Остались только повторения</div></div></div>`}
-    <div class="course" aria-label="Прогресс курса">${[0, 1, 2, 3, 4].map(i => `<i style="top:${4 + i * 6}px"></i>`).join("")}${notes}</div>
-    <div class="ccap">Курс «Классическая музыка: база» · каждая нота — урок</div>
+    ${pathBar()}
+    ${fadingBlock()}
     <div class="grow"></div>
     ${due ? `<p class="duenote">Сначала ${due} ${due === 1 ? "карточка" : due < 5 ? "карточки" : "карточек"} на повторение, потом урок.</p>` : ""}`;
   stage.replaceChildren(card);
   hydratePortraits(card);
+  card.querySelectorAll("[data-refresh]").forEach(b => b.addEventListener("click", () => refreshLesson(+b.dataset.refresh)));
   const label = finished ? (due ? "Повторить" : "Открыть программу") : (ci > 0 || due ? "Продолжить" : "Начать урок");
   actions.innerHTML = `<button class="btn" id="go">${label}</button>`;
   hint.textContent = "один заход — около двух минут";
@@ -3188,6 +3372,34 @@ function renderHome() {
     if (finished && !due) { showTab("prog"); return; }
     home = false; buildQueue(); render();
   });
+}
+
+/* «Путь слушателя»: прогресс-бар, в котором первые шаги уже засчитаны */
+function pathBar() {
+  const BONUS = 2, partsOfL = l => l.parts || 1;
+  const total = BONUS + LESSONS.reduce((a, l) => a + partsOfL(l), 0);
+  let doneU = BONUS + LESSONS.reduce((a, l) => a + (S.done[l.id] ? partsOfL(l) : 0), 0);
+  const cl = LESSONS[S.pos.li];
+  if (cl && !S.done[cl.id] && S.pos.ci > 0) { const { cur } = partAt(cl, Math.min(S.pos.ci, cl.cards.length - 1)); if (cur) doneU += cur.n - 1; }
+  const pct = Math.max(1, Math.round(doneU / total * 100));
+  return `<div class="path"><div class="ph"><b>Путь слушателя</b><span>${pct}%</span></div>
+    <div class="pbar"><i style="width:${doneU / total * 100}%"></i></div>
+    <div class="psub">${doneU <= BONUS ? "Два шага уже позади: ты установил «Антракт» и выбрал классику" : `${doneU - BONUS} из ${total - BONUS} частей пройдено`}</div></div>`;
+}
+function fadingBlock() {
+  const list = LESSONS.map((l, i) => ({ l, i, m: S.done[l.id] ? lessonMemory(l) : null })).filter(x => x.m != null && x.m < 0.75).sort((a, b) => a.m - b.m).slice(0, 2);
+  if (!list.length) return "";
+  return `<div class="fade"><div class="fh">Тускнеет</div>${list.map(({ l, i, m }) => {
+    const ck = lessonComposer(l), C = ck && COMPOSERS[ck];
+    return `<div class="frow">${C ? `<span class="medal mini2" aria-hidden="true" data-key="${ck}" data-wiki="${esc(C.wiki || "")}" style="${fadeStyle(m)}"><span>${esc(C.ini)}</span></span>` : `<span class="dot" style="--era:var(--${l.era});opacity:${(0.35 + 0.65 * m).toFixed(2)}"></span>`}
+      <span class="ft">${esc(l.title)}<span class="membar"><i style="width:${Math.round(m * 100)}%"></i></span></span>
+      <button class="btn ghost fbtn" data-refresh="${i}">Освежить</button></div>`;
+  }).join("")}</div>`;
+}
+function refreshLesson(li) {
+  const ids = lessonQs(LESSONS[li]).filter(id => S.cards[id]).sort((a, b) => recall(a) - recall(b)).slice(0, 5);
+  queue = ids.map(id => ({ kind: "review", id })); qi = 0; hist = {}; answered = null;
+  pushLesson(); home = false; render();
 }
 
 function render() {
@@ -3218,6 +3430,7 @@ function renderCard() {
     else if (c.t === "listen") renderListen(card, c, it);
     else if (c.t === "voices") renderVoices(card, c, it);
     else if (c.t === "reflect") renderReflect(card, c, it);
+    else if (c.t === "chat") renderChat(card, c, it);
     else renderQ(card, c, false);
   }
   hydratePortraits(card);
@@ -3280,8 +3493,10 @@ function seenComposers(it) {
 }
 
 function renderText(card, c, it) {
+  card.classList.add("story");
   card.innerHTML = `<div class="kicker">${esc(ERAS[LESSONS[it.li].era].name)}${ERAS[LESSONS[it.li].era].years ? " · " + ERAS[LESSONS[it.li].era].years : ""}</div>
     <h2>${esc(c.h)}</h2>${figs(c, it)}<p>${esc(c.b)}</p>`;
+  tapHint(card);
   nextBtn();
 }
 
@@ -3290,7 +3505,7 @@ function renderListen(card, c, it) {
     <div class="work">${esc(c.work)}</div>
     <div class="meta">${esc(c.meta)}</div>
     <div class="player"><button class="play" aria-label="Слушать">${ICON.play}</button>
-      <div class="ptrack"><div class="bar"><i></i></div><div class="ptime"><span>0:00</span><span>—</span></div></div></div>
+      <div class="ptrack"><div class="bar"><i></i></div><div class="ptime"><span>0:00</span><span>—</span></div></div>${heartBtn(c.track)}</div>
     ${c.inst ? FIG.chips(c.inst) : ""}
     <p class="note">${esc(c.note)}</p>
     ${c.marks ? `<div class="marks">${c.marks.map(([t, lab]) => `<button class="mark" data-t="${t}"><span class="mt">${fmtMin(t)}</span><span>${esc(lab)}</span></button>`).join("")}</div>` : ""}
@@ -3299,6 +3514,7 @@ function renderListen(card, c, it) {
     <button class="more" hidden>Дослушать целиком</button>
     <div class="synth src"></div>`;
   const ui = playerUI(card, c.track);
+  wireHeart(card, { title: c.work, meta: c.meta, li: it.li, era: eraOfTrack(c.track, LESSONS[it.li]) });
   card.querySelectorAll(".mark").forEach(m => m.addEventListener("click", () => { playFrom(c.track, ui, +m.dataset.t); lastAct = Date.now(); }));
   if (c.marks) {
     const sync = () => { if (curTrack !== c.track) return; const t = el.currentTime;
@@ -3308,12 +3524,57 @@ function renderListen(card, c, it) {
   nextBtn();
 }
 
+/* ---------- «Мои находки» ---------- */
+const TRACK_ERA = { chorale: "baroque", canon: "baroque", haydn: "classical", r_k525: "classical", r_b5: "classical", r_k265: "classical",
+  r_turca: "classical", r_moon: "classical", r_578: "baroque", r_spring: "baroque", r_vltava: "romantic", r_danube: "romantic",
+  r_nocturne: "romantic", r_sousa: "modern", r_veni: "intro" };
+function eraOfTrack(track, l) {
+  if (l && l.era !== "listen") return l.era;
+  const k = Object.keys(TRACK_ERA).find(p => track.startsWith(p)); return k ? TRACK_ERA[k] : null;
+}
+const liked = t => !!(S.likes || {})[t];
+function heartBtn(track) { return `<button class="heart ${liked(track) ? "on" : ""}" data-track="${track}" aria-pressed="${liked(track)}" aria-label="В находки"><svg viewBox="0 0 24 24"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10Z"/></svg></button>`; }
+function wireHeart(card, info) {
+  card.querySelectorAll(".heart").forEach(h => h.addEventListener("click", () => {
+    S.likes = S.likes || {};
+    const t = h.dataset.track;
+    if (S.likes[t]) delete S.likes[t]; else S.likes[t] = Object.assign({ at: Date.now() }, info);
+    h.classList.toggle("on", !!S.likes[t]); h.setAttribute("aria-pressed", !!S.likes[t]);
+    if (S.likes[t]) { h.classList.remove("beat"); void h.offsetWidth; h.classList.add("beat"); hint.textContent = "Добавлено в «Находки»"; }
+    save(); lastAct = Date.now();
+  }));
+}
+function renderFinds() {
+  const L = Object.entries(S.likes || {}).sort((a, b) => b[1].at - a[1].at);
+  let html = `<h1>Находки</h1><p class="sub">Фрагменты, которые тебе понравились. Ставь ♥ на карточках «Слушаем».</p>`;
+  if (!L.length) {
+    html += `<div class="empty"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10Z"/></svg><p>Здесь появится твой плейлист. Нажми на сердечко рядом с плеером, когда фрагмент зацепит.</p></div>`;
+    $("#finds").innerHTML = html; return;
+  }
+  const cnt = {}; L.forEach(([, v]) => { if (v.era && ERAS[v.era] && v.era !== "intro") cnt[v.era] = (cnt[v.era] || 0) + 1; });
+  const sum = Object.values(cnt).reduce((a, b) => a + b, 0);
+  if (sum) {
+    const order = ["baroque", "classical", "romantic", "modern"].filter(e => cnt[e]);
+    html += `<div class="taste"><h3>Профиль вкуса</h3><div class="tbar">${order.map(e => `<i style="flex:${cnt[e]};background:var(--${e})"></i>`).join("")}</div>
+      <div class="tleg">${order.map(e => `<span><b style="background:var(--${e})"></b>${ERAS[e].name} ${Math.round(cnt[e] / sum * 100)}%</span>`).join("")}</div></div>`;
+  }
+  html += `<div class="flist">${L.map(([t, v]) => `<div class="fitem" style="--era:var(--${v.era && ERAS[v.era] ? v.era : "listen"})">
+      <div class="mini"><button class="play" aria-label="Слушать">${ICON.play}</button><div class="ptrack"><div class="fi-t">${esc(v.title || t)}</div><div class="bar"><i></i></div><div class="ptime"><span>0:00</span><span>—</span></div></div>${heartBtn(t)}</div>
+      ${v.meta ? `<div class="fi-m">${esc(v.meta)}</div>` : ""}</div>`).join("")}</div>`;
+  $("#finds").innerHTML = html;
+  $("#finds").querySelectorAll(".fitem").forEach((el2, i) => {
+    const [t, v] = L[i];
+    playerUI(el2, t);
+    wireHeart(el2, v);
+  });
+}
+
 function renderVoices(card, c, it) {
   card.innerHTML = `<div class="kicker">Слушаем по голосам</div>
     <div class="work">${esc(c.work)}</div>
     ${c.meta ? `<div class="meta">${esc(c.meta)}</div>` : ""}
     <div class="player"><button class="play" aria-label="Слушать">${ICON.play}</button>
-      <div class="ptrack"><div class="bar"><i></i></div><div class="ptime"><span>0:00</span><span>—</span></div></div></div>
+      <div class="ptrack"><div class="bar"><i></i></div><div class="ptime"><span>0:00</span><span>—</span></div></div>${heartBtn(c.opts[0].track)}</div>
     <div class="vsel" role="group" aria-label="Что звучит">${c.opts.map((o, i) => `<button class="vbtn ${i === 0 ? "on" : ""}" data-i="${i}">${esc(o.label)}</button>`).join("")}</div>
     <p class="note">${esc(c.note)}</p>
     ${figs(c, it)}
@@ -3321,6 +3582,7 @@ function renderVoices(card, c, it) {
     <div class="synth src"></div>`;
   let cur = 0;
   const ui = playerUI(card, c.opts[0].track, { getTrack: () => c.opts[cur].track });
+  wireHeart(card, { title: c.work, meta: c.meta, li: it.li, era: eraOfTrack(c.opts[0].track, LESSONS[it.li]) });
   card.querySelectorAll(".vbtn").forEach(b => b.addEventListener("click", () => {
     const i = +b.dataset.i; if (i === cur) return;
     card.querySelectorAll(".vbtn").forEach(x => x.classList.toggle("on", x === b));
@@ -3331,6 +3593,52 @@ function renderVoices(card, c, it) {
   }));
   nextBtn();
 }
+
+/* письма композиторов: сообщения появляются по одному */
+function renderChat(card, c, it) {
+  const C = COMPOSERS[c.who] || {};
+  const av = k => { const P = COMPOSERS[k]; return P ? `<div class="medal xs" aria-hidden="true" data-key="${k}" data-wiki="${esc(P.wiki || "")}"><span>${esc(P.ini)}</span></div>` : `<div class="medal xs alt" aria-hidden="true"><span>${esc((c.toIni || "?"))}</span></div>`; };
+  card.classList.add("chat");
+  card.innerHTML = `<div class="chead">${av(c.who)}<div class="cht"><b>${esc(C.name || c.who)}</b><span>${esc(c.title)}</span></div></div>
+    <div class="cmeta2">${esc(c.date)}</div>
+    <div class="msgs" aria-live="polite"></div>
+    <div class="grow"></div>
+    <div class="csrc">${esc(c.src || "Пересказ подлинного письма, сокращено")}</div>`;
+  const box = $(".msgs", card);
+  let shown = hist[qi] ? c.msgs.length : 0, busy = false;
+  const bubble = m => {
+    const mine = m.from === "to";
+    return `<div class="msg ${mine ? "r" : "l"}">${!mine && m.name ? `<i>${esc(m.name)}</i>` : mine && m.name ? `<i>${esc(m.name)}</i>` : ""}${esc(m.text)}</div>`;
+  };
+  const paint = () => { box.innerHTML = c.msgs.slice(0, shown).map(bubble).join(""); };
+  const finish = () => { hist[qi] = { read: true }; nextBtn(); };
+  const more = () => {
+    if (busy || shown >= c.msgs.length) return false;
+    busy = true;
+    const typing = document.createElement("div");
+    typing.className = "msg " + (c.msgs[shown].from === "to" ? "r" : "l") + " typing";
+    typing.innerHTML = "<span></span><span></span><span></span>";
+    box.appendChild(typing);
+    typing.scrollIntoView({ block: "end", behavior: "smooth" });
+    setTimeout(() => {
+      shown++; paint(); busy = false;
+      const last = box.lastElementChild; last && last.classList.add("pop");
+      last && last.scrollIntoView({ block: "end", behavior: "smooth" });
+      if (shown >= c.msgs.length) finish(); else moreBtn();
+    }, reduceMotion() ? 0 : 650);
+    return true;
+  };
+  const moreBtn = () => {
+    actions.innerHTML = `${qi > 0 ? BACK : ""}<button class="btn" id="more">Дальше в письме</button>`;
+    $("#more").addEventListener("click", more); wireBack();
+    hint.textContent = `${shown} из ${c.msgs.length}`;
+  };
+  card._tap = () => (shown < c.msgs.length ? (more(), true) : false);
+  paint();
+  if (shown >= c.msgs.length) { finish(); return; }
+  moreBtn(); more();
+}
+const reduceMotion = () => matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 function renderReflect(card, c, it) {
   card.innerHTML = `<div class="kicker">Без правильного ответа</div><div class="qtext">${esc(c.q)}</div>
@@ -3505,6 +3813,25 @@ function advance() {
   render();
 }
 
+/* сторис: тап по правой части карточки — дальше, по левой — назад */
+const INTERACTIVE = "button, a, input, textarea, .opt, .vbtn, .mark, .player, .mini, .tapzone, .vsel, .heart";
+stage.addEventListener("click", e => {
+  if (home || paused || $("#s-learn").hidden) return;
+  if (e.target.closest(INTERACTIVE)) return;
+  const sel = window.getSelection && String(window.getSelection()); if (sel) return;
+  const card = $(".card", stage); if (!card) return;
+  const r = card.getBoundingClientRect(), x = (e.clientX - r.left) / r.width;
+  if (x < 0.3) { if (qi > 0) back(); return; }
+  if (card._tap && card._tap()) return;          // карточка сама обработала тап (письма)
+  const b = $("#next"); if (b && !b.disabled) { tapsSeen(); b.click(); }
+});
+function tapsSeen() { S.ui = S.ui || {}; S.ui.taps = (S.ui.taps || 0) + 1; }
+function tapHint(card) {
+  if (((S.ui || {}).taps || 0) >= 3) return;
+  const h = document.createElement("div"); h.className = "taphint"; h.textContent = "тап справа — дальше · слева — назад";
+  card.appendChild(h);
+}
+
 document.addEventListener("keydown", e => {
   if ($("#s-learn").hidden || paused) return;
   if (e.key === "Enter" || e.key === "ArrowDown" || e.key === " ") { const b = $("#next"); if (b && !b.disabled && document.activeElement?.tagName !== "BUTTON") { e.preventDefault(); b.click(); } }
@@ -3517,18 +3844,41 @@ function renderProg() {
   LESSONS.forEach((l, i) => {
     if (l.era !== era) { era = l.era; const E = ERAS[era];
       html += `<div class="era-h" style="--era:var(--${era})"><span class="n">${E.name}</span><span class="tm">${E.tempo}</span><span class="y">${E.years}</span></div>`; }
-    const done = !!S.done[l.id], curL = S.pos.li === i;
-    const st = done ? "пройден" : curL ? (S.pos.ci > 0 ? "продолжить" : "следующий") : (l.parts ? "3 части" : "");
-    html += `<button class="row ${done ? "done" : ""} ${curL ? "cur" : ""}" data-li="${i}" style="--era:var(--${l.era})">
-      <span class="no">${String(i + 1).padStart(2, "0")}</span><span class="dot"></span><span class="tt">${esc(l.title)}</span><span class="st">${st}</span></button>`;
+    const done = !!S.done[l.id], curL = S.pos.li === i, mem = done ? lessonMemory(l) : null;
+    const due = done && lessonQs(l).some(id => S.cards[id] && S.cards[id].due <= Date.now());
+    const st = done ? (due ? "пора повторить" : mem != null ? memWord(mem) : "пройден") : curL ? (S.pos.ci > 0 ? "продолжить" : "следующий") : "";
+    const ck = lessonComposer(l), C = ck && COMPOSERS[ck];
+    const icon = C ? `<span class="medal mini2" aria-hidden="true" data-key="${ck}" data-wiki="${esc(C.wiki || "")}" style="${fadeStyle(done ? mem : 0.2)}"><span>${esc(C.ini)}</span></span>`
+                   : `<span class="dot" style="${done && mem != null ? `opacity:${(0.35 + 0.65 * mem).toFixed(2)}` : ""}"></span>`;
+    html += `<button class="row ${done ? "done" : ""} ${curL ? "cur" : ""} ${due || (mem != null && mem < 0.6) ? "fading" : ""}" data-li="${i}" style="--era:var(--${l.era})">
+      <span class="no">${String(i + 1).padStart(2, "0")}</span>${icon}<span class="tt">${esc(l.title)}${done && mem != null ? `<span class="membar"><i style="width:${Math.round(mem * 100)}%"></i></span>` : ""}</span><span class="st">${st}</span></button>`;
   });
-  html += `<p class="foot">Аудио — короткие фрагменты, синтезированные по нотам: сами произведения давно в общественном достоянии. Нажми на любой урок, чтобы пройти или переслушать его.</p>`;
+  html += `<p class="foot">Портреты и полоски под названиями показывают, насколько крепко ты помнишь урок. Со временем они тускнеют — повторение возвращает цвет. Нажми на любой урок, чтобы пройти или переслушать его.</p>`;
   $("#prog").innerHTML = html;
+  hydratePortraits($("#prog"));
   $("#prog").querySelectorAll(".row").forEach(b => b.addEventListener("click", () => {
     const li = +b.dataset.li;
     if (li !== S.pos.li) S.pos = { li, ci: 0 };
     save(); queue = []; qi = 0; hist = {}; pushLesson(); home = false; showTab("learn"); render();
   }));
+}
+
+/* ---------- радар навыков ---------- */
+function radarSVG() {
+  const sc = skillScores(), n = sc.length, W = 340, H = 270, cx = W / 2, cy = 138, Rr = 84;
+  const pt = (i, v) => { const a = -Math.PI / 2 + i * 2 * Math.PI / n; return [cx + Math.cos(a) * Rr * v, cy + Math.sin(a) * Rr * v]; };
+  let s = `<svg viewBox="0 0 ${W} ${H}" class="radar" role="img" aria-label="Радар навыков: ${sc.map(x => `${x.name} ${Math.round(x.v * 100)}%`).join(", ")}">`;
+  [0.25, 0.5, 0.75, 1].forEach(g => { s += `<polygon points="${sc.map((_, i) => pt(i, g).join(",")).join(" ")}" fill="none" stroke="var(--line)" stroke-width="1"/>`; });
+  sc.forEach((_, i) => { const [x, y] = pt(i, 1); s += `<line x1="${cx}" y1="${cy}" x2="${x}" y2="${y}" stroke="var(--line)"/>`; });
+  const poly = sc.map((x, i) => pt(i, Math.max(0.03, x.v)).join(",")).join(" ");
+  s += `<polygon points="${poly}" fill="color-mix(in srgb, var(--listen) 28%, transparent)" stroke="var(--listen)" stroke-width="2.2" stroke-linejoin="round"/>`;
+  sc.forEach((x, i) => { const [px, py] = pt(i, Math.max(0.03, x.v)); s += `<circle cx="${px}" cy="${py}" r="3.5" fill="var(--listen)"/>`; });
+  sc.forEach((x, i) => {
+    const [lx, ly] = pt(i, 1.17), anc = Math.abs(lx - cx) < 8 ? "middle" : lx > cx ? "start" : "end";
+    s += `<text x="${lx}" y="${ly}" text-anchor="${anc}" font-family="Golos Text, system-ui, sans-serif" font-size="11.5" font-weight="600" fill="var(--ink)">${esc(x.name)}</text>`;
+    s += `<text x="${lx}" y="${ly + 14}" text-anchor="${anc}" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="var(--muted)">${Math.round(x.v * 100)}%</text>`;
+  });
+  return s + `</svg>`;
 }
 
 /* ---------- stats ---------- */
@@ -3566,6 +3916,7 @@ function renderStats() {
       <div class="tile"><b>${learned}</b><span>карточек в повторении</span></div>
       <div class="tile"><b>${S.answers.all ? pct + "%" : "—"}</b><span>верных ответов</span></div>
     </div>
+    <div class="chart"><h3>Навыки слушателя</h3>${radarSVG()}<p class="rnote">Каждая ось — доля вопросов этой темы, которые ты сейчас помнишь. Пройденное постепенно забывается, и ось сжимается, пока не повторишь.</p></div>
     <div class="chart"><h3>Минуты по дням</h3>${svg}</div>
     <div class="tools"><h3>Резервная копия</h3>
       <div class="rowb"><button class="btn ghost" id="exp">Скопировать прогресс</button><button class="btn ghost" id="imp">Вставить из копии</button><button class="btn ghost" id="rst">Сбросить</button></div>
@@ -3588,10 +3939,11 @@ function renderStats() {
 /* ---------- tabs ---------- */
 function showTab(t) {
   stopAudio();
-  ["learn", "prog", "stats"].forEach(x => { $("#s-" + x).hidden = x !== t; });
+  ["learn", "prog", "finds", "stats"].forEach(x => { $("#s-" + x).hidden = x !== t; });
   document.querySelectorAll(".tabs button").forEach(b => { if (b.dataset.tab === t) b.setAttribute("aria-current", "page"); else b.removeAttribute("aria-current"); });
   if (t === "prog") renderProg();
   if (t === "stats") renderStats();
+  if (t === "finds") renderFinds();
   if (t === "learn") { if (home) renderHome(); else setEra(eraOf(item())); }
 }
 document.querySelectorAll(".tabs button").forEach(b => b.addEventListener("click", () => {
