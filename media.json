@@ -43,11 +43,6 @@
    "start": 0,
    "dur": 40
   },
-  "l07_surprise": {
-   "file": "Haydn; Symphony No. 94 \"Surprise\", 2. Andante.ogg",
-   "start": 0,
-   "dur": 50
-  },
   "l08_nachtmusik": {
    "file": "Mozart - Eine kleine Nachtmusik - 1. Allegro.ogg",
    "start": 0,
@@ -93,11 +88,6 @@
    "start": 0,
    "dur": 50
   },
-  "l17_swan": {
-   "file": "Tchaikovsky Swan Lake Op.20 No.10. Scène.ogg",
-   "start": 0,
-   "dur": 50
-  },
   "l18_clairdelune": {
    "file": "Clair de lune (Claude Debussy) Suite bergamasque.ogg",
    "start": 0,
@@ -105,11 +95,6 @@
   },
   "l19_prelude": {
    "file": "Sergei Rachmaninoff performs Rachmaninoff's Prelude in C sharp minor, Op. 3.ogg",
-   "start": 0,
-   "dur": 45
-  },
-  "l20_bolero": {
-   "file": "Bolero-Maurice Ravel-1930.ogg",
    "start": 0,
    "dur": 45
   }

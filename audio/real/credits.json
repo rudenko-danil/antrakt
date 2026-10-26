@@ -24,11 +24,6 @@
   "artist": "Composer: <a href=\"//commons.wikimedia.org/wiki/Georg_Friedrich_H%C3%A4ndel\" title=\"Georg Friedrich Händel\">Georg Friedrich Händel</a>; Performed by: MIT Concert Choir; Directed by William C. Cutter.",
   "license": "CC BY-SA 2.0"
  },
- "l07_surprise": {
-  "file": "Haydn; Symphony No. 94 \"Surprise\", 2. Andante.ogg",
-  "artist": "<p>Boston Symphony Orchestra\n</p>\nSerge Koussevitzky",
-  "license": "Public domain"
- },
  "l08_nachtmusik": {
   "file": "Mozart - Eine kleine Nachtmusik - 1. Allegro.ogg",
   "artist": "<bdi><a href=\"https://en.wikipedia.org/wiki/en:Wolfgang_Amadeus_Mozart\" class=\"extiw\" title=\"w:en:Wolfgang Amadeus Mozart\"><span title=\"Austrian composer of the Classical period (1756–1791)\">Wolfgang Amadeus Mozart</span></a></bdi>",
@@ -74,11 +69,6 @@
   "artist": "Richard Wagner (1813–1883)",
   "license": "Public domain"
  },
- "l17_swan": {
-  "file": "Tchaikovsky Swan Lake Op.20 No.10. Scène.ogg",
-  "artist": "<bdi><a href=\"https://en.wikipedia.org/wiki/en:Pyotr_Ilyich_Tchaikovsky\" class=\"extiw\" title=\"w:en:Pyotr Ilyich Tchaikovsky\"><span title=\"Russian composer (1840–1893)\">Pyotr Ilyich Tchaikovsky</span></a></bdi>",
-  "license": "Public domain"
- },
  "l18_clairdelune": {
   "file": "Clair de lune (Claude Debussy) Suite bergamasque.ogg",
   "artist": "<bdi><a href=\"https://en.wikipedia.org/wiki/en:Claude_Debussy\" class=\"extiw\" title=\"w:en:Claude Debussy\"><span title=\"French classical composer (1862–1918)\">Claude Debussy</span></a></bdi>",
@@ -87,11 +77,6 @@
  "l19_prelude": {
   "file": "Sergei Rachmaninoff performs Rachmaninoff's Prelude in C sharp minor, Op. 3.ogg",
   "artist": "<bdi><a href=\"https://en.wikipedia.org/wiki/en:Sergei_Rachmaninoff\" class=\"extiw\" title=\"w:en:Sergei Rachmaninoff\"><span title=\"Russian composer, pianist and conductor (1873–1943)\">Sergei Rachmaninoff</span></a></bdi>",
-  "license": "Public domain"
- },
- "l20_bolero": {
-  "file": "Bolero-Maurice Ravel-1930.ogg",
-  "artist": "<bdi><a href=\"https://en.wikipedia.org/wiki/en:Maurice_Ravel\" class=\"extiw\" title=\"w:en:Maurice Ravel\"><span title=\"French composer (1875–1937)\">Maurice Ravel</span></a></bdi>",
   "license": "Public domain"
  }
 }

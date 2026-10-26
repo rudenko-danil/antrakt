@@ -271,5 +271,226 @@
  "tempo_slow": {
   "dur": 18.55,
   "tempo": "adagio"
+ },
+ "r_k525_open": {
+  "dur": 29.7,
+  "src": "k525_1",
+  "start": 0.3,
+  "file": "Mozart - Eine kleine Nachtmusik - 1. Allegro.ogg",
+  "who": "Advent Chamber Orchestra",
+  "license": "CC BY-SA 2.0"
+ },
+ "r_k525_dev": {
+  "dur": 30.0,
+  "src": "k525_1",
+  "start": 195.0,
+  "file": "Mozart - Eine kleine Nachtmusik - 1. Allegro.ogg",
+  "who": "Advent Chamber Orchestra",
+  "license": "CC BY-SA 2.0"
+ },
+ "r_k525_recap": {
+  "dur": 35,
+  "src": "k525_1",
+  "start": 215,
+  "file": "Mozart - Eine kleine Nachtmusik - 1. Allegro.ogg",
+  "who": "Advent Chamber Orchestra",
+  "license": "CC BY-SA 2.0"
+ },
+ "r_k525_expo2": {
+  "dur": 30,
+  "src": "k525_1",
+  "start": 30,
+  "file": "Mozart - Eine kleine Nachtmusik - 1. Allegro.ogg",
+  "who": "Advent Chamber Orchestra",
+  "license": "CC BY-SA 2.0"
+ },
+ "r_b5_motif": {
+  "dur": 6.0,
+  "src": "b5_1",
+  "start": 0.0,
+  "file": "Ludwig van Beethoven - Symphonie 5 c-moll - 1. Allegro con brio.ogg",
+  "who": "Fulda Symphonic Orchestra, Simon Schindler",
+  "license": "Public domain"
+ },
+ "r_b5_open": {
+  "dur": 25.0,
+  "src": "b5_1",
+  "start": 0.0,
+  "file": "Ludwig van Beethoven - Symphonie 5 c-moll - 1. Allegro con brio.ogg",
+  "who": "Fulda Symphonic Orchestra, Simon Schindler",
+  "license": "Public domain"
+ },
+ "r_b5_dev": {
+  "dur": 25,
+  "src": "b5_1",
+  "start": 165,
+  "file": "Ludwig van Beethoven - Symphonie 5 c-moll - 1. Allegro con brio.ogg",
+  "who": "Fulda Symphonic Orchestra, Simon Schindler",
+  "license": "Public domain"
+ },
+ "r_b5_recap": {
+  "dur": 30,
+  "src": "b5_1",
+  "start": 245,
+  "file": "Ludwig van Beethoven - Symphonie 5 c-moll - 1. Allegro con brio.ogg",
+  "who": "Fulda Symphonic Orchestra, Simon Schindler",
+  "license": "Public domain"
+ },
+ "r_k265_theme": {
+  "dur": 10.5,
+  "src": "k265",
+  "start": 0.0,
+  "file": "Mozart Ah vous dirai-je, Maman.ogg",
+  "who": "Андрей Бондаренко",
+  "license": "CC BY-SA 4.0"
+ },
+ "r_k265_minor": {
+  "dur": 30,
+  "src": "k265",
+  "start": 341,
+  "file": "Mozart Ah vous dirai-je, Maman.ogg",
+  "who": "Андрей Бондаренко",
+  "license": "CC BY-SA 4.0"
+ },
+ "r_k265_late": {
+  "dur": 22,
+  "src": "k265",
+  "start": 600,
+  "file": "Mozart Ah vous dirai-je, Maman.ogg",
+  "who": "Андрей Бондаренко",
+  "license": "CC BY-SA 4.0"
+ },
+ "r_veni": {
+  "dur": 27.2,
+  "src": "veni",
+  "start": 3.8,
+  "file": "Veni.sancte.spiritus.ogg",
+  "who": "Membeth",
+  "license": "Public domain"
+ },
+ "r_578_one": {
+  "dur": 17.5,
+  "src": "bwv578",
+  "start": 1.5,
+  "file": "J.S.Bach – BWV 578.oga",
+  "who": "Formanavt, орган",
+  "license": "Public domain"
+ },
+ "r_578_entry": {
+  "dur": 18,
+  "src": "bwv578",
+  "start": 12,
+  "file": "J.S.Bach – BWV 578.oga",
+  "who": "Formanavt, орган",
+  "license": "Public domain"
+ },
+ "r_578_many": {
+  "dur": 22,
+  "src": "bwv578",
+  "start": 150,
+  "file": "J.S.Bach – BWV 578.oga",
+  "who": "Formanavt, орган",
+  "license": "Public domain"
+ },
+ "r_vltava_springs": {
+  "dur": 37,
+  "src": "vltava",
+  "start": 3,
+  "file": "Bedrich Smetana - ma vlast - i. vltava 'the moldau'.ogg",
+  "who": "Musopen",
+  "license": "Public domain"
+ },
+ "r_vltava_river": {
+  "dur": 40,
+  "src": "vltava",
+  "start": 75,
+  "file": "Bedrich Smetana - ma vlast - i. vltava 'the moldau'.ogg",
+  "who": "Musopen",
+  "license": "Public domain"
+ },
+ "r_turca_open": {
+  "dur": 19.7,
+  "src": "turca",
+  "start": 0.3,
+  "file": "Rondo Alla Turka.ogg",
+  "who": "",
+  "license": "Public domain"
+ },
+ "r_turca_return": {
+  "dur": 40,
+  "src": "turca",
+  "start": 100,
+  "file": "Rondo Alla Turka.ogg",
+  "who": "",
+  "license": "Public domain"
+ },
+ "r_danube": {
+  "dur": 25,
+  "src": "danube",
+  "start": 100,
+  "file": "\"An der schönen, blauen Donau\" performed by the U.S. Marine Band.mp3",
+  "who": "оркестр Морской пехоты США",
+  "license": "Public domain"
+ },
+ "r_sousa": {
+  "dur": 20,
+  "src": "sousa",
+  "start": 10,
+  "file": "John Philip Sousa - Comrades of the Legion.ogg",
+  "who": "оркестр Морской пехоты США",
+  "license": "Public domain"
+ },
+ "r_nocturne": {
+  "dur": 25,
+  "src": "nocturne",
+  "start": 0,
+  "file": "Chopin Nocturne Op 9 No 2.ogg",
+  "who": "",
+  "license": "CC BY-SA 3.0"
+ },
+ "r_moon": {
+  "dur": 30,
+  "src": "moonlight",
+  "start": 3,
+  "file": "Ludwig van Beethoven - sonata no. 14 in c sharp minor 'moonlight', op. 27 no. 2 - i. adagio sostenuto.ogg",
+  "who": "Paul Pitman, Musopen",
+  "license": "Public domain"
+ },
+ "r_spring": {
+  "dur": 20,
+  "src": "spring",
+  "start": 0,
+  "file": "Vivaldi - Four Seasons 1 Spring mvt 1 Allegro - John Harrison violin.oga",
+  "who": "Джон Харрисон, скрипка",
+  "license": "CC BY-SA 4.0"
+ },
+ "rondo_teach": {
+  "dur": 45.64,
+  "sections": [
+   [
+    "A",
+    0.0
+   ],
+   [
+    "B",
+    8.727
+   ],
+   [
+    "A",
+    17.455
+   ],
+   [
+    "C",
+    26.182
+   ],
+   [
+    "A",
+    34.909
+   ]
+  ]
+ },
+ "haydn_surprise": {
+  "dur": 16.4,
+  "chord": 12.24
  }
 }
