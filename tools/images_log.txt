@@ -1,60 +1,58 @@
-FAIL ctx_l01: 'imageinfo'
-FAIL ctx_l02: 'imageinfo'
-FAIL ctx_l03: 'imageinfo'
-FAIL ctx_l04: 'imageinfo'
-FAIL ctx_l05: 'imageinfo'
-FAIL ctx_l06: lead image is not on Commons: 
-FAIL ctx_l07: 'imageinfo'
-FAIL ctx_l08: 'imageinfo'
-FAIL ctx_l09: 'imageinfo'
-FAIL ctx_l10: 'imageinfo'
-FAIL ctx_l11: 'imageinfo'
-FAIL ctx_l12: lead image is not on Commons: 
-FAIL ctx_l13: 'imageinfo'
-FAIL ctx_l14: 'imageinfo'
-FAIL ctx_l15: 'imageinfo'
-FAIL ctx_l16: 'imageinfo'
-FAIL ctx_l17: 'imageinfo'
-FAIL ctx_l18: 'imageinfo'
-FAIL ctx_l19: HTTP Error 404: Not Found
-FAIL ctx_l20: 'imageinfo'
-FAIL ins_violin: 'imageinfo'
-FAIL ins_viola: 'imageinfo'
-FAIL ins_cello: 'imageinfo'
-FAIL ins_contrabass: 'imageinfo'
-FAIL ins_flute: 'imageinfo'
-FAIL ins_oboe: 'imageinfo'
-FAIL ins_clarinet: 'imageinfo'
-FAIL ins_bassoon: 'imageinfo'
-FAIL ins_trumpet: 'imageinfo'
-FAIL ins_horn: 'imageinfo'
-FAIL ins_trombone: 'imageinfo'
-FAIL ins_tuba: 'imageinfo'
-FAIL ins_timpani: 'imageinfo'
-FAIL ins_orchestra: 'imageinfo'
-FAIL ins_organ: 'imageinfo'
-FAIL ins_harpsichord: 'imageinfo'
-FAIL ins_piano: 'imageinfo'
-FAIL ins_harp: 'imageinfo'
-FAIL lis_gregorian: 'imageinfo'
-FAIL lis_vltava: 'imageinfo'
-FAIL lis_choir: 'imageinfo'
-FAIL lis_metronome: 'imageinfo'
-FAIL lis_monet: 'imageinfo'
-FAIL lis_score: lead image is not on Commons: 
-FAIL lis_concert: 'imageinfo'
-FAIL lis_vienna: 'imageinfo'
-FAIL st_gesualdo: 'imageinfo'
-FAIL st_venosa: 'imageinfo'
-FAIL st_arnstadt: HTTP Error 404: Not Found
-FAIL st_cuzzoni: 'imageinfo'
-FAIL st_farinelli: 'imageinfo'
-FAIL st_philip: 'imageinfo'
-FAIL st_eisenstadt: 'imageinfo'
-FAIL st_paganini: 'imageinfo'
-FAIL st_salieri: 'imageinfo'
-FAIL st_amadeus: lead image is not on Commons: 
-FAIL st_champs: 'imageinfo'
-FAIL st_rite: 'imageinfo'
-FAIL st_genoa: 'imageinfo'
-FAIL st_stradella: 'imageinfo'
+OK   ctx_l01: Guido_van_Arezzo.jpg | Public domain | The original uploader was Robbot at Dutch Wikipedia.
+OK   ctx_l02: Paul_Mignard_-_Jean-Baptiste_Lully.jpg | Public domain | Paul Mignard
+OK   ctx_l03: Ospedale_della_Pietà.jpg | Public domain | 
+OK   ctx_l04: Carl_Friedrich_Lessing_-_The_Siege_(Defense_of_a_Church_Courtyard_During_the_Thirty_Years’_War)_-_Google_Art_Project.jpg | Public domain | Karl Friedrich Lessing
+OK   ctx_l05: Leipzig_Thomaskirche.jpg | Public domain | Dirk Goldhahn
+OK   ctx_l06: The_Foundling_Hospital,_Holborn,_London;_a_bird's-eye_view_o_Wellcome_V0013461.jpg | CC BY 4.0 | 
+OK   ctx_l07: Aerial_image_of_Esterházy_Palace,_Fertőd_(view_from_the_southeast).jpg | CC BY-SA 4.0 | Carsten Steger
+OK   ctx_l08: Salzburg_(48489551981).jpg | CC BY 2.0 | Jorge Franganillo
+OK   ctx_l09: Anonym_Entsatz_Wien_1683.jpg | Public domain | Anonymer, zeitgenössischer Maler
+OK   ctx_l10: Beethoven_Heiligenstaedter_Testament.jpg | Public domain | Ludwig van Beethoven
+OK   ctx_l11: 2020-05-23_Theater_an_der_Wien_Linke_Wienzeile.jpg | CC BY-SA 4.0 | Rosso Robot
+OK   ctx_l12: Moritz_von_Schwind_Schubertiade.jpg | Public domain | Moritz von Schwind
+OK   ctx_l13: Marcin_Zaleski,_Wzięcie_Arsenału.jpg | Public domain | Marcin Zaleski
+OK   ctx_l14: Franz_Hanfstaengl_-_Clara_Schumann_(1857).jpg | Public domain | Franz Hanfstaengl
+OK   ctx_l15: Exterior_Teatro_Alla_Scala_high_quality_01.jpg | CC BY 2.0 | John Picken
+OK   ctx_l16: Bayreuth_Festspielhaus_2006-07-16.jpg | CC BY-SA 2.5 | Rico Neitzel
+OK   ctx_l17: Tschaikowsky_EBieber_1888.jpg | Public domain | Atelier E. Bieber, Hamburg (probably by Leonard Berlin (1841
+OK   ctx_l18: Monet_-_Impression,_Sunrise.jpg | Public domain | Claude Monet
+OK   ctx_l19: Sergei_Rachmaninoff_cph.3a40575.jpg | Public domain | Kubey-Rembrandt Studios (Philadephia, Pennsylvania)
+OK   ctx_l20: Ida_Rubinstein_1912.jpg | Public domain | Unknown authorUnknown author
+OK   ins_violin: Violin_VL100.png | CC0 | Just plain Bill
+OK   ins_viola: Bratsche.jpg | Public domain | Just plain Bill
+OK   ins_cello: Cello_front_side.png | CC BY 3.0 | Georg Feitscher
+OK   ins_contrabass: AGK_bass1_full.jpg | CC BY-SA 3.0 | User:AndrewKepert
+OK   ins_flute: Flûte_traversière.png | CC BY-SA 4.0 | Tubamirum
+OK   ins_oboe: Oboe_Patricola_Artista_PT1.jpg | CC BY-SA 4.0 | Fratelli Patricola, Editor/Bearbeiter User:Gisbert K
+OK   ins_clarinet: Leitner+Kraus_410_320.png | CC BY-SA 4.0 | Leitner &amp; Kraus GmbH, Neustadt/Aisch, Editor/Bearbeiter 
+OK   ins_bassoon: FoxBassoon.png | GFDL 1.2 | Gregory F. Maxwell &lt;gmaxwell@gmail.com&gt; PGP:0xB0413BFA
+OK   ins_trumpet: Yamaha_Trumpet_YTR-8335LA_crop.jpg | CC BY-SA 4.0 | Yamaha Corporation
+OK   ins_horn: Yamaha_Horn_YHR-667V.tif | CC BY-SA 4.0 | Yamaha Corporation
+OK   ins_trombone: Yamaha_Tenor_trombone_YSL-891Z_(re-crop).jpg | CC BY-SA 4.0 | Yamaha Corporation
+OK   ins_tuba: Yamaha_Bass_tuba_YFB-822.tif | CC BY-SA 4.0 | Yamaha Corporation
+OK   ins_timpani: USAFE_Band_timpanist.jpg | Public domain | 
+OK   ins_orchestra: National_Chamber_Orchestra_of_Armenia.jpg | CC BY-SA 3.0 | Սէրուժ Ուրիշեան (Serouj Ourishian)
+OK   ins_organ: Neunkirchen_am_Brand_Kirche_Orgel-20210411-RM-155230.jpg | CC BY-SA 4.0 | Ermell
+OK   ins_harpsichord: ClavecinRuckers&Taskin.JPG | CC BY-SA 3.0 | Gérard Janot
+OK   ins_piano: Steinway_Vienna_002.JPG | CC BY-SA 3.0 | Gryffindor
+OK   ins_harp: Harp.png | Public domain | 
+OK   lis_gregorian: Graduale_Aboense_2.jpg | Public domain | 
+OK   lis_vltava: Prague_skyline_view.jpg | CC0 | MurderousPass
+OK   lis_choir: Evensong_in_York_Minster.jpg | CC BY-SA 2.0 | Allan Engelhardt
+OK   lis_metronome: Metronome.webm | CC BY 4.0 | Daniel Eriksson
+OK   lis_monet: Claude_Monet_1899_Nadar_crop.jpg | Public domain | Nadar
+OK   lis_concert: Teatro_dal_Verme_Interior_Circa_1875.jpg | Public domain | Unknown authorUnknown author
+OK   lis_vienna: Wiener_Staatsoper_Front.jpg | CC BY-SA 4.0 | Wiener Staatsoper GmbH
+OK   st_gesualdo: Carlo-gesualdo-détail.JPG | CC BY-SA 3.0 | Flopinot2012
+OK   st_venosa: Gesualdo_(AV).jpg | CC BY-SA 3.0 | Prolocogesualdo
+FAIL st_arnstadt: no page image: {"ns": 0, "title": "Bachkirche (Arnstadt)", "missing": ""}
+OK   st_cuzzoni: Francesca_Cuzzoni.jpg | Public domain | 
+OK   st_farinelli: Bartolomeo_Nazari_-_Portrait_of_Farinelli_1734_-_Royal_College_of_Music_London.jpg | Public domain | Bartolomeo Nazari
+OK   st_philip: Philip_V_of_Spain.jpg | Public domain | Jean Ranc
+OK   st_eisenstadt: Haydnkirche,_Eisenstadt_5.jpg | CC BY-SA 4.0 | Thomas Ledl
+OK   st_paganini: Paganini.jpeg | Public domain | John Whittle (active in Preston, early 19th century)
+OK   st_salieri: Antonio_Salieri_painted_by_Joseph_Willibrord_Mähler.jpg | Public domain | Joseph Willibrord Mähler
+OK   st_champs: Théâtre_des_Champs-Élysées,_21_April_2013.jpg | CC BY 3.0 | Coldcreation
+OK   st_rite: Roerich_Rite_of_Spring.jpg | Public domain | Nicholas Roerich
+OK   st_genoa: Genoa,_Italy_skyline_5x3.jpg | CC BY 4.0 | Quintin Soloviev
+OK   st_stradella: AlessandroStradella.jpg | Public domain | Louis Denis

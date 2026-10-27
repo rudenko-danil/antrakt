@@ -1,1 +1,344 @@
-{}
+{
+ "ctx_l01": {
+  "file": "Guido_van_Arezzo.jpg",
+  "author": "The original uploader was Robbot at Dutch Wikipedia.",
+  "license": "Public domain",
+  "desc": "Guido van Arezzo. Bron onbekend, maar kennelijk Middeleeuws."
+ },
+ "ctx_l02": {
+  "file": "Paul_Mignard_-_Jean-Baptiste_Lully.jpg",
+  "author": "Paul Mignard",
+  "license": "Public domain",
+  "desc": ""
+ },
+ "ctx_l03": {
+  "file": "Ospedale_della_Pietà.jpg",
+  "author": "",
+  "license": "Public domain",
+  "desc": ""
+ },
+ "ctx_l04": {
+  "file": "Carl_Friedrich_Lessing_-_The_Siege_(Defense_of_a_Church_Courtyard_During_the_Thirty_Years’_War)_-_Google_Art_Project.jpg",
+  "author": "Karl Friedrich Lessing",
+  "license": "Public domain",
+  "desc": ""
+ },
+ "ctx_l05": {
+  "file": "Leipzig_Thomaskirche.jpg",
+  "author": "Dirk Goldhahn",
+  "license": "Public domain",
+  "desc": "St. Thomas Church of Leipzig."
+ },
+ "ctx_l06": {
+  "file": "The_Foundling_Hospital,_Holborn,_London;_a_bird's-eye_view_o_Wellcome_V0013461.jpg",
+  "author": "",
+  "license": "CC BY 4.0",
+  "desc": "The Foundling Hospital, Holborn, London: a bird's-eye view of the courtyard, numbered for a key. Coloured engraving after L. P. Boitard, 1753. Iconographic Collections Keywords: Louis-Pierre Boitard; "
+ },
+ "ctx_l07": {
+  "file": "Aerial_image_of_Esterházy_Palace,_Fertőd_(view_from_the_southeast).jpg",
+  "author": "Carsten Steger",
+  "license": "CC BY-SA 4.0",
+  "desc": "Aerial image of Esterházy Palace, Fertőd (view from the southeast)"
+ },
+ "ctx_l08": {
+  "file": "Salzburg_(48489551981).jpg",
+  "author": "Jorge Franganillo",
+  "license": "CC BY 2.0",
+  "desc": "Salzburg (Austria)"
+ },
+ "ctx_l09": {
+  "file": "Anonym_Entsatz_Wien_1683.jpg",
+  "author": "Anonymer, zeitgenössischer Maler",
+  "license": "Public domain",
+  "desc": "Belagerung und Entsatz der Stadt Wien im September 1683"
+ },
+ "ctx_l10": {
+  "file": "Beethoven_Heiligenstaedter_Testament.jpg",
+  "author": "Ludwig van Beethoven",
+  "license": "Public domain",
+  "desc": "First page of Beethoven's \"Heiligenstädter Testament\""
+ },
+ "ctx_l11": {
+  "file": "2020-05-23_Theater_an_der_Wien_Linke_Wienzeile.jpg",
+  "author": "Rosso Robot",
+  "license": "CC BY-SA 4.0",
+  "desc": "This media shows the Vienna residential building (Gemeindebau) with the ID 333."
+ },
+ "ctx_l12": {
+  "file": "Moritz_von_Schwind_Schubertiade.jpg",
+  "author": "Moritz von Schwind",
+  "license": "Public domain",
+  "desc": "aus der Erinnerung gezeichnet Das Bild zeigt Franz Schubert am Klavier sowie Josef von Spaun, Johann Michael Vogl, Franz Lachner, Moritz von Schwind, Wilhelm August Rieder, Leopold Kupelwieser, Eduard"
+ },
+ "ctx_l13": {
+  "file": "Marcin_Zaleski,_Wzięcie_Arsenału.jpg",
+  "author": "Marcin Zaleski",
+  "license": "Public domain",
+  "desc": ""
+ },
+ "ctx_l14": {
+  "file": "Franz_Hanfstaengl_-_Clara_Schumann_(1857).jpg",
+  "author": "Franz Hanfstaengl",
+  "license": "Public domain",
+  "desc": "Clara Schumann (1819-1896), Autotypie"
+ },
+ "ctx_l15": {
+  "file": "Exterior_Teatro_Alla_Scala_high_quality_01.jpg",
+  "author": "John Picken",
+  "license": "CC BY 2.0",
+  "desc": "Exterior of Teatro Alla Scala."
+ },
+ "ctx_l16": {
+  "file": "Bayreuth_Festspielhaus_2006-07-16.jpg",
+  "author": "Rico Neitzel",
+  "license": "CC BY-SA 2.5",
+  "desc": "Richard Wagner Festspielhaus am Grünen Hügel in Bayreuth"
+ },
+ "ctx_l17": {
+  "file": "Tschaikowsky_EBieber_1888.jpg",
+  "author": "Atelier E. Bieber, Hamburg (probably by Leonard Berlin (1841-1931))",
+  "license": "Public domain",
+  "desc": "Portrait von Pjotr Iljitsch Tschaikowski, 1888, vermutlich von Leonard Berlin im Atelier E. Bieber Hamburg"
+ },
+ "ctx_l18": {
+  "file": "Monet_-_Impression,_Sunrise.jpg",
+  "author": "Claude Monet",
+  "license": "Public domain",
+  "desc": ""
+ },
+ "ctx_l19": {
+  "file": "Sergei_Rachmaninoff_cph.3a40575.jpg",
+  "author": "Kubey-Rembrandt Studios (Philadephia, Pennsylvania)",
+  "license": "Public domain",
+  "desc": "Sergei Rachmaninoff, head-and-shoulders portrait, facing slightly right"
+ },
+ "ctx_l20": {
+  "file": "Ida_Rubinstein_1912.jpg",
+  "author": "Unknown authorUnknown author",
+  "license": "Public domain",
+  "desc": "Miss Ida Rubinstein wearing a hat of Mrs. Lentheric extracted from the newspaper 'The theater' in July 1912"
+ },
+ "ins_violin": {
+  "file": "Violin_VL100.png",
+  "author": "Just plain Bill",
+  "license": "CC0",
+  "desc": "A standard modern trade violin shown from the front and the side"
+ },
+ "ins_viola": {
+  "file": "Bratsche.jpg",
+  "author": "Just plain Bill",
+  "license": "Public domain",
+  "desc": "Inexpensive Chinese 16.5\" viola, labeled \"2006\"."
+ },
+ "ins_cello": {
+  "file": "Cello_front_side.png",
+  "author": "Georg Feitscher",
+  "license": "CC BY 3.0",
+  "desc": "Cello, front and side view"
+ },
+ "ins_contrabass": {
+  "file": "AGK_bass1_full.jpg",
+  "author": "User:AndrewKepert",
+  "license": "CC BY-SA 3.0",
+  "desc": "Photo of my double bass, front and side. It has a piezo pickup, as I use it mostly in a jazz band nowadays. Photos were taken by me on Dec 17, 2003 on a digital camera, had their colour adjusted, and "
+ },
+ "ins_flute": {
+  "file": "Flûte_traversière.png",
+  "author": "Tubamirum",
+  "license": "CC BY-SA 4.0",
+  "desc": "Western concert flute"
+ },
+ "ins_oboe": {
+  "file": "Oboe_Patricola_Artista_PT1.jpg",
+  "author": "Fratelli Patricola, Editor/Bearbeiter User:Gisbert K",
+  "license": "CC BY-SA 4.0",
+  "desc": "Oboe"
+ },
+ "ins_clarinet": {
+  "file": "Leitner+Kraus_410_320.png",
+  "author": "Leitner &amp; Kraus GmbH, Neustadt/Aisch, Editor/Bearbeiter User:Gisbert K",
+  "license": "CC BY-SA 4.0",
+  "desc": "Summary of the two released images Leitner + Kraus 410.jpg and Leitner + Kraus 320.jpg"
+ },
+ "ins_bassoon": {
+  "file": "FoxBassoon.png",
+  "author": "Gregory F. Maxwell &lt;gmaxwell@gmail.com&gt; PGP:0xB0413BFA",
+  "license": "GFDL 1.2",
+  "desc": "Photograph of a Renard Artist model 220 (long bore) bassoon, made by Fox. The instrument is made of black maple, with silver-plated nickel silver keys. As other models from this brand, this basson has"
+ },
+ "ins_trumpet": {
+  "file": "Yamaha_Trumpet_YTR-8335LA_crop.jpg",
+  "author": "Yamaha Corporation",
+  "license": "CC BY-SA 4.0",
+  "desc": "Yamaha trumpet model YTR-8335LA in B♭ with three piston valves. This is a crop of File:Yamaha_Trumpet_YTR-8335LA.tif made to satisfy criteria for Page Preview card images, for use with trumpet Wikiped"
+ },
+ "ins_horn": {
+  "file": "Yamaha_Horn_YHR-667V.tif",
+  "author": "Yamaha Corporation",
+  "license": "CC BY-SA 4.0",
+  "desc": "Yamaha Double horn, model YHR-667V. In F/Bb, yellow brass, four valves."
+ },
+ "ins_trombone": {
+  "file": "Yamaha_Tenor_trombone_YSL-891Z_(re-crop).jpg",
+  "author": "Yamaha Corporation",
+  "license": "CC BY-SA 4.0",
+  "desc": "Yamaha tenor trombone in B♭, model YSL-891Z. This is a re-crop of File:Yamaha Tenor trombone YSL-891Z.tif made to satisfy criteria for Page Preview card images, for use with Wikipedia trombone article"
+ },
+ "ins_tuba": {
+  "file": "Yamaha_Bass_tuba_YFB-822.tif",
+  "author": "Yamaha Corporation",
+  "license": "CC BY-SA 4.0",
+  "desc": "Yamaha Bass tuba, model YFB-822. In F, yellow brass, 4 front pistons + 1 rotary valve."
+ },
+ "ins_timpani": {
+  "file": "USAFE_Band_timpanist.jpg",
+  "author": "",
+  "license": "Public domain",
+  "desc": "Timpanist in the en:United States Air Forces in Europe Band."
+ },
+ "ins_orchestra": {
+  "file": "National_Chamber_Orchestra_of_Armenia.jpg",
+  "author": "Սէրուժ Ուրիշեան (Serouj Ourishian)",
+  "license": "CC BY-SA 3.0",
+  "desc": "The National Chamber Orchestra of Armenia in concert at The Alex Theatre in Glendale, California on November 15, 2013."
+ },
+ "ins_organ": {
+  "file": "Neunkirchen_am_Brand_Kirche_Orgel-20210411-RM-155230.jpg",
+  "author": "Ermell",
+  "license": "CC BY-SA 4.0",
+  "desc": "Pipe organ in the collegiate church of St. Michael in Neunkirchen am Brand"
+ },
+ "ins_harpsichord": {
+  "file": "ClavecinRuckers&Taskin.JPG",
+  "author": "Gérard Janot",
+  "license": "CC BY-SA 3.0",
+  "desc": "Clavecin par Andreas Ruckers (Anvers, 1646) ravalé par Pascal Taskin (Paris, 1780)"
+ },
+ "ins_piano": {
+  "file": "Steinway_Vienna_002.JPG",
+  "author": "Gryffindor",
+  "license": "CC BY-SA 3.0",
+  "desc": "A grand piano by Steinway &amp; Sons, model C-227, in Steinway-Haus Wien (Steinway Hall Vienna)"
+ },
+ "ins_harp": {
+  "file": "Harp.png",
+  "author": "",
+  "license": "Public domain",
+  "desc": ""
+ },
+ "lis_gregorian": {
+  "file": "Graduale_Aboense_2.jpg",
+  "author": "",
+  "license": "Public domain",
+  "desc": "Graduale Aboense, hymn book of Turku, Finland. 14th-15th century."
+ },
+ "lis_vltava": {
+  "file": "Prague_skyline_view.jpg",
+  "author": "MurderousPass",
+  "license": "CC0",
+  "desc": "Bridges in Prague, Czechia"
+ },
+ "lis_choir": {
+  "file": "Evensong_in_York_Minster.jpg",
+  "author": "Allan Engelhardt",
+  "license": "CC BY-SA 2.0",
+  "desc": "Anglican choir music – a guest choir practices for evensong in York MinsterEvensong in York Minster"
+ },
+ "lis_metronome": {
+  "file": "Metronome.webm",
+  "author": "Daniel Eriksson",
+  "license": "CC BY 4.0",
+  "desc": "Mechanical metronome produced by Japanese manufacturer Nikko, ticking at 96 beats per minute"
+ },
+ "lis_monet": {
+  "file": "Claude_Monet_1899_Nadar_crop.jpg",
+  "author": "Nadar",
+  "license": "Public domain",
+  "desc": "Portrait photograph of the French impressionist painter Claude Monet by Nadar"
+ },
+ "lis_concert": {
+  "file": "Teatro_dal_Verme_Interior_Circa_1875.jpg",
+  "author": "Unknown authorUnknown author",
+  "license": "Public domain",
+  "desc": "Description: A late 19th century engraving depicting the interior of the Teatro Dal Verme in Milan Source: www.dalverme.org"
+ },
+ "lis_vienna": {
+  "file": "Wiener_Staatsoper_Front.jpg",
+  "author": "Wiener Staatsoper GmbH",
+  "license": "CC BY-SA 4.0",
+  "desc": "Front der Wiener Staatsoper"
+ },
+ "st_gesualdo": {
+  "file": "Carlo-gesualdo-détail.JPG",
+  "author": "Flopinot2012",
+  "license": "CC BY-SA 3.0",
+  "desc": "Carlo-Gesualdo-détail"
+ },
+ "st_venosa": {
+  "file": "Gesualdo_(AV).jpg",
+  "author": "Prolocogesualdo",
+  "license": "CC BY-SA 3.0",
+  "desc": "Panorama di Gesualdo (AV)"
+ },
+ "st_cuzzoni": {
+  "file": "Francesca_Cuzzoni.jpg",
+  "author": "",
+  "license": "Public domain",
+  "desc": ""
+ },
+ "st_farinelli": {
+  "file": "Bartolomeo_Nazari_-_Portrait_of_Farinelli_1734_-_Royal_College_of_Music_London.jpg",
+  "author": "Bartolomeo Nazari",
+  "license": "Public domain",
+  "desc": "Portrait of Farinelli, 1734"
+ },
+ "st_philip": {
+  "file": "Philip_V_of_Spain.jpg",
+  "author": "Jean Ranc",
+  "license": "Public domain",
+  "desc": "This is an official portrait of Felipe V (1683-1746), the first Bourbon king of Spain. The grandson of Louis XIV (1638-1715) of France, he was born in Versailles and was proclaimed King of Spain in 17"
+ },
+ "st_eisenstadt": {
+  "file": "Haydnkirche,_Eisenstadt_5.jpg",
+  "author": "Thomas Ledl",
+  "license": "CC BY-SA 4.0",
+  "desc": "Haydnkirche, Eisenstadt"
+ },
+ "st_paganini": {
+  "file": "Paganini.jpeg",
+  "author": "John Whittle (active in Preston, early 19th century)",
+  "license": "Public domain",
+  "desc": ""
+ },
+ "st_salieri": {
+  "file": "Antonio_Salieri_painted_by_Joseph_Willibrord_Mähler.jpg",
+  "author": "Joseph Willibrord Mähler",
+  "license": "Public domain",
+  "desc": ""
+ },
+ "st_champs": {
+  "file": "Théâtre_des_Champs-Élysées,_21_April_2013.jpg",
+  "author": "Coldcreation",
+  "license": "CC BY 3.0",
+  "desc": "Champs-Elysées theater, 15 Montaigne avenue, Paris 8th."
+ },
+ "st_rite": {
+  "file": "Roerich_Rite_of_Spring.jpg",
+  "author": "Nicholas Roerich",
+  "license": "Public domain",
+  "desc": "Kiss to the Earth. 2nd variant. Scenery sketch. 1912 (from a reproduction) For Diaghilev’s production, Théâtre des Champs-Élysées, Paris, 1913"
+ },
+ "st_genoa": {
+  "file": "Genoa,_Italy_skyline_5x3.jpg",
+  "author": "Quintin Soloviev",
+  "license": "CC BY 4.0",
+  "desc": "Genoa, the capital of Liguria, Italy, has about 566,000 residents and an economy centred on shipping, logistics and manufacturing, with its port visible beyond the city centre."
+ },
+ "st_stradella": {
+  "file": "AlessandroStradella.jpg",
+  "author": "Louis Denis",
+  "license": "Public domain",
+  "desc": "Imaginary portrait, created in the 19th century, of 17th-century Italian composer Alessandro Stradella. The year and place of birth are incorrect. Note: \"There is no verifiable image or painting of St"
+ }
+}
