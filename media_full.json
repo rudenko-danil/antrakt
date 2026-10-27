@@ -71,14 +71,18 @@
   "stradella": {
    "file": "__none__",
    "search": "Stradella"
+  },
+  "gesualdo2": {
+   "file": "Gesualdo-moro lasso al mio duolo.ogg"
+  },
+  "gesualdo3": {
+   "file": "Carlo Gesualdo - Gagliarda del Principe di Venosa.flac"
   }
  },
  "searches": [
-  "Paganini Caprice",
-  "Gesualdo",
-  "Requiem Lacrimosa",
-  "Farinelli",
-  "Handel aria Rinaldo"
+  "Farinelli aria",
+  "Porpora aria countertenor",
+  "Handel Lascia ch'io pianga aria"
  ],
  "audit": {}
 }
