@@ -27,18 +27,20 @@ for key, s in spec.items():
     if os.path.exists(out) and key in credits:
         continue
     try:
+        lang = s.get("lang", "en")
+        wapi = f"https://{lang}.wikipedia.org/w/api.php?action=query&format=json&redirects=1"
         if "file" in s:
             fname = s["file"]
         else:
-            lang = s.get("lang", "en")
-            j = get(f"https://{lang}.wikipedia.org/api/rest_v1/page/summary/" + urllib.parse.quote(s["wiki"].replace(" ", "_")))
-            src = (j.get("originalimage") or j.get("thumbnail") or {}).get("source", "")
-            if "/wikipedia/commons/" not in src:
-                raise RuntimeError("lead image is not on Commons: " + src[:80])
-            fname = urllib.parse.unquote(src.split("/")[-1])
-        api = ("https://commons.wikimedia.org/w/api.php?action=query&format=json&prop=imageinfo&iiprop=url|extmetadata&iiurlwidth=900&titles="
-               + urllib.parse.quote("File:" + fname))
-        page = next(iter(get(api)["query"]["pages"].values()))
+            q = get(wapi + "&prop=pageimages&piprop=name|original&titles=" + urllib.parse.quote(s["wiki"]))
+            pg = next(iter(q["query"]["pages"].values()))
+            fname = pg.get("pageimage")
+            if not fname:
+                raise RuntimeError("no page image: " + json.dumps(pg)[:160])
+        q = get(wapi + "&prop=imageinfo&iiprop=url|extmetadata&iiurlwidth=900&titles=" + urllib.parse.quote("File:" + fname))
+        page = next(iter(q["query"]["pages"].values()))
+        if page.get("imagerepository") != "shared":
+            raise RuntimeError(f"not a Commons file ({page.get('imagerepository')}): {fname}")
         ii = page["imageinfo"][0]
         m = ii.get("extmetadata", {})
         raw = out + ".src"
