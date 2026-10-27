@@ -516,5 +516,78 @@
   "file": "Gesualdo-moro lasso al mio duolo.ogg",
   "who": "MIT Chamber Chorus, «Moro, lasso», 1611",
   "license": "CC BY-SA 2.0"
+ },
+ "dyn_f": {
+  "dur": 12.0,
+  "dyn": "forte"
+ },
+ "dyn_p": {
+  "dur": 12.0,
+  "dyn": "piano"
+ },
+ "art_pizz": {
+  "dur": 12.0,
+  "art": "pizzicato"
+ },
+ "mel_step": {
+  "dur": 11.23,
+  "contour": "step"
+ },
+ "mel_leap": {
+  "dur": 11.23,
+  "contour": "leap"
+ },
+ "chord_cons": {
+  "dur": 6.0,
+  "chord": "consonance"
+ },
+ "chord_diss": {
+  "dur": 6.0,
+  "chord": "dissonance"
+ },
+ "diss_hang": {
+  "dur": 8.67,
+  "ends": "tension"
+ },
+ "diss_resolve": {
+  "dur": 12.0,
+  "ends": "resolved"
+ },
+ "var_fast": {
+  "dur": 11.6,
+  "var": "rhythm"
+ },
+ "var_waltz": {
+  "dur": 11.0,
+  "var": "meter"
+ },
+ "var_bass": {
+  "dur": 11.23,
+  "var": "bass"
+ },
+ "sonata_teach": {
+  "dur": 56.0,
+  "sections": [
+   [
+    "Тема 1",
+    0.0
+   ],
+   [
+    "Тема 2",
+    8.73
+   ],
+   [
+    "Разработка",
+    17.45
+   ],
+   [
+    "Реприза: тема 1",
+    34.91
+   ],
+   [
+    "Тема 2 дома",
+    43.64
+   ]
+  ]
  }
 }
