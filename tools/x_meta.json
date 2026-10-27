@@ -492,5 +492,21 @@
  "haydn_surprise": {
   "dur": 16.4,
   "chord": 12.24
+ },
+ "x_paganini": {
+  "dur": 44.2,
+  "src": "paganini",
+  "start": 0.8,
+  "file": "Paganini Caprice-24.ogg",
+  "who": "Элиас Гольдштейн (альт), Кристина Лалог (ф-но), переложение Примроуза",
+  "license": "Public domain"
+ },
+ "x_lacrimosa": {
+  "dur": 49.1,
+  "src": "lacrimosa",
+  "start": 0.9,
+  "file": "Mozart, Requiem in D minor, 'Lacrimosa' – piano arrangement.ogg",
+  "who": "переложение для фортепиано Тальберга",
+  "license": "CC BY-SA 4.0"
  }
 }
