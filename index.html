@@ -103,7 +103,6 @@ button:focus-visible, [tabindex]:focus-visible { outline: 2px solid var(--era); 
 .kicker { font-family: var(--f-mono); font-size: 11.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--era); margin-bottom: 14px; }
 .card h2 { font-family: var(--f-display); font-weight: 400; font-size: clamp(25px, 7vw, 31px); line-height: 1.18; margin: 0 0 16px; text-wrap: balance; }
 .card p { margin: 0 0 12px; font-size: 17px; line-height: 1.6; max-width: 62ch; }
-.card.story { cursor: pointer; }
 .card.story h2 { font-size: clamp(27px, 7.6vw, 33px); }
 .card.story p { font-size: 18px; line-height: 1.62; }
 .card .grow { flex: 1; }
@@ -169,7 +168,6 @@ button:focus-visible, [tabindex]:focus-visible { outline: 2px solid var(--era); 
 .hin .kicker { color: #E8C875; }
 .hin h2 { font-family: var(--f-display); font-weight: 400; font-size: clamp(27px, 7.4vw, 34px); line-height: 1.2; margin: 0 0 12px; color: #FFFFFF; text-wrap: balance; }
 .hsub { font-family: var(--f-mono); font-size: 12px; color: rgba(244,242,236,.7); }
-.card.storyfull { cursor: pointer; }
 .smini { margin: -6px 0 14px; padding-bottom: 12px; border-bottom: 1px solid var(--line); }
 .smini .play { width: 44px; height: 44px; }
 .smini .play svg { width: 18px; height: 18px; }
@@ -184,7 +182,7 @@ button:focus-visible, [tabindex]:focus-visible { outline: 2px solid var(--era); 
 .nexts b { font-family: var(--f-display); font-weight: 400; font-size: 18px; line-height: 1.3; }
 
 /* letters */
-.card.chat { padding: 18px 16px 14px; cursor: pointer; }
+.card.chat { padding: 18px 16px 14px; }
 .chead { display: flex; gap: 12px; align-items: center; padding-bottom: 12px; border-bottom: 1px solid var(--line); }
 .cht { display: flex; flex-direction: column; min-width: 0; }
 .cht b { font-family: var(--f-display); font-weight: 400; font-size: 19px; line-height: 1.2; }
@@ -4148,7 +4146,6 @@ function renderText(card, c, it) {
   card.classList.add("story");
   card.innerHTML = `${c.img ? imgTag(c.img, "ptop") : ""}<div class="kicker">${esc(ERAS[LESSONS[it.li].era].name)}${ERAS[LESSONS[it.li].era].years ? " · " + ERAS[LESSONS[it.li].era].years : ""}</div>
     <h2>${esc(c.h)}</h2>${figs(c, it)}<p>${esc(c.b)}</p>`;
-  tapHint(card);
   nextBtn();
 }
 
@@ -4473,18 +4470,7 @@ function advance() {
   render();
 }
 
-/* сторис: тап по правой части карточки — дальше, по левой — назад */
-const INTERACTIVE = "button, a, input, textarea, .opt, .vbtn, .mark, .player, .mini, .tapzone, .vsel, .heart";
-stage.addEventListener("click", e => {
-  if ((home && !story) || paused || $("#s-learn").hidden) return;
-  if (e.target.closest(INTERACTIVE)) return;
-  const sel = window.getSelection && String(window.getSelection()); if (sel) return;
-  const card = $(".card", stage); if (!card) return;
-  const r = card.getBoundingClientRect(), x = (e.clientX - r.left) / r.width;
-  if (x < 0.3) { if (qi > 0) back(); return; }
-  if (card._tap && card._tap()) return;          // карточка сама обработала тап (письма)
-  const b = $("#next"); if (b && !b.disabled) { tapsSeen(); b.click(); }
-});
+/* листание только кнопками: тапы по карточке ничего не делают */
 function tapsSeen() { S.ui = S.ui || {}; S.ui.taps = (S.ui.taps || 0) + 1; }
 function tapHint(card) {
   if (((S.ui || {}).taps || 0) >= 3) return;
