@@ -176,14 +176,12 @@ button:focus-visible, [tabindex]:focus-visible { outline: 2px solid var(--era); 
 .sbody.enter { animation: rise .3s cubic-bezier(.2,.8,.2,1); }
 @media (prefers-reduced-motion: reduce) { .sbody.enter { animation: none; } }
 .stext { font-size: 19px !important; line-height: 1.6 !important; }
+.sbody { display: flex; flex-direction: column; flex: 1; }
+.sketch { display: block; width: min(78%, 290px); margin: auto auto 0; padding-top: 18px; color: var(--era); opacity: .9; }
+@keyframes sk-draw { to { stroke-dashoffset: 0; } }
+@media (prefers-reduced-motion: reduce) { .sketch path { animation: none !important; stroke-dashoffset: 0 !important; } }
 .nexts { margin-top: 18px; padding: 14px; border-radius: 12px; border: 1px dashed var(--line); }
 .nexts b { font-family: var(--f-display); font-weight: 400; font-size: 18px; line-height: 1.3; }
-.smin { display: flex; gap: 12px; align-items: stretch; width: 100%; text-align: left; margin: 12px 0 18px; padding: 0; border-radius: 14px; overflow: hidden;
-  background: #16181D; color: #F4F2EC; border: 1px solid var(--line); }
-.sth { width: 92px; flex: none; background-size: cover; background-position: center; }
-.stx { padding: 12px 14px; font-family: var(--f-display); font-size: 16.5px; line-height: 1.3; }
-.smin .sth + .stx { padding-left: 0; }
-.stx i { display: block; font-style: normal; font-family: var(--f-mono); font-size: 10.5px; letter-spacing: .08em; text-transform: uppercase; color: #E8C875; margin-bottom: 4px; }
 
 /* letters */
 .card.chat { padding: 18px 16px 14px; cursor: pointer; }
@@ -2291,6 +2289,53 @@ const STORIES = [
   if (h03) h03.cards.forEach(c => { if (c.t === "voices") c.opts.forEach(o => { const k = o.track.replace("tim_", ""); o.img = "ins_" + (k === "horn" ? "horn" : k); }); });
 })();
 
+// Наброски-виньетки для историй: линии пером, viewBox 0 0 200 120, рисуются на глазах.
+const SKETCH = {
+  bassoon: `<path d="M94 112 L94 34 Q94 26 101 26 Q108 26 108 34 L108 112 Q108 116 101 116 Q94 116 94 112 Z"/><path d="M101 26 L101 18"/><path d="M98 44 C82 40 70 30 62 18"/><path d="M62 18 L58 14"/><path d="M98 58 h6 M98 70 h6 M98 82 h6 M98 94 h6"/><path d="M110 50 q8 2 8 10 M110 76 q8 2 8 10"/>`,
+  stick: `<path d="M34 104 C70 80 120 46 168 18"/><path d="M78 76 l-8 -6 M116 52 l6 -8 M146 32 l-7 -5"/><path d="M168 18 q6 -4 9 1"/>`,
+  swordstick: `<path d="M40 102 L162 22"/><path d="M45 98 L48 103"/><path d="M58 90 L44 76 M58 90 L72 104"/><path d="M52 84 C36 92 38 108 52 106"/><path d="M40 102 a4 4 0 1 1 -1 0"/><path d="M160 104 C120 80 80 50 38 20"/><path d="M118 77 l7 -7 M84 54 l-6 -6"/>`,
+  scroll: `<path d="M50 30 Q50 20 60 20 L150 20 Q160 20 160 30 Q160 40 150 40 L150 98 Q150 108 140 108 L50 108 Q40 108 40 98 Q40 88 50 88 Z"/><path d="M150 40 L60 40 Q50 40 50 30"/><path d="M50 88 L140 88 Q150 88 150 98"/><path d="M64 54 h70 M64 64 h62 M64 74 h70"/><path d="M118 98 c6 -10 16 -4 10 4 c-4 6 -10 0 -6 -4"/>`,
+  road: `<path d="M10 82 L190 82"/><path d="M70 120 L97 82 M130 120 L103 82"/><path d="M100 120 L100 112 M100 104 L100 98 M100 92 L100 88"/><path d="M10 82 Q40 64 72 82 M120 82 Q152 60 190 80"/><path d="M150 86 L150 44"/><path d="M150 48 L180 48 L188 54 L180 60 L150 60 Z"/><path d="M42 40 a10 10 0 1 1 0.1 0"/>`,
+  rings: `<path d="M86 70 a24 24 0 1 1 -0.1 0"/><path d="M114 70 a24 24 0 1 1 -0.1 0"/><path d="M80 44 l6 -10 l6 10 z"/><path d="M60 24 l3 6 M100 16 l0 7 M140 24 l-3 6"/>`,
+  dagger: `<path d="M100 14 L108 70 L92 70 Z"/><path d="M100 22 L100 66"/><path d="M80 72 Q100 66 120 72"/><path d="M96 74 L96 98 M104 74 L104 98"/><path d="M96 82 h8 M96 90 h8"/><path d="M100 104 a5 5 0 1 1 -0.1 0"/>`,
+  castle: `<path d="M10 112 Q60 70 100 74 Q150 76 190 112"/><path d="M62 82 L62 46 L138 46 L138 80"/><path d="M62 46 l0 -8 h8 v8 h8 v-8 h8 v8 h8 v-8 h8 v8 h8 v-8 h8 v8 h8 v-8 h8 v8"/><path d="M88 46 L88 18 L112 18 L112 46"/><path d="M88 18 l0 -6 h6 v6 h6 v-6 h6 v6 h6 v-6"/><path d="M96 78 L96 64 Q100 58 104 64 L104 78"/><path d="M98 32 v6 M74 58 v6 M126 58 v6"/>`,
+  score: `<path d="M30 24 L170 24 L170 104 L30 104 Z"/><path d="M40 40 h120 M40 46 h120 M40 52 h120 M40 58 h120 M40 64 h120"/><path d="M40 78 h120 M40 84 h120 M40 90 h120"/><path d="M60 58 a4 3 -20 1 1 -0.1 0 M64 58 L64 36"/><path d="M84 52 a4 3 -20 1 1 -0.1 0 M88 52 L88 32"/><path d="M110 46 a4 3 -20 1 1 -0.1 0 M114 46 L114 26 q10 6 6 14"/><path d="M136 55 a4 3 -20 1 1 -0.1 0 M140 55 L140 34"/><path d="M70 86 a4 3 -20 1 1 -0.1 0 M124 82 a4 3 -20 1 1 -0.1 0"/>`,
+  window: `<path d="M64 112 L64 44 Q64 14 100 14 Q136 14 136 44 L136 112"/><path d="M100 14 L100 112 M64 62 L136 62"/><path d="M136 44 L162 34 L162 104 L136 112"/><path d="M150 50 l0 40"/><path d="M56 112 L144 112"/><path d="M76 80 q10 -8 14 4 M110 90 q8 -6 14 2"/>`,
+  wreath: `<path d="M100 104 C60 100 44 70 52 40"/><path d="M100 104 C140 100 156 70 148 40"/><path d="M56 52 q-12 -4 -10 -14 q10 2 10 14 M62 70 q-14 0 -16 -10 q12 -2 16 10 M74 86 q-14 4 -18 -6 q12 -4 18 6 M88 98 q-12 8 -18 0 q10 -6 18 0"/><path d="M144 52 q12 -4 10 -14 q-10 2 -10 14 M138 70 q14 0 16 -10 q-12 -2 -16 10 M126 86 q14 4 18 -6 q-12 -4 -18 6 M112 98 q12 8 18 0 q-10 -6 -18 0"/><path d="M94 104 l-8 12 M106 104 l8 12"/>`,
+  coins: `<path d="M62 96 a26 8 0 1 0 52 0 a26 8 0 1 0 -52 0"/><path d="M62 96 v-10 M114 96 v-10"/><path d="M62 86 a26 8 0 1 0 52 0 a26 8 0 1 0 -52 0"/><path d="M62 86 v-10 M114 86 v-10 M62 76 a26 8 0 1 0 52 0 a26 8 0 1 0 -52 0"/><path d="M118 100 a22 7 0 1 0 44 0 a22 7 0 1 0 -44 0"/><path d="M118 100 v-9 M162 100 v-9 M118 91 a22 7 0 1 0 44 0 a22 7 0 1 0 -44 0"/><path d="M142 30 a14 14 0 1 1 -0.1 0"/><path d="M142 36 a8 8 0 1 1 -0.1 0"/>`,
+  masks: `<path d="M48 34 Q70 26 92 34 Q94 70 70 84 Q46 70 48 34 Z"/><path d="M58 46 q5 -4 10 0 M74 46 q5 -4 10 0"/><path d="M60 62 Q70 72 80 62"/><path d="M108 40 Q130 32 152 40 Q154 76 130 90 Q106 76 108 40 Z"/><path d="M118 52 q5 4 10 0 M134 52 q5 4 10 0"/><path d="M120 76 Q130 66 140 76"/><path d="M92 34 q8 -10 16 6"/>`,
+  note: `<path d="M70 92 a14 10 -20 1 1 -0.1 0"/><path d="M83 88 L83 26 L140 16 L140 76"/><path d="M127 80 a14 10 -20 1 1 -0.1 0"/><path d="M83 38 L140 28"/><path d="M40 30 q6 -6 12 0 M150 96 q8 -8 16 0 M30 70 q4 -4 8 0"/>`,
+  crown: `<path d="M50 90 L42 40 L74 66 L100 28 L126 66 L158 40 L150 90 Z"/><path d="M50 90 L150 90 L150 102 L50 102 Z"/><path d="M42 40 a4 4 0 1 1 -0.1 0 M100 28 a4 4 0 1 1 -0.1 0 M158 40 a4 4 0 1 1 -0.1 0"/><path d="M72 96 a3 3 0 1 1 -0.1 0 M100 96 a3 3 0 1 1 -0.1 0 M128 96 a3 3 0 1 1 -0.1 0"/>`,
+  candle: `<path d="M88 104 L88 52 L112 52 L112 104"/><path d="M70 104 L130 104 Q134 112 126 112 L74 112 Q66 112 70 104"/><path d="M100 52 L100 44"/><path d="M100 44 C90 34 96 22 100 14 C104 22 110 34 100 44"/><path d="M112 66 q4 6 0 12"/><path d="M150 24 a16 16 0 1 0 14 22 a12 12 0 1 1 -14 -22"/><path d="M40 30 l2 4 M56 18 l1 4 M30 52 l3 3"/>`,
+  boat: `<path d="M40 82 L160 82 L146 98 L54 98 Z"/><path d="M100 82 L100 16"/><path d="M100 20 L146 74 L100 74"/><path d="M98 24 L62 70 L98 70"/><path d="M100 16 l12 4 l-12 4"/><path d="M14 106 q10 -6 20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0"/>`,
+  quill: `<path d="M64 108 C80 84 112 46 158 14"/><path d="M158 14 C150 40 130 66 96 86 C112 62 132 40 158 14"/><path d="M158 14 C132 26 106 50 86 76"/><path d="M64 108 L60 116"/><path d="M118 36 l8 6 M106 50 l8 6 M134 24 l6 6"/><path d="M30 112 q20 -6 40 0"/>`,
+  gondola: `<path d="M24 82 Q100 104 172 74"/><path d="M24 82 Q22 66 30 60"/><path d="M172 74 Q182 60 176 46 l6 -4 m-6 4 l8 2 m-8 4 l8 2"/><path d="M84 90 L84 74 L112 74 L112 90"/><path d="M140 80 L150 30"/><path d="M146 30 l8 0"/><path d="M14 108 q10 -5 20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0 t20 0"/>`,
+  book: `<path d="M100 32 C80 22 52 22 34 30 L34 100 C52 92 80 92 100 102 Z"/><path d="M100 32 C120 22 148 22 166 30 L166 100 C148 92 120 92 100 102 Z"/><path d="M46 44 q24 -6 44 4 M46 56 q24 -6 44 4 M46 68 q24 -6 44 4"/><path d="M110 48 q20 -10 44 -4 M110 60 q20 -10 44 -4"/><path d="M128 18 L128 50 L134 44 L140 50 L140 18"/>`,
+  shovel: `<path d="M66 18 L66 30 M56 18 L76 18"/><path d="M66 30 L66 80"/><path d="M52 80 L80 80 L78 104 Q66 114 54 104 Z"/><path d="M110 104 Q130 80 150 84 Q172 88 186 104"/><path d="M120 104 l4 -6 M140 92 l3 4 M160 96 l-2 5"/><path d="M110 104 L190 104"/>`,
+  skull: `<path d="M64 60 C64 26 136 26 136 60 C136 74 128 80 124 84 L124 98 L76 98 L76 84 C72 80 64 74 64 60 Z"/><path d="M86 56 a10 11 0 1 1 -0.1 0 M114 56 a10 11 0 1 1 -0.1 0"/><path d="M100 70 L94 80 L106 80 Z"/><path d="M86 98 L86 90 M94 98 L94 90 M102 98 L102 90 M110 98 L110 90"/>`,
+  chest: `<path d="M30 70 L90 70 L90 104 L30 104 Z"/><path d="M30 70 Q60 52 90 70"/><path d="M56 82 h8 v8 h-8 z"/><path d="M110 70 L170 70 L170 104 L110 104 Z"/><path d="M110 70 Q140 52 170 70"/><path d="M136 82 h8 v8 h-8 z"/><path d="M100 30 q0 -10 8 -10 q8 0 8 8 q0 6 -8 8 l0 6 M108 50 v1"/>`,
+  church: `<path d="M60 112 L60 56 L100 26 L140 56 L140 112"/><path d="M100 26 L100 8 M92 14 L108 14"/><path d="M86 112 L86 82 Q100 66 114 82 L114 112"/><path d="M100 72 L100 112"/><path d="M70 66 L70 80 M130 66 L130 80"/><path d="M40 112 L160 112"/><path d="M96 92 q4 -3 8 0"/>`,
+  vial: `<path d="M92 20 L108 20 L108 30 L104 34 L104 52 C122 58 128 74 124 88 C118 106 82 106 76 88 C72 74 78 58 96 52 L96 34 L92 30 Z"/><path d="M84 80 Q100 72 116 80"/><path d="M90 20 L110 20 L110 12 L90 12 Z"/><path d="M94 66 a3 3 0 1 1 -0.1 0 M108 90 a2 2 0 1 1 -0.1 0"/>`,
+  violin: `<path d="M100 110 C80 110 74 96 80 86 C84 80 80 74 78 66 C74 54 86 46 94 48 L94 28 L106 28 L106 48 C114 46 126 54 122 66 C120 74 116 80 120 86 C126 96 120 110 100 110 Z"/><path d="M94 28 L94 12 Q100 4 106 12 L106 28"/><path d="M90 74 q-4 4 0 8 M110 74 q4 4 0 8"/><path d="M96 14 L96 100 M100 14 L100 100 M104 14 L104 100"/><path d="M90 98 L110 98"/><path d="M140 18 C150 50 152 80 140 112"/>`,
+  violin_broken: `<path d="M100 110 C80 110 74 96 80 86 C84 80 80 74 78 66 C74 54 86 46 94 48 L94 28 L106 28 L106 48 C114 46 126 54 122 66 C120 74 116 80 120 86 C126 96 120 110 100 110 Z"/><path d="M94 28 L94 12 Q100 4 106 12 L106 28"/><path d="M90 74 q-4 4 0 8 M110 74 q4 4 0 8"/><path d="M100 14 L100 100"/><path d="M96 14 C90 30 72 34 66 50 M104 14 C112 28 130 30 136 44 M92 100 C84 90 70 94 64 84"/><path d="M90 98 L110 98"/>`,
+  wheel: `<path d="M100 20 a40 40 0 1 1 -0.1 0"/><path d="M100 52 a8 8 0 1 1 -0.1 0"/><path d="M100 68 L100 100 M100 52 L100 20 M108 60 L140 60 M92 60 L60 60 M106 66 L128 88 M94 54 L72 32 M106 54 L128 32 M94 66 L72 88"/><path d="M20 108 L180 108"/><path d="M150 100 q8 -6 16 0 M30 100 q8 -6 16 0"/>`,
+  curtains: `<path d="M20 12 L180 12"/><path d="M24 12 C40 40 40 80 30 110 L70 110 C80 70 76 30 92 12"/><path d="M176 12 C160 40 160 80 170 110 L130 110 C120 70 124 30 108 12"/><path d="M40 30 C46 60 46 86 42 108 M156 30 C150 60 150 86 158 108"/><path d="M62 70 q12 4 20 -4 M138 70 q-12 4 -20 -4"/><path d="M90 104 l6 -10 l6 10 l6 -10 l6 10"/>`,
+  chair: `<path d="M70 18 L70 112 M130 18 L130 112"/><path d="M70 18 Q100 10 130 18"/><path d="M70 36 L130 36 M70 52 L130 52"/><path d="M66 70 L134 70 L138 78 L62 78 Z"/><path d="M76 78 L76 112 M124 78 L124 112"/><path d="M150 40 l14 -6 M152 52 l16 0 M150 64 l14 6"/>`,
+};
+// какой набросок под каким слайдом
+const STORY_SKETCHES = {
+  s_bach: ["bassoon", "stick", "swordstick", "scroll", "road"],
+  s_gesualdo: ["rings", "dagger", "castle", "score", "wreath"],
+  s_handel: ["coins", "score", "window", "wreath", "masks"],
+  s_farinelli: ["note", "crown", "candle", "boat"],
+  s_stradella: ["quill", "gondola", "dagger", "book"],
+  s_haydn: ["candle", "shovel", "skull", "chest", "church"],
+  s_salieri: ["candle", "vial", "masks", "wreath", "book"],
+  s_paganini: ["violin", "violin_broken", "church", "wheel"],
+  s_rite: ["curtains", "bassoon", "chair", "wreath"],
+};
+STORIES.forEach(st => (STORY_SKETCHES[st.id] || []).forEach((k, i) => { if (st.slides[i]) st.slides[i].sk = k; }));
+
 const XMETA = {
  "chorale_all": {
   "dur": 51.09,
@@ -3890,14 +3935,12 @@ function renderHome() {
           if (ps.length) return cur && ci > 0 ? `часть ${cur.n} из ${ps.length} · ${esc(cur.title)}` : `${ps.length} части по 3–4 минуты`;
           return ci > 0 ? `пройдено ${ci} из ${total} карточек` : `${total} карточек · около 2 минут`; })()}</div></div>
     </div>` : `<div class="next"><div class="ninfo"><div class="ntitle">Трек пройден</div><div class="nmeta">Остались только повторения</div></div></div>`}
-    ${(() => { const st = nextStory(); return st ? `<button class="smin" id="smin">${IC(st.cover) ? `<span class="sth" style="background-image:url(images/${st.cover}.jpg)"></span>` : ""}<span class="stx"><i>История за минуту</i>${esc(st.hook)}</span></button>` : ""; })()}
     ${pathBar()}
     ${fadingBlock()}
     <div class="grow"></div>
     ${due ? `<p class="duenote">Сначала ${due} ${due === 1 ? "карточка" : due < 5 ? "карточки" : "карточек"} на повторение, потом урок.</p>` : ""}`;
   stage.replaceChildren(card);
   hydratePortraits(card);
-  const sm = $("#smin", card); if (sm) sm.addEventListener("click", () => startStory(nextStory()));
   card.querySelectorAll("[data-refresh]").forEach(b => b.addEventListener("click", () => refreshLesson(+b.dataset.refresh)));
   const label = finished ? (due ? "Повторить" : "Открыть программу") : (ci > 0 || due ? "Продолжить" : "Начать урок");
   actions.innerHTML = `<button class="btn" id="go">${label}</button>`;
@@ -3956,6 +3999,17 @@ function startStory(st) {
   hookPending = false; story = { st, i: 0 };
   stopAudio(); renderStory(true);
 }
+function drawSketch(root) {
+  const svg = $(".sketch", root); if (!svg) return;
+  const ps = [...svg.querySelectorAll("path")]; let delay = 250;
+  ps.forEach(p => {
+    let L = 300; try { L = Math.ceil(p.getTotalLength()) + 2; } catch (e) {}
+    const dur = Math.min(1400, 250 + L * 3.2);
+    p.style.strokeDasharray = L; p.style.strokeDashoffset = L;
+    p.style.animation = `sk-draw ${dur}ms ease-in-out ${delay}ms forwards`;
+    delay += dur * 0.55;
+  });
+}
 function renderStory(fresh) {
   const { st, i } = story, n = st.slides.length;
   setEra(st.era || "listen");
@@ -3971,13 +4025,13 @@ function renderStory(fresh) {
     if (st.track) {
       const ui = playerUI(card, st.track);
       wireHeart(card, { title: "Из истории «" + st.title + "»", meta: "", era: st.era });
-      if (fresh) toggle(st.track, ui);   // музыка начинается по нажатию «Узнать»
     }
   }
   const body = $(".sbody", card);
   if (i < n) {
     const sl = st.slides[i], im = sl.img || (i === 0 ? st.cover : null);
-    body.innerHTML = `${im ? imgTag(im, "ptop") : ""}<div class="kicker">${i === 0 ? "История за минуту" : `${i + 1} / ${n}`}</div>${i === 0 ? `<h2>${esc(st.title)}</h2>` : ""}<p class="stext">${esc(sl.text)}</p>`;
+    body.innerHTML = `${im ? imgTag(im, "ptop") : ""}<div class="kicker">${i === 0 ? "История за минуту" : `${i + 1} / ${n}`}</div>${i === 0 ? `<h2>${esc(st.title)}</h2>` : ""}<p class="stext">${esc(sl.text)}</p>${sl.sk && SKETCH[sl.sk] ? `<svg class="sketch" viewBox="0 0 200 120" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${SKETCH[sl.sk]}</svg>` : ""}`;
+    drawSketch(body);
     body.classList.remove("enter"); void body.offsetWidth; body.classList.add("enter");
     actions.innerHTML = `${i > 0 ? BACK : ""}<button class="btn" id="next">Дальше</button>`;
     $("#next").addEventListener("click", () => { story.i++; renderStory(); }); wireBack();
@@ -4460,10 +4514,14 @@ function renderProg() {
     html += `<button class="row ${done ? "done" : ""} ${curL ? "cur" : ""} ${due || (mem != null && mem < 0.6) ? "fading" : ""}" data-li="${i}" style="--era:var(--${l.era})">
       <span class="no">${String(i + 1).padStart(2, "0")}</span>${icon}<span class="tt">${esc(l.title)}${done && mem != null ? `<span class="membar"><i style="width:${Math.round(mem * 100)}%"></i></span>` : ""}</span><span class="st">${st}</span></button>`;
   });
+  const rd = S.stories || {}, nr = STORIES.filter(x => rd[x.id]).length;
+  html += `<div class="era-h" style="--era:var(--listen)"><span class="n">Истории за минуту</span><span class="y">${nr}/${STORIES.length}</span></div><div class="chsub">Короткие истории без вопросов — открываются при входе, а здесь их можно перечитать</div>`;
+  STORIES.forEach((x, k) => { html += `<button class="row srow ${rd[x.id] ? "done" : ""}" data-st="${k}" style="--era:var(--${x.era})"><span class="no">${String(k + 1).padStart(2, "0")}</span><span class="dot"></span><span class="tt">${esc(x.title)}</span><span class="st">${rd[x.id] ? "прочитана" : ""}</span></button>`; });
   html += `<p class="foot">Портреты и полоски под названиями показывают, насколько крепко ты помнишь урок. Со временем они тускнеют — повторение возвращает цвет. Нажми на любой урок, чтобы пройти или переслушать его.</p>`;
   $("#prog").innerHTML = html;
   hydratePortraits($("#prog"));
-  $("#prog").querySelectorAll(".row").forEach(b => b.addEventListener("click", () => {
+  $("#prog").querySelectorAll(".srow").forEach(b => b.addEventListener("click", () => { showTab("learn"); startStory(STORIES[+b.dataset.st]); }));
+  $("#prog").querySelectorAll(".row:not(.srow)").forEach(b => b.addEventListener("click", () => {
     const li = +b.dataset.li;
     if (li !== S.pos.li) S.pos = { li, ci: 0 };
     save(); queue = []; qi = 0; hist = {}; pushLesson(); home = false; showTab("learn"); render();
