@@ -1,0 +1,182 @@
+{
+ "ctx_l01": {
+  "wiki": "Guido of Arezzo"
+ },
+ "ctx_l02": {
+  "wiki": "Jean-Baptiste Lully"
+ },
+ "ctx_l03": {
+  "wiki": "Ospedale della Pietà"
+ },
+ "ctx_l04": {
+  "wiki": "Thirty Years' War"
+ },
+ "ctx_l05": {
+  "wiki": "St. Thomas Church, Leipzig"
+ },
+ "ctx_l06": {
+  "wiki": "King's Theatre"
+ },
+ "ctx_l07": {
+  "wiki": "Esterháza"
+ },
+ "ctx_l08": {
+  "wiki": "Salzburg"
+ },
+ "ctx_l09": {
+  "wiki": "Battle of Vienna"
+ },
+ "ctx_l10": {
+  "wiki": "Heiligenstadt Testament"
+ },
+ "ctx_l11": {
+  "wiki": "Theater an der Wien"
+ },
+ "ctx_l12": {
+  "wiki": "Schubertiade"
+ },
+ "ctx_l13": {
+  "wiki": "November Uprising"
+ },
+ "ctx_l14": {
+  "wiki": "Clara Schumann"
+ },
+ "ctx_l15": {
+  "wiki": "La Scala"
+ },
+ "ctx_l16": {
+  "wiki": "Bayreuth Festspielhaus"
+ },
+ "ctx_l17": {
+  "wiki": "Swan Lake"
+ },
+ "ctx_l18": {
+  "wiki": "Impression, Sunrise"
+ },
+ "ctx_l19": {
+  "wiki": "Ivanovka (Rachmaninoff)"
+ },
+ "ctx_l20": {
+  "wiki": "Ida Rubinstein"
+ },
+ "ins_violin": {
+  "wiki": "Violin"
+ },
+ "ins_viola": {
+  "wiki": "Viola"
+ },
+ "ins_cello": {
+  "wiki": "Cello"
+ },
+ "ins_contrabass": {
+  "wiki": "Double bass"
+ },
+ "ins_flute": {
+  "wiki": "Western concert flute"
+ },
+ "ins_oboe": {
+  "wiki": "Oboe"
+ },
+ "ins_clarinet": {
+  "wiki": "Clarinet"
+ },
+ "ins_bassoon": {
+  "wiki": "Bassoon"
+ },
+ "ins_trumpet": {
+  "wiki": "Trumpet"
+ },
+ "ins_horn": {
+  "wiki": "French horn"
+ },
+ "ins_trombone": {
+  "wiki": "Trombone"
+ },
+ "ins_tuba": {
+  "wiki": "Tuba"
+ },
+ "ins_timpani": {
+  "wiki": "Timpani"
+ },
+ "ins_orchestra": {
+  "wiki": "Orchestra"
+ },
+ "ins_organ": {
+  "wiki": "Pipe organ"
+ },
+ "ins_harpsichord": {
+  "wiki": "Harpsichord"
+ },
+ "ins_piano": {
+  "wiki": "Piano"
+ },
+ "ins_harp": {
+  "wiki": "Harp"
+ },
+ "lis_gregorian": {
+  "wiki": "Gregorian chant"
+ },
+ "lis_vltava": {
+  "wiki": "Vltava"
+ },
+ "lis_choir": {
+  "wiki": "Choir"
+ },
+ "lis_metronome": {
+  "wiki": "Metronome"
+ },
+ "lis_monet": {
+  "wiki": "Claude Monet"
+ },
+ "lis_score": {
+  "wiki": "Sheet music"
+ },
+ "lis_concert": {
+  "wiki": "Concert hall"
+ },
+ "lis_vienna": {
+  "wiki": "Vienna State Opera"
+ },
+ "st_gesualdo": {
+  "wiki": "Carlo Gesualdo"
+ },
+ "st_venosa": {
+  "wiki": "Gesualdo, Campania"
+ },
+ "st_arnstadt": {
+  "wiki": "Bachkirche Arnstadt"
+ },
+ "st_cuzzoni": {
+  "wiki": "Francesca Cuzzoni"
+ },
+ "st_farinelli": {
+  "wiki": "Farinelli"
+ },
+ "st_philip": {
+  "wiki": "Philip V of Spain"
+ },
+ "st_eisenstadt": {
+  "wiki": "Bergkirche (Eisenstadt)"
+ },
+ "st_paganini": {
+  "wiki": "Niccolò Paganini"
+ },
+ "st_salieri": {
+  "wiki": "Antonio Salieri"
+ },
+ "st_amadeus": {
+  "wiki": "Mozart and Salieri"
+ },
+ "st_champs": {
+  "wiki": "Théâtre des Champs-Élysées"
+ },
+ "st_rite": {
+  "wiki": "The Rite of Spring"
+ },
+ "st_genoa": {
+  "wiki": "Genoa"
+ },
+ "st_stradella": {
+  "wiki": "Alessandro Stradella"
+ }
+}

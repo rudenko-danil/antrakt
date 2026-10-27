@@ -1,0 +1,27 @@
+name: Картинки с Wikimedia
+
+on:
+  push:
+    branches: [main]
+    paths: ["images.json", "tools/fetch_images.py", ".github/workflows/fetch-images.yml"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  images:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install ffmpeg
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
+      - name: Fetch images
+        run: python3 tools/fetch_images.py
+      - name: Commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add images tools/images_log.txt
+          git diff --cached --quiet || git commit -m "Картинки с Wikimedia"
+          git pull --rebase -q && git push

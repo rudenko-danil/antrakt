@@ -51,14 +51,34 @@
   },
   "swan2": {
    "file": "Tchaikovsky - Swan Lake Op.20 - Act II Pt.1.ogg"
+  },
+  "paganini": {
+   "file": "__none__",
+   "search": "Paganini Caprice 24"
+  },
+  "gesualdo": {
+   "file": "__none__",
+   "search": "Gesualdo madrigal"
+  },
+  "lacrimosa": {
+   "file": "__none__",
+   "search": "Mozart Requiem Lacrimosa"
+  },
+  "lascia": {
+   "file": "__none__",
+   "search": "Lascia ch'io pianga"
+  },
+  "stradella": {
+   "file": "__none__",
+   "search": "Stradella"
   }
  },
  "searches": [
-  "KV525 Satz 3",
-  "Eine kleine Nachtmusik Menuett",
-  "Nachtmusik Menuetto",
-  "Bach chorale",
-  "Carnival of the Animals swan cello"
+  "Paganini Caprice",
+  "Gesualdo",
+  "Requiem Lacrimosa",
+  "Farinelli",
+  "Handel aria Rinaldo"
  ],
  "audit": {}
 }
