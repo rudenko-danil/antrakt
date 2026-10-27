@@ -155,6 +155,36 @@ button:focus-visible, [tabindex]:focus-visible { outline: 2px solid var(--era); 
 .facts b { display: block; font-family: var(--f-mono); font-weight: 500; font-size: 20px; font-variant-numeric: tabular-nums; }
 .facts span { font-size: 12.5px; color: var(--muted); }
 
+/* photos, hook, stories */
+.photo { margin: 0 0 14px; }
+.photo img { display: block; width: 100%; max-width: 100%; aspect-ratio: 16 / 10; object-fit: cover; border-radius: 12px; background: var(--bg); }
+.photo.top { margin: -8px -6px 16px; }
+.photo figcaption { font-family: var(--f-mono); font-size: 10px; color: var(--muted); margin-top: 5px; line-height: 1.35; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.photo.vimg img { aspect-ratio: 16 / 9; object-fit: contain; background: #fff; }
+.card.hook { padding: 0; overflow: hidden; justify-content: flex-end; border: 0; background: #111317; }
+.hbg { position: absolute; inset: 0; background-size: cover; background-position: center; }
+.hbg::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(10,11,14,.05) 20%, rgba(10,11,14,.55) 55%, rgba(10,11,14,.94) 100%); }
+.hbg.plain { background: linear-gradient(160deg, var(--era), #111317); }
+.hin { position: relative; padding: 24px 22px 26px; color: #F4F2EC; }
+.hin .kicker { color: #E8C875; }
+.hin h2 { font-family: var(--f-display); font-weight: 400; font-size: clamp(27px, 7.4vw, 34px); line-height: 1.2; margin: 0 0 12px; color: #FFFFFF; text-wrap: balance; }
+.hsub { font-family: var(--f-mono); font-size: 12px; color: rgba(244,242,236,.7); }
+.card.storyfull { cursor: pointer; }
+.smini { margin: -6px 0 14px; padding-bottom: 12px; border-bottom: 1px solid var(--line); }
+.smini .play { width: 44px; height: 44px; }
+.smini .play svg { width: 18px; height: 18px; }
+.sbody.enter { animation: rise .3s cubic-bezier(.2,.8,.2,1); }
+@media (prefers-reduced-motion: reduce) { .sbody.enter { animation: none; } }
+.stext { font-size: 19px !important; line-height: 1.6 !important; }
+.nexts { margin-top: 18px; padding: 14px; border-radius: 12px; border: 1px dashed var(--line); }
+.nexts b { font-family: var(--f-display); font-weight: 400; font-size: 18px; line-height: 1.3; }
+.smin { display: flex; gap: 12px; align-items: stretch; width: 100%; text-align: left; margin-bottom: 18px; padding: 0; border-radius: 14px; overflow: hidden;
+  background: #16181D; color: #F4F2EC; border: 1px solid var(--line); }
+.sth { width: 92px; flex: none; background-size: cover; background-position: center; }
+.stx { padding: 12px 14px 12px 2px; font-family: var(--f-display); font-size: 16.5px; line-height: 1.3; }
+.smin .sth + .stx { padding-left: 0; }
+.stx i { display: block; font-style: normal; font-family: var(--f-mono); font-size: 10.5px; letter-spacing: .08em; text-transform: uppercase; color: #E8C875; margin-bottom: 4px; }
+
 /* letters */
 .card.chat { padding: 18px 16px 14px; cursor: pointer; }
 .chead { display: flex; gap: 12px; align-items: center; padding-bottom: 12px; border-bottom: 1px solid var(--line); }
@@ -330,6 +360,7 @@ button:focus-visible, [tabindex]:focus-visible { outline: 2px solid var(--era); 
 .sub { color: var(--muted); font-size: 14px; margin: 0 0 18px; }
 .era-h { display: flex; align-items: baseline; gap: 10px; margin: 22px 0 8px; padding-bottom: 6px; border-bottom: 1px solid var(--line); }
 .era-h .n { font-family: var(--f-display); font-size: 21px; }
+.chsub { font-size: 12.5px; color: var(--muted); margin: -2px 0 6px; }
 .era-h .y { font-family: var(--f-mono); font-size: 12px; color: var(--muted); margin-left: auto; }
 .era-h .tm { font-family: var(--f-display); font-style: italic; font-size: 14px; color: var(--era); }
 .row { display: flex; align-items: center; gap: 14px; width: 100%; text-align: left; padding: 11px 2px; border-bottom: 1px dashed var(--line); }
@@ -2132,6 +2163,134 @@ for (const [id, chat] of Object.entries(LETTERS)) {
   l.cards.splice(p2 + 2, 0, chat);   // после первой карточки части «Человек»
 }
 
+// Порядок курса: история композитора чередуется с уроком «как слушать» на его же материале
+const CHAPTERS = [
+  { id: "prologue", name: "Пролог", sub: "Как слушать и откуда взялась эта музыка", era: "listen",
+    ids: ["h00", "l01"] },
+  { id: "baroque", name: "Барокко", sub: "1600–1750 · Вивальди, Пахельбель, Бах, Гендель", era: "baroque",
+    ids: ["l03", "h01", "l04", "h02", "l02", "h03", "l05", "h04", "l06", "h05"] },
+  { id: "classical", name: "Классицизм", sub: "1750–1820 · Гайдн, Моцарт, Бетховен", era: "classical",
+    ids: ["l07", "h06", "l08", "h07", "l09", "h08", "l10", "h09", "l11", "h10"] },
+  { id: "romantic", name: "Романтизм", sub: "1820–1900 · от Шуберта до Чайковского", era: "romantic",
+    ids: ["l12", "h11", "l13", "h12", "l14", "h13", "l15", "l16", "l17"] },
+  { id: "modern", name: "XX век", sub: "Дебюсси, Рахманинов, Равель", era: "modern",
+    ids: ["l18", "l19", "l20"] },
+];
+(() => {
+  const byId = Object.fromEntries(LESSONS.map(l => [l.id, l]));
+  const ordered = [];
+  CHAPTERS.forEach(ch => ch.ids.forEach(id => { const l = byId[id]; if (l) { l.chapter = ch.id; ordered.push(l); delete byId[id]; } }));
+  Object.values(byId).forEach(l => { l.chapter = "modern"; ordered.push(l); });   // на случай новых уроков
+  LESSONS.splice(0, LESSONS.length, ...ordered);
+  // «Вступление» больше не в начале курса
+  const l02 = LESSONS.find(l => l.id === "l02"); if (l02) { l02.era = "baroque"; l02.title = "Как родился оркестр"; }
+  const l01 = LESSONS.find(l => l.id === "l01"); if (l01) l01.title = "Откуда взялась классическая музыка";
+})();
+// порядок версии 2 (сначала модуль, потом композиторы) — для переноса прогресса
+const ORDER_V2 = ["h00", "h01", "h02", "h03", "h04", "h05", "h06", "h07", "h08", "h09", "h10", "h11", "h12", "h13",
+  "l01", "l02", "l03", "l04", "l05", "l06", "l07", "l08", "l09", "l10", "l11", "l12", "l13", "l14", "l15", "l16", "l17", "l18", "l19", "l20"];
+
+// «Тёмные истории»: истории на минуту, без вопросов. Открываются крючком при входе.
+const STORIES = [
+{ id: "s_bach", title: "Бах со шпагой", hook: "Двадцатилетний Бах выхватил шпагу на городской площади. Из-за чего?",
+  cover: "st_arnstadt", track: "l05_toccata", era: "baroque", slides: [
+  { img: "st_arnstadt", text: "Лето 1705 года, Арнштадт. Двадцатилетний Бах служит органистом и ведёт школьный хор. Многие ученики почти его ровесники, и ладить с ними у него не получается." },
+  { text: "На одной репетиции Бах при всех назвал фаготиста Гейерсбаха «козлиным фаготистом». Тот затаил обиду." },
+  { text: "Вечером Гейерсбах с приятелями поджидал Баха на площади, с палкой в руке, и потребовал извинений. Слово за слово — он ударил. Бах выхватил шпагу." },
+  { text: "Их растащили. Дело разбирала церковная консистория, и протоколы сохранились до наших дней. Выговор получили оба, а Баху заодно припомнили, что он не умеет ладить с учениками." },
+  { text: "Через пару месяцев Бах отпросился на четыре недели в Любек — и пропал там на четыре месяца. Терпение у начальства было не бесконечным." },
+]},
+{ id: "s_gesualdo", title: "Князь-убийца", hook: "Он убил жену — и стал одним из самых смелых композиторов своей эпохи. Кто это?",
+  cover: "st_gesualdo", track: "x_gesualdo", era: "baroque", slides: [
+  { img: "st_gesualdo", text: "Карло Джезуальдо, князь Веноза, — один из богатейших аристократов Неаполя конца XVI века и страстный музыкант. В 1586 году он женился на Марии д'Авалос, одной из первых красавиц города." },
+  { text: "В октябре 1590 года князь застал жену с её возлюбленным, герцогом Фабрицио Карафой. Вместе со слугами он убил обоих. Тела, по рассказам современников, выставили на ступенях дворца." },
+  { text: "Суда не было: по меркам эпохи князь был «в своём праве», да и слишком знатен. Он уехал в родовой замок в городке Джезуальдо и почти не покидал его до конца жизни. Говорят, его мучили тоска и болезни." },
+  { img: "st_venosa", text: "В замке он писал мадригалы с такими резкими, «неправильными» созвучиями, каких никто не решался писать ещё триста лет. Его музыку называли больной — и гениальной." },
+  { text: "В XX веке Стравинский восхищался Джезуальдо и сделал обработки его мадригалов. Убийца из Неаполя оказался композитором, опередившим своё время." },
+]},
+{ id: "s_handel", title: "Гендель и окно", hook: "Гендель держал звезду оперы над открытым окном. Что она ему сделала?",
+  cover: "st_cuzzoni", track: "l06_hallelujah", era: "baroque", slides: [
+  { img: "st_cuzzoni", text: "1723 год. В Лондон приезжает звезда — итальянское сопрано Франческа Куццони. Ей платят огромные деньги, и знает она себе цену." },
+  { text: "На репетиции оперы «Оттон» Куццони заявила, что не будет петь арию, которую Гендель написал для её первого выхода." },
+  { text: "Первый биограф Генделя рассказывает: композитор схватил её в охапку, поднёс к окну и сказал по-французски: «Я знаю, что вы настоящая дьяволица. Но я — Вельзевул, начальник всех дьяволов»." },
+  { text: "Куццони спела. Ария «Falsa imagine» стала одним из её главных лондонских триумфов." },
+  { text: "Через несколько лет Лондон разделился на поклонников Куццони и её соперницы Фаустины Бордони. В 1727 году на спектакле две примадонны подрались прямо на сцене, на глазах у публики." },
+]},
+{ id: "s_farinelli", title: "Голос, который лечил короля", hook: "Десять лет каждый вечер он пел одному-единственному слушателю. Кому?",
+  cover: "st_farinelli", track: null, era: "baroque", slides: [
+  { img: "st_farinelli", text: "Карло Броски по прозвищу Фаринелли — самый знаменитый певец-кастрат XVIII века. Его голос охватывал больше трёх октав, в Лондоне на него ломились в театры." },
+  { img: "st_philip", text: "В 1737 году, на пике славы, он уехал в Испанию. Королева позвала его ради мужа: король Филипп V впал в тяжёлую меланхолию — не вставал, не брился, не занимался делами." },
+  { text: "Пение подействовало. По рассказам, следующие годы Фаринелли каждый вечер пел королю одни и те же несколько арий — и так почти десять лет, до смерти Филиппа." },
+  { text: "При следующем короле он стал влиятельным придворным: руководил королевской оперой и устраивал праздники с флотилией на реке Тахо. На публичную сцену самый знаменитый голос Европы так и не вернулся." },
+]},
+{ id: "s_stradella", title: "Композитора заказали", hook: "Талантливейшего композитора Италии зарезали посреди площади. За что?",
+  cover: "st_stradella", track: null, era: "baroque", slides: [
+  { img: "st_stradella", text: "Алессандро Страделла (1639–1682) — один из самых одарённых композиторов Италии своего времени. И большой авантюрист." },
+  { text: "В Риме он, похоже, был замешан в махинации с приданым и бежал из города. По распространённой версии, в Венеции он увёз возлюбленную знатного покровителя — и чудом пережил нападение наёмных убийц." },
+  { img: "st_genoa", text: "В феврале 1682 года в Генуе его зарезали прямо на площади. Скорее всего, это была месть знатного семейства за роман с одной из его дам." },
+  { text: "Его жизнь стала легендой: о нём писали оперы и романы. А его музыку ценили и после смерти — Гендель позаимствовал из неё несколько номеров для своей оратории." },
+]},
+{ id: "s_haydn", title: "Где голова Гайдна", hook: "Голову Гайдна похоронили через 145 лет после его смерти. Где она была всё это время?",
+  cover: "st_eisenstadt", track: "haydn_surprise", era: "classical", slides: [
+  { text: "Гайдн умер в мае 1809 года в Вене, занятой войсками Наполеона. Хоронили его тихо, почти без почестей." },
+  { text: "Через несколько дней могилу тайно вскрыли. Бывший секретарь князя Эстерхази Розенбаум и тюремный смотритель Петер увлекались френологией — модной теорией, будто гениальность видна по форме черепа." },
+  { text: "В 1820 году князь Эстерхази решил перенести останки композитора в свою резиденцию в Айзенштадте. Открыли гроб — черепа нет. Похитителям пришлось отдать череп, но подсунули чужой." },
+  { text: "Настоящий десятилетиями переходил из рук в руки и в 1895 году попал в венское Общество друзей музыки, где его показывали посетителям." },
+  { img: "st_eisenstadt", text: "Только в 1954 году голову и тело Гайдна наконец соединили в мавзолее церкви Бергкирхе в Айзенштадте — через 145 лет после смерти." },
+]},
+{ id: "s_salieri", title: "Отравил ли Сальери Моцарта?", hook: "Пушкин и Голливуд уверены, что Моцарта отравили. А что говорят историки?",
+  cover: "st_salieri", track: "x_lacrimosa", era: "classical", slides: [
+  { text: "Моцарт умер в декабре 1791 года, в 35 лет, за несколько недель сгорев от болезни. По воспоминаниям жены, в последние недели он сам говорил, что его отравили." },
+  { img: "st_salieri", text: "Через три десятилетия по Вене пошёл слух: отравитель — Антонио Сальери, придворный капельмейстер. Говорили, что старый больной Сальери признался в этом в бреду. Сам он это отрицал." },
+  { text: "В 1830 году Пушкин написал маленькую трагедию «Моцарт и Сальери» — о зависти посредственности к гению. В 1984 году вышел фильм «Амадей». Миф оказался сильнее фактов." },
+  { text: "Историки уверены, что Сальери не травил Моцарта. Они были соперниками, но не врагами. За два месяца до смерти Моцарт взял Сальери на «Волшебную флейту» и с гордостью писал, что тот кричал «браво» после каждого номера." },
+  { text: "Позже Сальери учил младшего сына Моцарта. А от чего умер сам Моцарт, спорят до сих пор: называют ревматическую лихорадку и другие болезни." },
+]},
+{ id: "s_paganini", title: "Скрипач дьявола", hook: "Церковь 36 лет не давала похоронить этого скрипача. Почему?",
+  cover: "st_paganini", track: "x_paganini", era: "romantic", slides: [
+  { img: "st_paganini", text: "Никколо Паганини (1782–1840) играл так, что публика верила: без сделки с дьяволом такое невозможно. Худой, бледный, в чёрном, с длинными пальцами — он и выглядел подходяще. И слухов не опровергал." },
+  { text: "Говорили, что он убил женщину и в тюрьме выучился играть на одной струне. Он и правда иногда доигрывал пьесу на одной струне, когда остальные лопались. Злые языки шептали, что он подпиливает их заранее, ради эффекта." },
+  { text: "Когда в 1840 году он умер в Ницце, епископ отказал ему в церковных похоронах: Паганини не исповедовался перед смертью, а репутация «скрипача дьявола» никуда не делась." },
+  { text: "Его забальзамированное тело десятилетиями переносили с места на место. Окончательно похоронить Паганини удалось только в 1876 году в Парме — через 36 лет после смерти." },
+]},
+{ id: "s_rite", title: "Премьера с дракой", hook: "На премьере этого балета публика свистела так, что танцоры не слышали оркестр. Что они увидели?",
+  cover: "st_champs", track: null, era: "modern", slides: [
+  { img: "st_champs", text: "29 мая 1913 года, Париж, только что открытый Театр Елисейских Полей. «Русские сезоны» Дягилева показывают новый балет «Весна священная»: музыка Стравинского, хореография Нижинского." },
+  { text: "Уже вступление — высокое соло фагота, на пределе его возможностей, — вызвало смешки. Дальше хуже: рваные ритмы, оглушительные аккорды, танцоры топают, вывернув ступни внутрь." },
+  { text: "В зале одни свистели и хохотали, другие кричали им замолчать. Танцоры не слышали оркестр, и Нижинский выкрикивал им счёт из-за кулис, стоя на стуле. Говорят, дошло до драк — насколько, спорят до сих пор." },
+  { img: "st_rite", text: "Через год «Весну» сыграли в Париже в концерте, без танцев. Успех был таким, что Стравинского вынесли из зала на руках. Сегодня это одно из главных сочинений XX века." },
+]},
+];
+
+// Картинки к карточкам (файлы в images/, лицензии в images/credits.json)
+(() => {
+  const byId = id => LESSONS.find(l => l.id === id);
+  const firstText = (l, part) => {
+    const p = l.cards.findIndex(c => c.t === "part" && c.n === part);
+    return l.cards.slice(p + 1).find(c => c.t === "text");
+  };
+  // контекст эпохи — первая карточка каждой истории композитора
+  for (let i = 1; i <= 20; i++) {
+    const id = "l" + String(i).padStart(2, "0"), l = byId(id);
+    if (!l) continue;
+    const c = firstText(l, 1); if (c) c.img = "ctx_" + id;
+  }
+  const set = (id, pred, img) => { const l = byId(id); if (!l) return; const c = l.cards.find(pred); if (c) c.img = img; };
+  set("h00", c => c.t === "text", "lis_concert");
+  set("h01", c => c.t === "text", "lis_metronome");
+  set("h03", c => c.t === "text" && /Что такое тембр/.test(c.h), "ins_orchestra");
+  set("h07", c => c.t === "text" && /Хор из четырёх/.test(c.h), "lis_choir");
+  set("h07", c => c.t === "listen" && c.track === "r_veni", "lis_gregorian");
+  set("h11", c => c.t === "text" && /Как устроена фуга/.test(c.h), "ins_organ");
+  set("h13", c => c.t === "text" && /Река в музыке/.test(c.h), "lis_vltava");
+  set("h09", c => c.t === "text", "lis_vienna");
+  set("l09", c => c.t === "text" && /Новый инструмент|Изобретение Кристофори/.test(c.h), "ins_piano");
+  set("l05", c => c.t === "listen", "ins_organ");
+  // фото инструментов в переключателе тембров
+  const h03 = byId("h03");
+  if (h03) h03.cards.forEach(c => { if (c.t === "voices") c.opts.forEach(o => { const k = o.track.replace("tim_", ""); o.img = "ins_" + (k === "horn" ? "horn" : k); }); });
+})();
+
 const XMETA = {
  "chorale_all": {
   "dur": 51.09,
@@ -2626,8 +2785,33 @@ const XMETA = {
  "haydn_surprise": {
   "dur": 16.4,
   "chord": 12.24
+ },
+ "x_paganini": {
+  "dur": 44.2,
+  "src": "paganini",
+  "start": 0.8,
+  "file": "Paganini Caprice-24.ogg",
+  "who": "Элиас Гольдштейн (альт), Кристина Лалог (ф-но), переложение Примроуза",
+  "license": "Public domain"
+ },
+ "x_lacrimosa": {
+  "dur": 49.1,
+  "src": "lacrimosa",
+  "start": 0.9,
+  "file": "Mozart, Requiem in D minor, 'Lacrimosa' – piano arrangement.ogg",
+  "who": "переложение для фортепиано Тальберга",
+  "license": "CC BY-SA 4.0"
+ },
+ "x_gesualdo": {
+  "dur": 45,
+  "src": "gesualdo2",
+  "start": 0.3,
+  "file": "Gesualdo-moro lasso al mio duolo.ogg",
+  "who": "MIT Chamber Chorus, «Moro, lasso», 1611",
+  "license": "CC BY-SA 2.0"
  }
 };
+const IMGCRED = {};
 
 // Иллюстрации: композиторы, нотные примеры, схемы форм, инструменты
 const COMPOSERS = {
@@ -2956,16 +3140,21 @@ LESSONS.forEach((l, li) => l.cards.forEach(c => { if (c.t === "q") QBYID[c.id] =
 
 /* ---------- state ---------- */
 const LS = "antrakt.v1";
-const blank = () => ({ v: 2, updated: 0, pos: { li: 0, ci: 0 }, done: {}, cards: {}, days: {}, answers: { ok: 0, all: 0 } });
+const blank = () => ({ v: 3, updated: 0, pos: { li: 0, ci: 0 }, done: {}, cards: {}, days: {}, answers: { ok: 0, all: 0 } });
 let S = blank();
 try { const raw = localStorage.getItem(LS); if (raw) { const o = JSON.parse(raw); S = Object.assign(blank(), o, { v: o.v || 1 }); } } catch (e) {}
 function nextUndone(from) { for (let i = from; i < LESSONS.length; i++) if (!S.done[LESSONS[i].id]) return i; return Math.min(from, LESSONS.length); }
 // v2: модуль «Как слушать» встал в начало курса — начинаем с первого непройденного урока
-if ((S.v || 1) < 2) { S.pos = { li: nextUndone(0), ci: 0 }; S.v = 2; delete S.paused; }
+if ((S.v || 1) < 2) { S.pos = { li: nextUndone(0), ci: 0 }; S.v = 3; delete S.paused; }
+// v3: уроки чередуются (история ↔ «как слушать») — переносим позицию по id урока
+if (S.v === 2) { const id = ORDER_V2[S.pos.li]; const ni = LESSONS.findIndex(l => l.id === id); S.pos = ni >= 0 ? { li: ni, ci: S.pos.ci } : { li: nextUndone(0), ci: 0 }; S.v = 3; }
+// дальше позиция хранится и по id, чтобы переживать любые перестановки
+if (S.posId && (!LESSONS[S.pos.li] || LESSONS[S.pos.li].id !== S.posId)) { const ni = LESSONS.findIndex(l => l.id === S.posId); if (ni >= 0) S.pos = { li: ni, ci: S.pos.ci }; }
 
 let db = null, uid = null, saveTimer = null, syncNote = "Прогресс хранится на этом устройстве";
 function save(soon) {
   S.updated = Date.now();
+  S.posId = LESSONS[S.pos.li] ? LESSONS[S.pos.li].id : null;
   try { localStorage.setItem(LS, JSON.stringify(S)); } catch (e) {}
   clearTimeout(saveTimer);
   saveTimer = setTimeout(pushRemote, soon ? 300 : 4000);
@@ -3358,12 +3547,14 @@ function renderHome() {
           if (ps.length) return cur && ci > 0 ? `часть ${cur.n} из ${ps.length} · ${esc(cur.title)}` : `${ps.length} части по 2–3 минуты`;
           return ci > 0 ? `пройдено ${ci} из ${total} карточек` : `${total} карточек · около 2 минут`; })()}</div></div>
     </div>` : `<div class="next"><div class="ninfo"><div class="ntitle">Трек пройден</div><div class="nmeta">Остались только повторения</div></div></div>`}
+    ${(() => { const st = nextStory(); return st ? `<button class="smin" id="smin">${IC(st.cover) ? `<span class="sth" style="background-image:url(images/${st.cover}.jpg)"></span>` : ""}<span class="stx"><i>История за минуту</i>${esc(st.hook)}</span></button>` : ""; })()}
     ${pathBar()}
     ${fadingBlock()}
     <div class="grow"></div>
     ${due ? `<p class="duenote">Сначала ${due} ${due === 1 ? "карточка" : due < 5 ? "карточки" : "карточек"} на повторение, потом урок.</p>` : ""}`;
   stage.replaceChildren(card);
   hydratePortraits(card);
+  const sm = $("#smin", card); if (sm) sm.addEventListener("click", () => startStory(nextStory()));
   card.querySelectorAll("[data-refresh]").forEach(b => b.addEventListener("click", () => refreshLesson(+b.dataset.refresh)));
   const label = finished ? (due ? "Повторить" : "Открыть программу") : (ci > 0 || due ? "Продолжить" : "Начать урок");
   actions.innerHTML = `<button class="btn" id="go">${label}</button>`;
@@ -3402,7 +3593,70 @@ function refreshLesson(li) {
   pushLesson(); home = false; render();
 }
 
+/* ---------- истории на минуту ---------- */
+let story = null, hookPending = true;
+const nextStory = () => STORIES.find(x => !(S.stories || {})[x.id]) || null;
+function renderHook(st) {
+  setEra(st.era || "listen");
+  $(".lhead").hidden = true; $("#staff").hidden = true;
+  const card = document.createElement("article");
+  card.className = "card hook enter";
+  card.innerHTML = `${IC(st.cover) ? `<div class="hbg" style="background-image:url(images/${st.cover}.jpg)"></div>` : `<div class="hbg plain"></div>`}
+    <div class="hin"><div class="kicker">История за минуту</div><h2>${esc(st.hook)}</h2><div class="hsub">${esc(st.title)}</div></div>`;
+  stage.replaceChildren(card);
+  actions.innerHTML = `<button class="btn ghost" id="skip">К уроку</button><button class="btn" id="read">Узнать</button>`;
+  hint.textContent = "";
+  $("#read").addEventListener("click", () => startStory(st));
+  $("#skip").addEventListener("click", () => { hookPending = false; home = true; render(); });
+}
+function startStory(st) {
+  hookPending = false; story = { st, i: 0 };
+  stopAudio(); renderStory(true);
+}
+function renderStory(fresh) {
+  const { st, i } = story, n = st.slides.length;
+  setEra(st.era || "listen");
+  $(".lhead").hidden = false; $("#staff").hidden = false;
+  $("#lnum").textContent = "История"; $("#lttl").textContent = st.title;
+  $("#staff").innerHTML = `<div class="segs">${Array.from({ length: n + 1 }, (_, k) => `<i class="${k < i ? "f" : k === i ? "c" : ""}"></i>`).join("")}</div>`;
+  let card = $(".card.storyfull", stage);
+  if (fresh || !card) {
+    card = document.createElement("article");
+    card.className = "card storyfull enter";
+    card.innerHTML = `${st.track ? `<div class="mini smini"><button class="play" aria-label="Музыка">${ICON.play}</button><div class="ptrack"><div class="bar"><i></i></div><div class="ptime"><span>0:00</span><span>—</span></div></div>${heartBtn(st.track)}</div>` : ""}<div class="sbody"></div>`;
+    stage.replaceChildren(card);
+    if (st.track) {
+      const ui = playerUI(card, st.track);
+      wireHeart(card, { title: "Из истории «" + st.title + "»", meta: "", era: st.era });
+      if (fresh) toggle(st.track, ui);   // музыка начинается по нажатию «Узнать»
+    }
+  }
+  const body = $(".sbody", card);
+  if (i < n) {
+    const sl = st.slides[i], im = sl.img || (i === 0 ? st.cover : null);
+    body.innerHTML = `${im ? imgTag(im, "top") : ""}<div class="kicker">${i === 0 ? "История за минуту" : `${i + 1} / ${n}`}</div>${i === 0 ? `<h2>${esc(st.title)}</h2>` : ""}<p class="stext">${esc(sl.text)}</p>`;
+    body.classList.remove("enter"); void body.offsetWidth; body.classList.add("enter");
+    actions.innerHTML = `${i > 0 ? BACK : ""}<button class="btn" id="next">Дальше</button>`;
+    $("#next").addEventListener("click", () => { story.i++; renderStory(); }); wireBack();
+    hint.textContent = "";
+  } else {
+    S.stories = S.stories || {}; S.stories[st.id] = S.stories[st.id] || Date.now(); save();
+    const nx = nextStory();
+    body.innerHTML = `<div class="kicker">Конец истории</div>
+      <svg class="done-mark" viewBox="0 0 64 36" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" aria-hidden="true"><path d="M6 32C6 14 18 4 32 4s26 10 26 28"/><circle cx="32" cy="27" r="4.5" fill="currentColor" stroke="none"/></svg>
+      <h2>${esc(st.title)}</h2>
+      <p class="stext" style="color:var(--muted)">${Object.keys(S.stories).length} из ${STORIES.length} историй прочитано.${st.track ? " Понравилась музыка — поставь ♥, и она будет в «Находках»." : ""}</p>
+      ${nx ? `<div class="nexts"><div class="kicker">Следующая</div><b>${esc(nx.hook)}</b></div>` : ""}`;
+    actions.innerHTML = `${BACK}<button class="btn ghost" id="tolesson">К уроку</button>${nx ? `<button class="btn" id="more2">Ещё история</button>` : ""}`;
+    wireBack();
+    $("#tolesson").addEventListener("click", () => { story = null; stopAudio(); home = true; render(); });
+    if (nx) $("#more2").addEventListener("click", () => startStory(nx));
+  }
+}
+
 function render() {
+  if (story) return renderStory();
+  if (home && hookPending) { const st = nextStory(); hookPending = false; if (st) return renderHook(st); }
   if (home) return renderHome();
   if (paused) { renderCard(); showPaused(); return; }
   renderCard();
@@ -3478,6 +3732,7 @@ function resume() {
 }
 
 function back() {
+  if (story) { if (story.i > 0) { story.i--; renderStory(); } return; }
   if (qi <= 0) return;
   qi--;
   const it = item();
@@ -3494,14 +3749,14 @@ function seenComposers(it) {
 
 function renderText(card, c, it) {
   card.classList.add("story");
-  card.innerHTML = `<div class="kicker">${esc(ERAS[LESSONS[it.li].era].name)}${ERAS[LESSONS[it.li].era].years ? " · " + ERAS[LESSONS[it.li].era].years : ""}</div>
+  card.innerHTML = `${c.img ? imgTag(c.img, "top") : ""}<div class="kicker">${esc(ERAS[LESSONS[it.li].era].name)}${ERAS[LESSONS[it.li].era].years ? " · " + ERAS[LESSONS[it.li].era].years : ""}</div>
     <h2>${esc(c.h)}</h2>${figs(c, it)}<p>${esc(c.b)}</p>`;
   tapHint(card);
   nextBtn();
 }
 
 function renderListen(card, c, it) {
-  card.innerHTML = `<div class="kicker">Слушаем</div>
+  card.innerHTML = `${c.img ? imgTag(c.img, "top") : ""}<div class="kicker">Слушаем</div>
     <div class="work">${esc(c.work)}</div>
     <div class="meta">${esc(c.meta)}</div>
     <div class="player"><button class="play" aria-label="Слушать">${ICON.play}</button>
@@ -3523,6 +3778,11 @@ function renderListen(card, c, it) {
   }
   nextBtn();
 }
+
+/* ---------- картинки ---------- */
+const IC = k => (typeof IMGCRED !== "undefined") && IMGCRED[k];
+function credit(k) { const c = IC(k); if (!c) return ""; const a = (c.author || "").replace(/\s*\(.*?\)\s*/g, " ").trim(); return `${a ? esc(a.slice(0, 48)) + " · " : ""}${esc(c.license || "")} · Wikimedia Commons`; }
+function imgTag(k, cls) { if (!IC(k)) return ""; return `<figure class="photo ${cls || ""}"><img src="images/${k}.jpg" alt="" loading="lazy" decoding="async"><figcaption>${credit(k)}</figcaption></figure>`; }
 
 /* ---------- «Мои находки» ---------- */
 const TRACK_ERA = { chorale: "baroque", canon: "baroque", haydn: "classical", r_k525: "classical", r_b5: "classical", r_k265: "classical",
@@ -3575,6 +3835,7 @@ function renderVoices(card, c, it) {
     ${c.meta ? `<div class="meta">${esc(c.meta)}</div>` : ""}
     <div class="player"><button class="play" aria-label="Слушать">${ICON.play}</button>
       <div class="ptrack"><div class="bar"><i></i></div><div class="ptime"><span>0:00</span><span>—</span></div></div>${heartBtn(c.opts[0].track)}</div>
+    ${c.opts.some(o => o.img && IC(o.img)) ? `<figure class="photo vimg"><img src="images/${c.opts[0].img}.jpg" alt=""><figcaption>${credit(c.opts[0].img)}</figcaption></figure>` : ""}
     <div class="vsel" role="group" aria-label="Что звучит">${c.opts.map((o, i) => `<button class="vbtn ${i === 0 ? "on" : ""}" data-i="${i}">${esc(o.label)}</button>`).join("")}</div>
     <p class="note">${esc(c.note)}</p>
     ${figs(c, it)}
@@ -3586,6 +3847,8 @@ function renderVoices(card, c, it) {
   card.querySelectorAll(".vbtn").forEach(b => b.addEventListener("click", () => {
     const i = +b.dataset.i; if (i === cur) return;
     card.querySelectorAll(".vbtn").forEach(x => x.classList.toggle("on", x === b));
+    const vi = $(".vimg", card), o = c.opts[i];
+    if (vi && o.img && IC(o.img)) { vi.querySelector("img").src = `images/${o.img}.jpg`; vi.querySelector("figcaption").innerHTML = credit(o.img); }
     const playingNow = curTrack === c.opts[cur].track && !el.paused;
     cur = i;
     if (playingNow) switchTrack(c.opts[i].track, ui); else ui.setSource(!!(XM(c.opts[i].track) || {}).file);
@@ -3816,7 +4079,7 @@ function advance() {
 /* сторис: тап по правой части карточки — дальше, по левой — назад */
 const INTERACTIVE = "button, a, input, textarea, .opt, .vbtn, .mark, .player, .mini, .tapzone, .vsel, .heart";
 stage.addEventListener("click", e => {
-  if (home || paused || $("#s-learn").hidden) return;
+  if ((home && !story) || paused || $("#s-learn").hidden) return;
   if (e.target.closest(INTERACTIVE)) return;
   const sel = window.getSelection && String(window.getSelection()); if (sel) return;
   const card = $(".card", stage); if (!card) return;
@@ -3839,11 +4102,12 @@ document.addEventListener("keydown", e => {
 
 /* ---------- programme ---------- */
 function renderProg() {
-  let html = `<h1>Программа</h1><p class="sub">Сначала 14 уроков о том, как слушать, затем 20 уроков о композиторах. Каждый урок — три части по 2–3 минуты</p>`;
-  let era = null;
+  let html = `<h1>Программа</h1><p class="sub">Истории композиторов чередуются с уроками о том, как слушать: сначала судьба и музыка, потом инструмент, чтобы услышать в ней больше</p>`;
+  let chap = null;
   LESSONS.forEach((l, i) => {
-    if (l.era !== era) { era = l.era; const E = ERAS[era];
-      html += `<div class="era-h" style="--era:var(--${era})"><span class="n">${E.name}</span><span class="tm">${E.tempo}</span><span class="y">${E.years}</span></div>`; }
+    if (l.chapter !== chap) { chap = l.chapter; const C = CHAPTERS.find(c => c.id === chap) || { name: "", sub: "", era: l.era };
+      const ls = LESSONS.filter(x => x.chapter === chap), dn = ls.filter(x => S.done[x.id]).length;
+      html += `<div class="era-h" style="--era:var(--${C.era})"><span class="n">${esc(C.name)}</span><span class="y">${dn}/${ls.length}</span></div><div class="chsub">${esc(C.sub)}</div>`; }
     const done = !!S.done[l.id], curL = S.pos.li === i, mem = done ? lessonMemory(l) : null;
     const due = done && lessonQs(l).some(id => S.cards[id] && S.cards[id].due <= Date.now());
     const st = done ? (due ? "пора повторить" : mem != null ? memWord(mem) : "пройден") : curL ? (S.pos.ci > 0 ? "продолжить" : "следующий") : "";
@@ -3947,10 +4211,10 @@ function showTab(t) {
   if (t === "learn") { if (home) renderHome(); else setEra(eraOf(item())); }
 }
 document.querySelectorAll(".tabs button").forEach(b => b.addEventListener("click", () => {
-  if (b.dataset.tab === "learn" && !$("#s-learn").hidden && !home) { home = true; render(); return; }
+  if (b.dataset.tab === "learn" && !$("#s-learn").hidden && (!home || story)) { story = null; stopAudio(); home = true; render(); return; }
   showTab(b.dataset.tab);
 }));
-$(".top .brand").addEventListener("click", () => { showTab("learn"); home = true; render(); });
+$(".top .brand").addEventListener("click", () => { story = null; showTab("learn"); home = true; render(); });
 
 /* ---------- boot ---------- */
 countOpen();

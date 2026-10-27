@@ -508,5 +508,13 @@
   "file": "Mozart, Requiem in D minor, 'Lacrimosa' – piano arrangement.ogg",
   "who": "переложение для фортепиано Тальберга",
   "license": "CC BY-SA 4.0"
+ },
+ "x_gesualdo": {
+  "dur": 45,
+  "src": "gesualdo2",
+  "start": 0.3,
+  "file": "Gesualdo-moro lasso al mio duolo.ogg",
+  "who": "MIT Chamber Chorus, «Moro, lasso», 1611",
+  "license": "CC BY-SA 2.0"
  }
 }
