@@ -62,3 +62,10 @@ AUDIT [l20_bolero] Bolero-Maurice Ravel-1930.ogg | Maurice Ravel | Public domain
 ?? Requiem Lacrimosa: File:Mozart, Requiem in D minor, 'Lacrimosa' – piano arrangement.ogg || File:Mozart - Requiem (Krips) - VIII. Lacrimosa.flac || File:W. A. Mozart - Requiem - 8. Lacrimosa (Herbert von Karajan, Wiener Philharmoniker, Wiener Singverein, 1960).ogg || File:W. A. Mozart - Requiem, K. 626 (Bruno Walter, Wiener Philharmoniker, Wiener Staatsopernchor, 1956) - 08. Lacrimosa.ogg || File:PMLP02751-S002-07-Mozart Requiem Mass.ogg || File:PDP-CH - London Philharmonic Choir, Charles Kennedy Scott - Requiem in D minor, K 626, Kyrie Eleison and Dies Irae - Mozart - Hmv-d1147-04898.flac
 ?? Farinelli: 
 ?? Handel aria Rinaldo: File:Inleiding Concerto de' Cavalieri olv. Marcello Di Lisa (audio).mp3 || File:Inleiding Academy of Ancient Music (audio) 1578.mp3
+[stradella] search candidates: 
+[stradella] FAIL nothing found
+[gesualdo2] OK File:Gesualdo-moro lasso al mio duolo.ogg | composerCarlo Gesualdo (1566-1613) | CC BY-SA 2.0 | date: composition: 1611 | Carlo Gesualdo: "Moro, lasso al mio duolo", from Book VI (Madrigali libro sesto), five voices, 1611. Performed by MIT Chamber Chorus (William Cutter, director).
+[gesualdo3] OK File:Carlo Gesualdo - Gagliarda del Principe di Venosa.flac | Flopinot2012 | CC BY-SA 4.0 | date: 2016-03-18 | "Gagliarda del Principe di Venosa", instrumental piece by Carlo Gesualdo (1566-1613) reconstructed through a software (Encore) legally bought by the user under the producer's licence (Gvox) : this fil
+?? Farinelli aria: 
+?? Porpora aria countertenor: 
+?? Handel Lascia ch'io pianga aria: File:Inleiding Concerto de' Cavalieri olv. Marcello Di Lisa (audio).mp3
